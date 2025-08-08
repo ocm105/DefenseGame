@@ -98,15 +98,12 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
                 {
                     case UnityWebRequest.Result.ConnectionError:
                     case UnityWebRequest.Result.DataProcessingError:
-                        Debug.Log("ERROR");
                         resultAction?.Invoke(GAMEDATA_STATE.CONNECTDATAERROR, request.downloadHandler.text);
                         break;
                     case UnityWebRequest.Result.ProtocolError:
-                        Debug.Log("ERROR");
                         resultAction?.Invoke(GAMEDATA_STATE.PROTOCOLERROR, request.downloadHandler.text);
                         break;
                     case UnityWebRequest.Result.Success:
-                        Debug.Log("OK");
                         resultAction?.Invoke(GAMEDATA_STATE.REQUESTSUCCESS, request.downloadHandler.text);
                         break;
                 }

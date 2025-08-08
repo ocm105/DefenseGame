@@ -24,14 +24,16 @@ public class Test : MonoBehaviour
             yield return StartCoroutine(NetworkManager.Instance.GetDescriptRequest((resData) => monster_Data = resData));
         }
 
-        for (int i = 0; i < monster_Data.Count; i++)
-        {
-            Debug.Log($"index = {i} / {monster_Data[i].index}");
-        }
-
         isDataLoad_Completed = true;
     }
 
+    public void OnClick_Test()
+    {
+        for (int i = 1; i < monster_Data.Count + 1; i++)
+        {
+            Debug.Log($"index = {i} / {monster_Data[i].type}");
+        }
+    }
 
 
 }

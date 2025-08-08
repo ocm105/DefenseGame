@@ -7,9 +7,9 @@ using System.Collections.Generic;
 [Serializable]
 public class MonsterData
 {
-    public string index;
+    public int index;
     // public int next_index;
-    // public string descript_key;
+    public string type;
 }
 
 public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
