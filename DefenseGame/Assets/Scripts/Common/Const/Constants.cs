@@ -13,4 +13,10 @@ public static class Constants
         public const string WebView = "7.WebviewScene";
         public const string DongleGame = "8.DongleGameScene";
     }
+
+    public static class Character
+    {
+        public const string Player = "Players";
+        public const string Monster = "Monsters";
+    }
 }

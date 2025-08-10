@@ -26,6 +26,12 @@ public enum GAMEDATA_STATE
     NODATA,
     REQUESTSUCCESS
 }
+public enum GameState
+{
+    Start = 0,
+    Pause,
+    End
+}
 #endregion
 
 #region Player
@@ -47,3 +53,5 @@ public enum PlayerAttackLevel
     Max
 }
 #endregion
+
+

@@ -2132,6 +2132,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce58127ea040b5a40bbc76b8dd2227cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roundTime: 20
+  monsterGroup: {fileID: 755692435}
+  monsterCreatePoint: {fileID: 1109586815}
+  monsterMovePath:
+  - {fileID: 209045713}
+  - {fileID: 1698671897}
+  - {fileID: 1653742447}
+  maxCreateCount: 60
+  maxSpwanCount: 20
+  monsterSpawnTime: 0.5
 --- !u!1 &2075690243
 GameObject:
   m_ObjectHideFlags: 0
