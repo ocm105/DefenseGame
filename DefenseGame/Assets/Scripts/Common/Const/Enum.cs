@@ -35,7 +35,6 @@ public enum GameState
 #endregion
 
 #region Player
-
 public enum PlayerAniState
 {
     Default,
@@ -54,4 +53,12 @@ public enum PlayerAttackLevel
 }
 #endregion
 
+#region Monster
+public enum MonsterState
+{
+    Arive = 0,
+    Stop,
+    Die
+}
+#endregion
 

@@ -27,10 +27,8 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
                     // PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("데이터를 받아오지 못했습니다.");
                     // popup.OnClose = p => Application.Quit();
                     // popup.OnOK = p => Application.Quit();
-                    Debug.Log("ERROR");
                     break;
                 case GAMEDATA_STATE.REQUESTSUCCESS:
-                    Debug.Log("OK");
                     callback?.Invoke(CSVReader.ReadFromResource<MonsterData>(resData));
                     break;
             }

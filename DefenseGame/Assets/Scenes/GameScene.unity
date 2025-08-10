@@ -2139,8 +2139,9 @@ MonoBehaviour:
   - {fileID: 209045713}
   - {fileID: 1698671897}
   - {fileID: 1653742447}
+  - {fileID: 1109586815}
   maxCreateCount: 60
-  maxSpwanCount: 20
+  maxSpwanCount: 10
   monsterSpawnTime: 0.5
 --- !u!1 &2075690243
 GameObject:
@@ -2334,6 +2335,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2499587}
     m_Modifications:
+    - target: {fileID: 5694282903654428493, guid: 7a43d341da1d61f41b7e53677855daf9, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694282903654428493, guid: 7a43d341da1d61f41b7e53677855daf9, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6126988005016426512, guid: 7a43d341da1d61f41b7e53677855daf9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.33

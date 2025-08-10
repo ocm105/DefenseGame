@@ -25,6 +25,7 @@ public class InGameManager : MonoBehaviour
     {
         gameState = GameState.Start;
         MonsterPooling();
+        gameTime = 19;
     }
     private void Start()
     {
@@ -44,7 +45,11 @@ public class InGameManager : MonoBehaviour
                         nowSpwanCount++;
                         MonsterSpawn();
                         spwanTime = 0;
-                        if (nowSpwanCount >= maxCreateCount) gameTime = 0;
+                        if (nowSpwanCount >= maxSpwanCount)
+                        {
+                            nowSpwanCount = 0;
+                            gameTime = 0;
+                        }
                     }
                 }
                 break;
@@ -73,6 +78,7 @@ public class InGameManager : MonoBehaviour
     #endregion
 
     #region Monster
+    /// <summary> 몬스터 풀링 </summary>
     private void MonsterPooling()
     {
         GameObject obj;
@@ -83,17 +89,24 @@ public class InGameManager : MonoBehaviour
             monsterPool.Enqueue(obj);
         }
     }
+    /// <summary> 몬스터 생성 </summary>
     private GameObject MonsterCreate()
     {
         string path = string.Concat(Constants.Character.Monster, '/', "Monster");
-        return Instantiate(Resources.Load<GameObject>(path), monsterGroup.transform);
+        GameObject obj = Instantiate(Resources.Load<GameObject>(path), monsterGroup.transform);
+        MonsterControl mc = obj.GetComponent<MonsterControl>();
+        mc.MovePath(monsterMovePath);
+        mc.dieAction = (ob) => MonsterInit(ob);
+        return obj;
     }
+    /// <summary> 몬스터 초기화 </summary>
     private void MonsterInit(GameObject obj)
     {
         obj.SetActive(false);
         obj.transform.position = monsterCreatePoint.position;
         obj.transform.rotation = Quaternion.identity;
     }
+    /// <summary> 몬스터 스폰 </summary>
     private void MonsterSpawn()
     {
         if (monsterPool.Count <= 0)
@@ -102,7 +115,11 @@ public class InGameManager : MonoBehaviour
             MonsterInit(obj);
             monsterPool.Enqueue(obj);
         }
-        monsterPool.Dequeue().SetActive(true);
+        GameObject obj2 = monsterPool.Dequeue();
+        MonsterControl mc = obj2.GetComponent<MonsterControl>();
+        obj2.SetActive(true);
+        mc.MonsterStart();
+
     }
     #endregion
 }
