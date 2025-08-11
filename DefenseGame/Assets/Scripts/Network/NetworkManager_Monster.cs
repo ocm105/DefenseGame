@@ -4,12 +4,15 @@ using UISystem;
 using System.Collections;
 using System.Collections.Generic;
 
+
+
 [Serializable]
 public class MonsterData
 {
     public int index;
-    // public int next_index;
     public string type;
+    public List<int> Trait;
+    public List<int> Stat;
 }
 
 public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>

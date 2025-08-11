@@ -497,6 +497,11 @@ public class CSVReader
         {
             actionList = SetUshort;
         }
+        else if (fieldType == typeof(List<int>))
+        {
+            Debug.Log("Array");
+            actionList = SetIntList;
+        }
         else
         {
             actionList = null;
@@ -693,6 +698,25 @@ public class CSVReader
         int startIndex = node[key].Value.IndexOf('[');
         int endIndex = node[key].Value.IndexOf(']') - startIndex;
         node[key].Value = node[key].Value.Substring(startIndex, endIndex + 1);
+    }
+    private static void SetIntList(Type fieldType, string key, string value, JSONNode node)
+    {
+        string[] elements = value.TrimStart('{').TrimEnd('}').Split('&');
+        if (elements.Length > 0)
+        {
+            int n;
+            int[] arr = new int[elements.Length];
+            for (int k = 0; k < elements.Length; ++k)
+            {
+                if (int.TryParse(elements[k], out n))
+                    arr[k] = n;
+            }
+            node[key].AsJson = new IntArray(arr);
+
+            int startIndex = node[key].Value.IndexOf('[');
+            int endIndex = node[key].Value.IndexOf(']') - startIndex;
+            node[key].Value = node[key].Value.Substring(startIndex, endIndex + 1);
+        }
     }
 
     public static float ToFloat(string s)

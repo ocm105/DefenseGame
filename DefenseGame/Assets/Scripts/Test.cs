@@ -23,6 +23,7 @@ public class Test : MonoBehaviour
         {
             yield return StartCoroutine(NetworkManager.Instance.GetDescriptRequest((resData) => monster_Data = resData));
         }
+        OnClick_Test();
 
         isDataLoad_Completed = true;
     }
@@ -32,6 +33,14 @@ public class Test : MonoBehaviour
         for (int i = 1; i < monster_Data.Count + 1; i++)
         {
             Debug.Log($"index = {i} / {monster_Data[i].type}");
+            for (int j = 0; j < monster_Data[i].Trait.Count; j++)
+            {
+                Debug.Log($"{monster_Data[i].Trait[j]}");
+            }
+            for (int j = 0; j < monster_Data[i].Stat.Count; j++)
+            {
+                Debug.Log($"{monster_Data[i].Stat[j]}");
+            }
         }
     }
 
