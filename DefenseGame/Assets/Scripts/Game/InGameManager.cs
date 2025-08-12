@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class InGameManager : MonoBehaviour
 {
@@ -9,8 +10,8 @@ public class InGameManager : MonoBehaviour
 
     #region Monster
     [SerializeField] GameObject monsterGroup;
-    [SerializeField] Transform monsterCreatePoint;
-    [SerializeField] Transform[] monsterMovePath;                   // 몬스터 이동 경로
+    [SerializeField] RectTransform monsterCreatePoint;
+    [SerializeField] RectTransform[] monsterMovePath;                   // 몬스터 이동 경로
     [Range(1, 100)][SerializeField] int maxCreateCount;             // 몬스터 최고 생성 갯수
     [Range(1, 30)][SerializeField] int maxSpwanCount;               // 라운드 스폰 갯수
     private int nowSpwanCount = 0;                                  // 현재 스폰 갯수
@@ -19,7 +20,11 @@ public class InGameManager : MonoBehaviour
     private Queue<GameObject> monsterPool = new Queue<GameObject>();
     #endregion
 
+    #region Unit
     private UnitControl characterControl;
+    private PointerEventData pointerEventData;
+    private List<RaycastResult> pointerResults = new List<RaycastResult>();
+    #endregion
 
     private void Awake()
     {
@@ -36,13 +41,6 @@ public class InGameManager : MonoBehaviour
         Init();
     }
 
-    private void FixedUpdate()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            ClickEvent();
-        }
-    }
     private void Update()
     {
         switch (gameState)
@@ -70,6 +68,7 @@ public class InGameManager : MonoBehaviour
             case GameState.End:
                 break;
         }
+        UnitClickEvent();
     }
 
     #region Fuction
@@ -86,29 +85,6 @@ public class InGameManager : MonoBehaviour
                 break;
         }
         gameState = state;
-    }
-
-    private void ClickEvent()
-    {
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
-
-        if (hit.collider != null)
-        {
-            if (hit.collider.CompareTag("Player"))
-            {
-                characterControl = hit.collider.GetComponent<UnitControl>();
-                characterControl.OnClick(true);
-            }
-        }
-        else
-        {
-            if (characterControl != null)
-            {
-                characterControl.OnClick(false);
-                characterControl = null;
-            }
-        }
     }
     #endregion
 
@@ -138,8 +114,9 @@ public class InGameManager : MonoBehaviour
     private void MonsterInit(GameObject obj)
     {
         obj.SetActive(false);
-        obj.transform.position = monsterCreatePoint.position;
-        obj.transform.rotation = Quaternion.identity;
+        RectTransform rect = obj.GetComponent<RectTransform>();
+        rect.anchoredPosition = monsterCreatePoint.anchoredPosition;
+        rect.rotation = Quaternion.identity;
     }
     /// <summary> 몬스터 스폰 </summary>
     private void MonsterSpawn()
@@ -157,7 +134,52 @@ public class InGameManager : MonoBehaviour
     }
     #endregion
 
-    #region Player
+    #region Unit
+    /// <summary> Unit 클릭 </summary>
+    private void UnitClickEvent()
+    {
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+        if (Input.GetMouseButtonDown(0))
+#elif UNITY_ANDROID
+        if (Input.touchCount > 0)
+#endif
+        {
+            pointerEventData = new PointerEventData(EventSystem.current);
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+            pointerEventData.position = Input.mousePosition;
+#elif UNITY_ANDROID
+            pointerEventData.position = Input.GetTouch(0).position;
+#endif
 
+            EventSystem.current.RaycastAll(pointerEventData, pointerResults);
+            for (int i = 0; i < pointerResults.Count; i++)
+            {
+                // 클릭한게 unit일때
+                if (pointerResults[i].gameObject.CompareTag("Unit"))
+                {
+                    // 이전에 클릭한 unit이 있을 때
+                    if (characterControl != null)
+                    {
+                        // 같은 unit을 클릭하지 않았을 때
+                        if (characterControl.gameObject != pointerResults[i].gameObject)
+                        {
+                            characterControl.OnClick(false);
+                            characterControl = pointerResults[i].gameObject.GetComponent<UnitControl>();
+                        }
+                        characterControl.OnClick(true);
+                    }
+                }
+                else    // unit을 클릭하지 안았을 때
+                {
+                    if (characterControl != null)
+                    {
+                        characterControl.OnClick(false);
+                        characterControl = null;
+                    }
+                }
+            }
+        }
+
+    }
     #endregion
 }

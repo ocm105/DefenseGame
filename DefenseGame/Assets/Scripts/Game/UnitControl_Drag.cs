@@ -1,47 +1,59 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public partial class UnitControl : MonoBehaviour
+public partial class UnitControl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    [SerializeField] GameObject dragObject;
     [SerializeField] Vector2 gridCellSize;      // grid 크기 (1유닛)
     [SerializeField] Vector2 dragClampPos;      // Drag 한정위치
     private Vector2 snapPos;                    // snap 위치
-    private Camera mainCamera;
     private Vector2 dragPos;                    // Drag 하고 있는 위치
-    private Vector3 offset;                     // 클릭시 Pivot 과 ClickPoint의 격차
+    private Vector2 offset;                     // 클릭시 Pivot 과 ClickPoint의 격차
+    private float gridOffsetX;
+    private RectTransform unitRect;
+    private RectTransform dragObjectRect;
+
     private bool isDragging = false;
 
-    private void Start()
+    void Awake()
     {
-        mainCamera = Camera.main;
+        unitRect = this.GetComponent<RectTransform>();
+        dragObjectRect = dragObject.GetComponent<RectTransform>();
     }
 
-    void OnMouseDown()
+    public void OnBeginDrag(PointerEventData eventData)
     {
+        Debug.Log("Click");
         isDragging = true;
-        dragPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        offset = dragObject.transform.position - new Vector3(dragPos.x, dragPos.y);
+        dragPos = eventData.position;
+        offset = dragObjectRect.anchoredPosition - new Vector2(dragPos.x, dragPos.y);
+        dragObject.SetActive(isDragging);
     }
-
-    private void OnMouseUp()
-    {
-        isDragging = false;
-
-        this.transform.position = dragObject.transform.position;
-        dragObject.transform.localPosition = Vector2.zero;
-    }
-    private void Update()
+    public void OnDrag(PointerEventData eventData)
     {
         if (isDragging)
         {
-            dragPos = mainCamera.ScreenToWorldPoint(Input.mousePosition) + offset;
+            dragPos = eventData.position + offset;
 
-            snapPos.x = Mathf.Round(dragPos.x / gridCellSize.x) * gridCellSize.x;
             snapPos.y = Mathf.Round(dragPos.y / gridCellSize.y) * gridCellSize.y;
-            dragObject.transform.position = new Vector2
+
+            gridOffsetX = snapPos.y == 0 ? 0 : gridCellSize.x * 0.5f;
+            snapPos.x = Mathf.Round((dragPos.x - gridOffsetX) / gridCellSize.x) * gridCellSize.x + gridOffsetX;
+
+            dragObjectRect.anchoredPosition = new Vector2
             (
-                Mathf.Clamp(snapPos.x, -dragClampPos.x, dragClampPos.x),
+                Mathf.Clamp(snapPos.x, -dragClampPos.x - gridOffsetX, dragClampPos.x + gridOffsetX),
                 Mathf.Clamp(snapPos.y, -dragClampPos.y, dragClampPos.y)
             );
         }
     }
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        isDragging = false;
+        unitRect.anchoredPosition = dragObjectRect.anchoredPosition;
+        shotAttackRange.GetComponent<RectTransform>().anchoredPosition = unitRect.anchoredPosition;
+        longAttackRange.GetComponent<RectTransform>().anchoredPosition = unitRect.anchoredPosition;
+        dragObject.SetActive(isDragging);
+    }
+
 }

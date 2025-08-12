@@ -6,7 +6,6 @@ public class GameView : UIView
 {
     [SerializeField] Button homeBtn;
 
-
     public void Show()
     {
         ShowLayer();

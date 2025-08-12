@@ -3,30 +3,31 @@ using UnityEngine;
 
 public class MonsterControl : MonoBehaviour
 {
-    private float speed = 1f;
-    private SpriteRenderer monsterSprite;
-    private Transform[] movePath;
+    [SerializeField] Animator animator;
+    [SerializeField] RectTransform monsterRect;
+    private RectTransform myRect;
+    private RectTransform[] movePath;
     private int movePathIndex = 0;
-
-    public Action<GameObject> dieAction;
+    private float speed = 200f;
     private MonsterState monsterState;
+    public Action<GameObject> dieAction;
 
     private void Awake()
     {
-        monsterSprite = this.GetComponent<SpriteRenderer>();
+        myRect = this.GetComponent<RectTransform>();
     }
 
     public void MonsterStart()
     {
         movePathIndex = 0;
-        monsterState = MonsterState.Arive;
+        ChangeMonsterState(MonsterState.Arive);
     }
     private void Update()
     {
         switch (monsterState)
         {
             case MonsterState.Arive:
-                this.transform.position = Vector2.MoveTowards(this.transform.position, movePath[movePathIndex].position, speed * Time.deltaTime);
+                myRect.anchoredPosition = Vector2.MoveTowards(myRect.anchoredPosition, movePath[movePathIndex].anchoredPosition, speed * Time.deltaTime);
                 DistanceCheck();
                 break;
             case MonsterState.Stop:
@@ -37,7 +38,7 @@ public class MonsterControl : MonoBehaviour
 
     #region Fuction
     /// <summary> 몬스터 이동경로 할당 </summary>
-    public void MovePath(Transform[] path)
+    public void MovePath(RectTransform[] path)
     {
         movePath = path;
     }
@@ -47,11 +48,13 @@ public class MonsterControl : MonoBehaviour
         switch (state)
         {
             case MonsterState.Arive:
+                animator.CrossFade("Walk", 0);
                 break;
             case MonsterState.Stop:
                 break;
             case MonsterState.Die:
                 dieAction.Invoke(this.gameObject);
+                animator.CrossFade("Death", 0);
                 break;
         }
         monsterState = state;
@@ -59,13 +62,16 @@ public class MonsterControl : MonoBehaviour
     /// <summary> 도착 - 현재 거리 체크 </summary>
     private void DistanceCheck()
     {
-        if (Vector2.Distance(this.transform.position, movePath[movePathIndex].position) <= 0.05f)
+        if (Vector2.Distance(myRect.anchoredPosition, movePath[movePathIndex].anchoredPosition) <= 0.05f)
         {
             movePathIndex++;
             if (movePathIndex >= movePath.Length)
                 movePathIndex = 0;
 
-            monsterSprite.flipX = movePathIndex >= movePath.Length * 0.5f ? true : false;
+            if (movePathIndex >= movePath.Length * 0.5f)
+                monsterRect.localScale = new Vector2(-monsterRect.localScale.x, monsterRect.localScale.y);
+            else
+                monsterRect.localScale = new Vector2(monsterRect.localScale.x, monsterRect.localScale.y);
         }
     }
     #endregion
