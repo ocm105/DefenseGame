@@ -7,7 +7,6 @@ public class MonsterControl : MonoBehaviour
     private SpriteRenderer monsterSprite;
     private Transform[] movePath;
     private int movePathIndex = 0;
-    private Vector3 dir;
 
     public Action<GameObject> dieAction;
     private MonsterState monsterState;
@@ -19,15 +18,15 @@ public class MonsterControl : MonoBehaviour
 
     public void MonsterStart()
     {
+        movePathIndex = 0;
         monsterState = MonsterState.Arive;
-        dir = (movePath[movePathIndex].position - this.transform.position).normalized;
     }
     private void Update()
     {
         switch (monsterState)
         {
             case MonsterState.Arive:
-                this.transform.position += dir * speed * Time.deltaTime;
+                this.transform.position = Vector2.MoveTowards(this.transform.position, movePath[movePathIndex].position, speed * Time.deltaTime);
                 DistanceCheck();
                 break;
             case MonsterState.Stop:
@@ -66,15 +65,7 @@ public class MonsterControl : MonoBehaviour
             if (movePathIndex >= movePath.Length)
                 movePathIndex = 0;
 
-            dir = (movePath[movePathIndex].position - this.transform.position).normalized;
-            if (movePathIndex >= movePath.Length * 0.5f)
-            {
-                monsterSprite.flipX = true;
-            }
-            else
-            {
-                monsterSprite.flipX = false;
-            }
+            monsterSprite.flipX = movePathIndex >= movePath.Length * 0.5f ? true : false;
         }
     }
     #endregion

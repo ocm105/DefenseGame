@@ -7,6 +7,7 @@ public class InGameManager : MonoBehaviour
     private GameState gameState;
     [SerializeField] float roundTime = 20f;                         // 라운드 시간
 
+    #region Monster
     [SerializeField] GameObject monsterGroup;
     [SerializeField] Transform monsterCreatePoint;
     [SerializeField] Transform[] monsterMovePath;                   // 몬스터 이동 경로
@@ -16,6 +17,9 @@ public class InGameManager : MonoBehaviour
     [SerializeField] float monsterSpawnTime = 0.5f;                 // 몬스터 스폰 시간
     private float gameTime, spwanTime = 0;
     private Queue<GameObject> monsterPool = new Queue<GameObject>();
+    #endregion
+
+    private UnitControl characterControl;
 
     private void Awake()
     {
@@ -30,6 +34,14 @@ public class InGameManager : MonoBehaviour
     private void Start()
     {
         Init();
+    }
+
+    private void FixedUpdate()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            ClickEvent();
+        }
     }
     private void Update()
     {
@@ -75,6 +87,29 @@ public class InGameManager : MonoBehaviour
         }
         gameState = state;
     }
+
+    private void ClickEvent()
+    {
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                characterControl = hit.collider.GetComponent<UnitControl>();
+                characterControl.OnClick(true);
+            }
+        }
+        else
+        {
+            if (characterControl != null)
+            {
+                characterControl.OnClick(false);
+                characterControl = null;
+            }
+        }
+    }
     #endregion
 
     #region Monster
@@ -119,7 +154,10 @@ public class InGameManager : MonoBehaviour
         MonsterControl mc = obj2.GetComponent<MonsterControl>();
         obj2.SetActive(true);
         mc.MonsterStart();
-
     }
+    #endregion
+
+    #region Player
+
     #endregion
 }
