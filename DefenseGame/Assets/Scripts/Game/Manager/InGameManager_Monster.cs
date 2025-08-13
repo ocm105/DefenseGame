@@ -6,8 +6,7 @@ using UnityEngine.EventSystems;
 public partial class InGameManager : MonoBehaviour
 {
     [SerializeField] GameObject monsterGroup;
-    [SerializeField] RectTransform monsterCreatePoint;
-    [SerializeField] RectTransform[] monsterMovePath;                   // 몬스터 이동 경로
+    [SerializeField] PathInfo monsterPathInfo;
     [Range(1, 100)][SerializeField] int maxCreateCount;             // 몬스터 최고 생성 갯수
     [Range(1, 30)][SerializeField] int maxSpwanCount;               // 라운드 스폰 갯수
     private int nowSpwanCount = 0;                                  // 현재 스폰 갯수
@@ -33,7 +32,7 @@ public partial class InGameManager : MonoBehaviour
         string path = string.Concat(Constants.Character.Monster, '/', "Monster");
         GameObject obj = Instantiate(Resources.Load<GameObject>(path), monsterGroup.transform);
         MonsterControl mc = obj.GetComponent<MonsterControl>();
-        mc.MovePath(monsterMovePath);
+        mc.MovePath(monsterPathInfo.MonsterMovePath);
         mc.dieAction = (ob) => MonsterInit(ob);
         return obj;
     }
@@ -42,7 +41,7 @@ public partial class InGameManager : MonoBehaviour
     {
         obj.SetActive(false);
         RectTransform rect = obj.GetComponent<RectTransform>();
-        rect.anchoredPosition = monsterCreatePoint.anchoredPosition;
+        rect.anchoredPosition = monsterPathInfo.MonsterCreatePoint.anchoredPosition;
         rect.rotation = Quaternion.identity;
     }
     /// <summary> 몬스터 스폰 </summary>

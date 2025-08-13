@@ -848,6 +848,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8850740506604028883}
+  - component: {fileID: 3782976101420514930}
   m_Layer: 5
   m_Name: Paths
   m_TagString: Untagged
@@ -871,13 +872,31 @@ RectTransform:
   - {fileID: 3987796555899988601}
   - {fileID: 3627768403393767988}
   - {fileID: 3204249201725764188}
-  m_Father: {fileID: 2243186743555920368}
+  m_Father: {fileID: 3140725326026480891}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -260}
-  m_SizeDelta: {x: -20, y: -1640}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3782976101420514930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613054021535537432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7a576403fcac6428af0dc9987141b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterCreatePoint: {fileID: 1878239792046036073}
+  monsterMovePath:
+  - {fileID: 6292119667522425887}
+  - {fileID: 4678329335904484112}
+  - {fileID: 8596884800268654703}
+  - {fileID: 1878239792046036073}
 --- !u!1 &1799431824649713419
 GameObject:
   m_ObjectHideFlags: 0
@@ -1899,7 +1918,6 @@ RectTransform:
   m_Children:
   - {fileID: 3140725326026480891}
   - {fileID: 7519731990924117835}
-  - {fileID: 8850740506604028883}
   - {fileID: 8192716651016768122}
   - {fileID: 3784183620086242194}
   m_Father: {fileID: 1987908905151463191}
@@ -4366,7 +4384,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8850740506604028883}
   m_Father: {fileID: 2243186743555920368}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4485,12 +4504,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roundTime: 20
   monsterGroup: {fileID: 8191054696328116031}
-  monsterCreatePoint: {fileID: 1878239792046036073}
-  monsterMovePath:
-  - {fileID: 6292119667522425887}
-  - {fileID: 4678329335904484112}
-  - {fileID: 8596884800268654703}
-  - {fileID: 1878239792046036073}
+  monsterPathInfo: {fileID: 0}
   maxCreateCount: 60
   maxSpwanCount: 10
   monsterSpawnTime: 0.5
@@ -4640,7 +4654,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -455, y: 275}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 72, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1014936196123859281
 CanvasRenderer:
@@ -4664,13 +4678,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: e828181400a5c9e4a8a1be3357344d23, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
