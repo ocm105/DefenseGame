@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class MonsterControl : MonoBehaviour
+public class MonsterControl : MonoBehaviour, IDamage
 {
     [SerializeField] Animator animator;
     [SerializeField] RectTransform monsterRect;
@@ -9,8 +10,13 @@ public class MonsterControl : MonoBehaviour
     private RectTransform[] movePath;
     private int movePathIndex = 0;
     private float speed = 200f;
-    private MonsterState monsterState;
     public Action<GameObject> dieAction;
+
+    [SerializeField] Slider hpSlider;
+    private float hp = 100f;
+    private float def;
+    private MonsterState monsterState;
+    public MonsterState MonsterState { get { return monsterState; } }
 
     private void Awake()
     {
@@ -21,6 +27,7 @@ public class MonsterControl : MonoBehaviour
     {
         movePathIndex = 0;
         ChangeMonsterState(MonsterState.Arive);
+        MonserInfo();
     }
     private void Update()
     {
@@ -75,4 +82,25 @@ public class MonsterControl : MonoBehaviour
         }
     }
     #endregion
+
+    public void MonserInfo()
+    {
+        hpSlider.maxValue = hp;
+        hpSlider.value = hp;
+    }
+    public void OnDamage(float damage)
+    {
+        Hit(damage);
+    }
+    private void Hit(float damege)
+    {
+        hpSlider.value -= damege - def;
+
+        Debug.Log($"{damege}를 입음 HP {hpSlider.value}");
+        if (hp <= 0) Die();
+    }
+    private void Die()
+    {
+        ChangeMonsterState(MonsterState.Die);
+    }
 }

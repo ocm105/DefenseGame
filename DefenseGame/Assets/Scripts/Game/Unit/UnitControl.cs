@@ -1,11 +1,21 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public partial class UnitControl : MonoBehaviour
 {
     [SerializeField] Animator animator;
-    [SerializeField] GameObject shotAttackRange;
-    [SerializeField] GameObject longAttackRange;
+    [SerializeField] Image attackRangeImage;
+    [SerializeField] UnitAttackTrigger atkTrigger;
+
+    private float atkRange = 5f;
+    private float atkPower = 10f;
+    private int atkCount = 3;
+    private float atkSpeed = 1f;
+    private float atkCoolTime = 0;
+    private float critical = 10f;
+    private float criPower = 1.5f;
+    private float damage = 0f;
+
     private UnitAniState unitAniState;
 
     private void Awake()
@@ -17,11 +27,43 @@ public partial class UnitControl : MonoBehaviour
     private void Start()
     {
         ChangeUnitAnimation(UnitAniState.Idle);
+        attackRangeImage.rectTransform.localScale = new Vector3(atkRange, atkRange);
+        attackRangeImage.GetComponent<CircleCollider2D>().radius = atkRange * 10f;
+    }
+
+    private void Update()
+    {
+        if (atkTrigger.targets.Count > 0)
+        {
+            atkCoolTime += Time.deltaTime;
+            if (atkCoolTime >= atkSpeed)
+            {
+                if (atkTrigger.targets.Count >= atkCount)
+                {
+                    for (int i = 0; i < atkCount; i++)
+                    {
+                        Attack(atkTrigger.targets[i]);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < atkTrigger.targets.Count; i++)
+                    {
+                        Attack(atkTrigger.targets[i]);
+                    }
+                }
+
+                atkCoolTime = 0;
+            }
+        }
+        else
+            atkCoolTime = 0;
+
     }
 
     public void OnClick(bool isOn = true)
     {
-        shotAttackRange.SetActive(isOn);
+        attackRangeImage.enabled = isOn;
     }
 
     /// <summary> 몬스터 상태 변경 </summary>
@@ -34,7 +76,6 @@ public partial class UnitControl : MonoBehaviour
                 break;
             case UnitAniState.Attack:
                 animator.SetBool("Attack", true);
-                Attack();
                 break;
             case UnitAniState.Skill:
                 animator.SetBool("Skill", true);
@@ -43,7 +84,19 @@ public partial class UnitControl : MonoBehaviour
         unitAniState = state;
     }
 
-    private void Attack()
+    public void Attack(IDamage target)
     {
+        if (target != null)
+        {
+            int ran = Random.Range(0, 101);
+            if (critical >= ran)
+                damage = atkPower * criPower;
+            else
+                damage = atkPower;
+
+            target.OnDamage(damage);
+        }
+        // ChangeUnitAnimation(UnitAniState.Attack);
     }
+
 }

@@ -44,8 +44,7 @@ public partial class UnitControl : MonoBehaviour, IBeginDragHandler, IDragHandle
     {
         isDragging = false;
         unitRect.anchoredPosition = dragObjectRect.anchoredPosition;
-        shotAttackRange.GetComponent<RectTransform>().anchoredPosition = unitRect.anchoredPosition;
-        longAttackRange.GetComponent<RectTransform>().anchoredPosition = unitRect.anchoredPosition;
+        attackRangeImage.rectTransform.anchoredPosition = unitRect.anchoredPosition;
         dragObject.SetActive(isDragging);
     }
 
