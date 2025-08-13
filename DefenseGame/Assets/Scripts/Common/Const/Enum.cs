@@ -34,6 +34,25 @@ public enum GameState
 }
 #endregion
 
+#region Unit
+public enum UnitAniState
+{
+    Idle,
+    Attack,
+    Skill,
+}
+#endregion
+
+#region Monster
+public enum MonsterState
+{
+    Arive = 0,
+    Stop,
+    Die
+}
+#endregion
+
+
 #region Player
 public enum PlayerAniState
 {
@@ -52,13 +71,3 @@ public enum PlayerAttackLevel
     Max
 }
 #endregion
-
-#region Monster
-public enum MonsterState
-{
-    Arive = 0,
-    Stop,
-    Die
-}
-#endregion
-

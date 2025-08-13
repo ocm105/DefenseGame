@@ -16,7 +16,7 @@ public static class Constants
 
     public static class Character
     {
-        public const string Player = "Players";
+        public const string Unit = "Units";
         public const string Monster = "Monsters";
     }
 }

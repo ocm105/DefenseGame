@@ -7,12 +7,14 @@ public partial class InGameManager : MonoBehaviour
 {
     private GameState gameState;
     [SerializeField] float roundTime = 20f;                         // 라운드 시간
+    private float gameTime, spawnTime = 0;
 
     private void Init()
     {
-        gameState = GameState.Start;
-        MonsterPooling();
         gameTime = 19;
+        MonsterPooling();
+        UnitPooling();
+        ChangeGameState(GameState.Start);
     }
     private void Start()
     {
@@ -27,15 +29,15 @@ public partial class InGameManager : MonoBehaviour
                 gameTime += Time.deltaTime;
                 if (gameTime >= roundTime)
                 {
-                    spwanTime += Time.deltaTime;
-                    if (spwanTime >= monsterSpawnTime)
+                    spawnTime += Time.deltaTime;
+                    if (spawnTime >= monsterSpawnTime)
                     {
-                        nowSpwanCount++;
+                        nowMonsterSpawnCount++;
                         MonsterSpawn();
-                        spwanTime = 0;
-                        if (nowSpwanCount >= maxSpwanCount)
+                        spawnTime = 0;
+                        if (nowMonsterSpawnCount >= maxMonsterSpawnCount)
                         {
-                            nowSpwanCount = 0;
+                            nowMonsterSpawnCount = 0;
                             gameTime = 0;
                         }
                     }

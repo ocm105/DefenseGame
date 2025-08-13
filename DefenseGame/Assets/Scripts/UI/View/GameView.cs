@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class GameView : UIView
 {
+    [SerializeField] InGameManager gameManager;
+    [SerializeField] Button unitSpawnBtn;
     [SerializeField] Button homeBtn;
 
     public void Show()
@@ -12,7 +14,7 @@ public class GameView : UIView
     }
     protected override void OnFirstShow()
     {
-        // homeBtn.onClick.AddListener(OnClick_HomeBtn);
+        unitSpawnBtn.onClick.AddListener(OnClick_UnitSpawn);
     }
     protected override void OnShow()
     {
@@ -24,10 +26,11 @@ public class GameView : UIView
     }
 
     #region Event
-    private void OnClick_AttackBtn()
+    private void OnClick_UnitSpawn()
     {
-        // SoundManager.Instance.PlaySFXSound("Button");
+        gameManager.UnitSpawn();
     }
+
     private void OnClick_HomeBtn()
     {
         // SoundManager.Instance.PlaySFXSound("Button");

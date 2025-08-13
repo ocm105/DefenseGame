@@ -15,15 +15,8 @@ public partial class UnitControl : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     private bool isDragging = false;
 
-    void Awake()
-    {
-        unitRect = this.GetComponent<RectTransform>();
-        dragObjectRect = dragObject.GetComponent<RectTransform>();
-    }
-
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("Click");
         isDragging = true;
         dragPos = eventData.position;
         offset = dragObjectRect.anchoredPosition - new Vector2(dragPos.x, dragPos.y);
