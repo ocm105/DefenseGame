@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 2764225286876865077}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Player
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -187,9 +187,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d289e6f5508ec6149843eaf7846c6bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragObject: {fileID: 1318216308660645143}
   shotAttackRange: {fileID: 8990985869404223383}
   longAttackRange: {fileID: 2931077750109917570}
+  dragObject: {fileID: 1318216308660645143}
   gridCellSize: {x: 0.6, y: 0.583}
   dragClampPos: {x: 1.2, y: 0.583}
 --- !u!222 &1357477714596400398
