@@ -9,6 +9,7 @@ public class GameView : UIView
     [SerializeField] Button unitSpawnBtn;
     [SerializeField] Button homeBtn;
     [SerializeField] TextMeshProUGUI goldText;
+    [SerializeField] TextMeshProUGUI waveTimeText;
 
     public void Show()
     {
@@ -31,6 +32,10 @@ public class GameView : UIView
     public void GoldSet(int gold)
     {
         goldText.text = gold.ToString();
+    }
+    public void WaveTimeSet(float time)
+    {
+        waveTimeText.text = Mathf.CeilToInt(time).ToString();
     }
     private void OnClick_UnitSpawn()
     {
