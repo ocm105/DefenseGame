@@ -29,6 +29,7 @@ public class UnitInfo : MonoBehaviour
         unitControl.ChangeUnitAnimation(UnitAniState.Idle);
     }
 
+    /// <summary> Unit 정보 설정 </summary>
     private void UnitInfoSet()
     {
         attackRange.localScale = new Vector3(atkRange, atkRange);

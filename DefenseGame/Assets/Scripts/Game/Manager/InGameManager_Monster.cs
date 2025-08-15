@@ -50,8 +50,8 @@ public partial class InGameManager : MonoBehaviour
             MonsterCreate();
         }
         GameObject obj = monsterPool.Dequeue();
-        MonsterControl mc = obj.GetComponent<MonsterControl>();
+        MonsterInfo mc = obj.GetComponent<MonsterInfo>();
         obj.SetActive(true);
-        mc.MonsterStart();
+        mc.Spawn();
     }
 }

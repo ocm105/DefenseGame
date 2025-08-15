@@ -1,40 +1,28 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MonsterControl : MonoBehaviour, IDamage
 {
+    [SerializeField] MonsterInfo monsterInfo;
     [SerializeField] Animator animator;
     [SerializeField] RectTransform monsterRect;
-    private RectTransform myRect;
     private RectTransform[] movePath;
     private int movePathIndex = 0;
-    private float speed = 200f;
     public Action<GameObject> dieAction;
-
-    [SerializeField] Slider hpSlider;
-    private float hp = 100f;
-    private float def;
     private MonsterState monsterState;
     public MonsterState MonsterState { get { return monsterState; } }
-
-    private void Awake()
-    {
-        myRect = this.GetComponent<RectTransform>();
-    }
 
     public void MonsterStart()
     {
         movePathIndex = 0;
-        ChangeMonsterState(MonsterState.Arive);
-        MonserInfo();
     }
+
     private void Update()
     {
         switch (monsterState)
         {
             case MonsterState.Arive:
-                myRect.anchoredPosition = Vector2.MoveTowards(myRect.anchoredPosition, movePath[movePathIndex].anchoredPosition, speed * Time.deltaTime);
+                monsterRect.anchoredPosition = Vector2.MoveTowards(monsterRect.anchoredPosition, movePath[movePathIndex].anchoredPosition, monsterInfo.speed * Time.deltaTime);
                 DistanceCheck();
                 break;
             case MonsterState.Stop:
@@ -68,7 +56,7 @@ public class MonsterControl : MonoBehaviour, IDamage
     /// <summary> 도착 - 현재 거리 체크 </summary>
     private void DistanceCheck()
     {
-        if (Vector2.Distance(myRect.anchoredPosition, movePath[movePathIndex].anchoredPosition) <= 0.05f)
+        if (Vector2.Distance(monsterRect.anchoredPosition, movePath[movePathIndex].anchoredPosition) <= 0.05f)
         {
             movePathIndex++;
             if (movePathIndex >= movePath.Length)
@@ -82,12 +70,7 @@ public class MonsterControl : MonoBehaviour, IDamage
     }
     #endregion
 
-    /// <summary> Moster 정보 설정 </summary>
-    public void MonserInfo()
-    {
-        hpSlider.maxValue = hp;
-        hpSlider.value = hp;
-    }
+
     /// <summary> interface 데미지 입는 함수 </summary>
     public void OnDamage(float damage)
     {
@@ -96,11 +79,10 @@ public class MonsterControl : MonoBehaviour, IDamage
     /// <summary> 실질적 데미지 입는 함수 </summary>
     private void Hit(float damege)
     {
-        hp -= damege - def;
-        hpSlider.value = hp;
+        monsterInfo.HPvalue -= damege - monsterInfo.def;
 
-        Debug.Log($"{damege}를 입음 HP {hp}");
-        if (hp <= 0) Die();
+        Debug.Log($"{damege}를 입음 HP {monsterInfo.HPvalue}");
+        if (monsterInfo.HPvalue <= 0) Die();
     }
     private void Die()
     {

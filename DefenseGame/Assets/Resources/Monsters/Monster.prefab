@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 4103219736524693083}
   - component: {fileID: 367307766298992804}
   - component: {fileID: 1278866057079466573}
+  - component: {fileID: 5565900065625581434}
   - component: {fileID: 5307552693244278967}
   - component: {fileID: 8457618822142249677}
   - component: {fileID: 4995597227679736688}
@@ -266,6 +267,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5565900065625581434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8644546409991993014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc5bce314ae9cc44eae6babfd5dd4882, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpSlider: {fileID: 6225098409199975801}
+  hp: 100
+  def: 0
+  gold: 10
+  speed: 200
 --- !u!114 &5307552693244278967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,9 +296,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f318143c1ef748c4fbe0ef9586104ac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterInfo: {fileID: 5565900065625581434}
   animator: {fileID: 8457618822142249677}
   monsterRect: {fileID: 4103219736524693083}
-  hpSlider: {fileID: 6225098409199975801}
 --- !u!95 &8457618822142249677
 Animator:
   serializedVersion: 7
