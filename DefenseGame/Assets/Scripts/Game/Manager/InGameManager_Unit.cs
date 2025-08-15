@@ -11,7 +11,7 @@ public partial class InGameManager : MonoBehaviour
     private int nowUnitSpawnCount = 0;             // 현재 스폰 갯수
     private Queue<GameObject> unitPool = new Queue<GameObject>();
 
-    private UnitControl clickUnit;                  // 유닛 클릭 Event 용 변수
+    private UnitInfo clickUnit;                  // 유닛 클릭 Event 용 변수
     private PointerEventData pointerEventData;
     private List<RaycastResult> pointerResults = new List<RaycastResult>();
 
@@ -28,6 +28,7 @@ public partial class InGameManager : MonoBehaviour
     private GameObject UnitCreate()
     {
         GameObject obj = Instantiate(Resources.Load<GameObject>(unitSource), unitGroup.transform);
+        obj.GetComponent<UnitInfo>().inGameManager = this;
         UnitInit(obj);
         return obj;
     }
@@ -67,6 +68,11 @@ public partial class InGameManager : MonoBehaviour
         unitGridInfo.ChangeGridValue(unitGridInfo.GirdPos[ran].anchoredPosition);
         return unitGridInfo.GirdPos[ran].anchoredPosition;
     }
+    /// <summary> 유닛 Upgrade </summary>
+    public void UnitUpgrade(UnitInfo info)
+    {
+        gameView.UnitStatusOpen(info.UnitImage.sprite, info.atkPower, info.atkSpeed);
+    }
 
     /// <summary> Unit 클릭 </summary>
     private void UnitClickEvent()
@@ -99,16 +105,16 @@ public partial class InGameManager : MonoBehaviour
                             if (clickUnit.gameObject != pointerResults[i].gameObject)
                             {
                                 clickUnit.OnClick(false);
-                                clickUnit = pointerResults[i].gameObject.GetComponent<UnitControl>();
+                                clickUnit = pointerResults[i].gameObject.GetComponent<UnitControl>().UnitInfo;
                             }
                         }
                         // 이전에 클릭한 unit이 없을 때
                         else
                         {
-                            clickUnit = pointerResults[i].gameObject.GetComponent<UnitControl>();
+                            clickUnit = pointerResults[i].gameObject.GetComponent<UnitControl>().UnitInfo;
                         }
                         clickUnit.OnClick(true);
-                        gameView.UnitStatusOpen(clickUnit.UnitInfo.UnitImage.sprite, clickUnit.UnitInfo.atkPower, clickUnit.UnitInfo.atkSpeed);
+                        UnitUpgrade(clickUnit);
                         break;
                     }
                 }

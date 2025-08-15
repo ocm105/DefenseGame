@@ -6,7 +6,6 @@ public class UnitControl : MonoBehaviour
     [SerializeField] UnitInfo unitInfo;
     public UnitInfo UnitInfo { get { return unitInfo; } }
     [SerializeField] Animator animator;
-    [SerializeField] Image attackRangeImage;
     [SerializeField] UnitAttackTrigger atkTrigger;
     public float damage = 0f;
 
@@ -41,11 +40,6 @@ public class UnitControl : MonoBehaviour
         }
         else
             unitInfo.atkCoolTime = 0;
-    }
-    /// <summary> Unit 클릭 </summary>
-    public void OnClick(bool isOn = true)
-    {
-        attackRangeImage.enabled = isOn;
     }
 
     /// <summary> 몬스터 상태 변경 </summary>
