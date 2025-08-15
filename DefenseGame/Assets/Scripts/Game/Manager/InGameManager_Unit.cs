@@ -108,6 +108,7 @@ public partial class InGameManager : MonoBehaviour
                             clickUnit = pointerResults[i].gameObject.GetComponent<UnitControl>();
                         }
                         clickUnit.OnClick(true);
+                        gameView.UnitStatusOpen(clickUnit.UnitInfo.UnitImage.sprite, clickUnit.UnitInfo.atkPower, clickUnit.UnitInfo.atkSpeed);
                         break;
                     }
                 }
@@ -118,6 +119,7 @@ public partial class InGameManager : MonoBehaviour
                 if (clickUnit != null)
                 {
                     clickUnit.OnClick(false);
+                    gameView.UnitStatusClose();
                     clickUnit = null;
                 }
             }

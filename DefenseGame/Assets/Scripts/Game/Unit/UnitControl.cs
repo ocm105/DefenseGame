@@ -4,9 +4,11 @@ using UnityEngine.UI;
 public class UnitControl : MonoBehaviour
 {
     [SerializeField] UnitInfo unitInfo;
+    public UnitInfo UnitInfo { get { return unitInfo; } }
     [SerializeField] Animator animator;
     [SerializeField] Image attackRangeImage;
     [SerializeField] UnitAttackTrigger atkTrigger;
+    public float damage = 0f;
 
     private UnitAniState unitAniState;
 
@@ -70,11 +72,11 @@ public class UnitControl : MonoBehaviour
         {
             int ran = Random.Range(0, 101);
             if (unitInfo.critical >= ran)
-                unitInfo.damage = unitInfo.atkPower * unitInfo.criPower;
+                damage = unitInfo.atkPower * unitInfo.criPower;
             else
-                unitInfo.damage = unitInfo.atkPower;
+                damage = unitInfo.atkPower;
 
-            target.OnDamage(unitInfo.damage);
+            target.OnDamage(damage);
         }
         // ChangeUnitAnimation(UnitAniState.Attack);
     }

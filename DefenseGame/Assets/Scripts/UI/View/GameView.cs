@@ -10,6 +10,10 @@ public class GameView : UIView
     [SerializeField] Button homeBtn;
     [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] TextMeshProUGUI waveTimeText;
+    [SerializeField] GameObject unitStatWindow;
+    [SerializeField] Image unitImage;
+    [SerializeField] TextMeshProUGUI unitPowerText;
+    [SerializeField] TextMeshProUGUI unitAtkSpeedText;
 
     public void Show()
     {
@@ -36,6 +40,17 @@ public class GameView : UIView
     public void WaveTimeSet(float time)
     {
         waveTimeText.text = Mathf.CeilToInt(time).ToString();
+    }
+    public void UnitStatusOpen(Sprite unit, float power, float atkSpeed)
+    {
+        unitImage.sprite = unit;
+        unitPowerText.text = power.ToString();
+        unitAtkSpeedText.text = atkSpeed.ToString();
+        unitStatWindow.SetActive(true);
+    }
+    public void UnitStatusClose()
+    {
+        unitStatWindow.SetActive(false);
     }
     private void OnClick_UnitSpawn()
     {
