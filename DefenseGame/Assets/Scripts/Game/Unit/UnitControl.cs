@@ -19,6 +19,7 @@ public class UnitControl : MonoBehaviour
             {
                 if (atkTrigger.targets.Count >= unitInfo.atkCount)
                 {
+                    // 공격하려는 갯수가 더 많을 때
                     for (int i = 0; i < unitInfo.atkCount; i++)
                     {
                         Attack(atkTrigger.targets[i]);
@@ -26,6 +27,7 @@ public class UnitControl : MonoBehaviour
                 }
                 else
                 {
+                    // 공격하려는 갯수가 더 적을 때
                     for (int i = 0; i < atkTrigger.targets.Count; i++)
                     {
                         Attack(atkTrigger.targets[i]);
