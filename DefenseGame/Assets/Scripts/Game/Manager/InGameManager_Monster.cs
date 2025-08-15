@@ -29,7 +29,7 @@ public partial class InGameManager : MonoBehaviour
         GameObject obj = Instantiate(Resources.Load<GameObject>(monsterSource), monsterGroup.transform);
         MonsterControl mc = obj.GetComponent<MonsterControl>();
         mc.MovePath(monsterPathInfo.MonsterMovePath);
-        mc.dieAction = (ob) => MonsterInit(ob);
+        mc.dieAction = (info) => MonsterDie(info);
         MonsterInit(obj);
         return obj;
     }
@@ -53,5 +53,11 @@ public partial class InGameManager : MonoBehaviour
         MonsterInfo mc = obj.GetComponent<MonsterInfo>();
         obj.SetActive(true);
         mc.Spawn();
+    }
+    /// <summary> 몬스터 죽었을 때 함수 </summary>
+    private void MonsterDie(MonsterInfo info)
+    {
+        MonsterInit(info.gameObject);
+        GoldSet(info.gold);
     }
 }

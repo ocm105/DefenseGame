@@ -8,7 +8,7 @@ public class MonsterControl : MonoBehaviour, IDamage
     [SerializeField] RectTransform monsterRect;
     private RectTransform[] movePath;
     private int movePathIndex = 0;
-    public Action<GameObject> dieAction;
+    public Action<MonsterInfo> dieAction;
     private MonsterState monsterState;
     public MonsterState MonsterState { get { return monsterState; } }
 
@@ -81,7 +81,7 @@ public class MonsterControl : MonoBehaviour, IDamage
     {
         monsterInfo.HPvalue -= damege - monsterInfo.def;
 
-        Debug.Log($"{damege}를 입음 HP {monsterInfo.HPvalue}");
+        // Debug.Log($"{damege}를 입음 HP {monsterInfo.HPvalue}");
         if (monsterInfo.HPvalue <= 0) Die();
     }
     private void Die()
@@ -90,6 +90,6 @@ public class MonsterControl : MonoBehaviour, IDamage
     }
     public void AniEvent_Die()
     {
-        dieAction.Invoke(this.gameObject);
+        dieAction.Invoke(monsterInfo);
     }
 }

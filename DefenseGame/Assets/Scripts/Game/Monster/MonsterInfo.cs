@@ -8,8 +8,8 @@ public class MonsterInfo : MonoBehaviour
     public float HPvalue { get { return hpSlider.value; } set { hpSlider.value = value; } }
     public float hp = 100f;
     public float def = 0f;
-    public int gold = 10;
     public float speed = 200f;
+    public int gold = 10;
 
     private void Awake()
     {

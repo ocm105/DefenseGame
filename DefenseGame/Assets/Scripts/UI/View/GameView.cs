@@ -1,3 +1,4 @@
+using TMPro;
 using UISystem;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ public class GameView : UIView
     [SerializeField] InGameManager gameManager;
     [SerializeField] Button unitSpawnBtn;
     [SerializeField] Button homeBtn;
+    [SerializeField] TextMeshProUGUI goldText;
 
     public void Show()
     {
@@ -26,6 +28,10 @@ public class GameView : UIView
     }
 
     #region Event
+    public void GoldSet(int gold)
+    {
+        goldText.text = gold.ToString();
+    }
     private void OnClick_UnitSpawn()
     {
         gameManager.UnitSpawn();

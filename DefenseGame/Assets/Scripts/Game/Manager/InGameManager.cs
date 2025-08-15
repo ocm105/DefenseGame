@@ -5,13 +5,17 @@ using UnityEngine.EventSystems;
 
 public partial class InGameManager : MonoBehaviour
 {
-    private GameState gameState;
+    [SerializeField] GameView gameView;
     [SerializeField] float roundTime = 20f;                         // 라운드 시간
     private float gameTime, spawnTime = 0;
+    private int gold = 0;
+
+    private GameState gameState;
 
     private void Init()
     {
         gameTime = 19;
+        GoldSet(100);
         MonsterPooling();
         UnitPooling();
         ChangeGameState(GameState.Start);
@@ -65,6 +69,11 @@ public partial class InGameManager : MonoBehaviour
                 break;
         }
         gameState = state;
+    }
+    private void GoldSet(int _gold)
+    {
+        gold += _gold;
+        gameView.GoldSet(gold);
     }
     #endregion
 
