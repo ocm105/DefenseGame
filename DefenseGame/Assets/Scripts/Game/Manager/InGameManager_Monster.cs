@@ -20,7 +20,7 @@ public partial class InGameManager : MonoBehaviour
     {
         for (int i = 0; i < maxMonsterCreateCount; i++)
         {
-            monsterPool.Enqueue(MonsterCreate());
+            MonsterCreate();
         }
     }
     /// <summary> 몬스터 생성 </summary>
@@ -40,13 +40,14 @@ public partial class InGameManager : MonoBehaviour
         RectTransform rect = obj.GetComponent<RectTransform>();
         rect.anchoredPosition = monsterPathInfo.MonsterCreatePoint.anchoredPosition;
         rect.rotation = Quaternion.identity;
+        monsterPool.Enqueue(obj);
     }
     /// <summary> 몬스터 스폰 </summary>
     private void MonsterSpawn()
     {
         if (monsterPool.Count <= 0)
         {
-            monsterPool.Enqueue(MonsterCreate());
+            MonsterCreate();
         }
         GameObject obj = monsterPool.Dequeue();
         MonsterControl mc = obj.GetComponent<MonsterControl>();

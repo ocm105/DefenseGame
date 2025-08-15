@@ -60,7 +60,6 @@ public class MonsterControl : MonoBehaviour, IDamage
             case MonsterState.Stop:
                 break;
             case MonsterState.Die:
-                dieAction.Invoke(this.gameObject);
                 animator.CrossFade("Death", 0);
                 break;
         }
@@ -97,13 +96,18 @@ public class MonsterControl : MonoBehaviour, IDamage
     /// <summary> 실질적 데미지 입는 함수 </summary>
     private void Hit(float damege)
     {
-        hpSlider.value -= damege - def;
+        hp -= damege - def;
+        hpSlider.value = hp;
 
-        Debug.Log($"{damege}를 입음 HP {hpSlider.value}");
+        Debug.Log($"{damege}를 입음 HP {hp}");
         if (hp <= 0) Die();
     }
     private void Die()
     {
         ChangeMonsterState(MonsterState.Die);
+    }
+    public void AniEvent_Die()
+    {
+        dieAction.Invoke(this.gameObject);
     }
 }

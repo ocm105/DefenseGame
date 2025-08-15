@@ -16,12 +16,13 @@ public partial class InGameManager : MonoBehaviour
     private List<RaycastResult> pointerResults = new List<RaycastResult>();
 
 
+
     /// <summary> 유닛 풀링 </summary>
     private void UnitPooling()
     {
         for (int i = 0; i < maxUnitCreateCount; i++)
         {
-            unitPool.Enqueue(UnitCreate());
+            UnitCreate();
         }
     }
     /// <summary> 유닛 생성 </summary>
@@ -35,6 +36,7 @@ public partial class InGameManager : MonoBehaviour
     private void UnitInit(GameObject obj)
     {
         obj.SetActive(false);
+        unitPool.Enqueue(obj);
     }
     public void UnitSpawn()
     {
@@ -42,7 +44,7 @@ public partial class InGameManager : MonoBehaviour
         {
             if (unitPool.Count <= 0)
             {
-                unitPool.Enqueue(UnitCreate());
+                UnitCreate();
             }
             GameObject obj = unitPool.Dequeue();
             obj.GetComponent<UnitInfo>().Spawn(UnitRandomSpawn());
