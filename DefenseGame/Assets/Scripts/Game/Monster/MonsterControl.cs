@@ -83,15 +83,18 @@ public class MonsterControl : MonoBehaviour, IDamage
     }
     #endregion
 
+    /// <summary> Moster 정보 설정 </summary>
     public void MonserInfo()
     {
         hpSlider.maxValue = hp;
         hpSlider.value = hp;
     }
+    /// <summary> interface 데미지 입는 함수 </summary>
     public void OnDamage(float damage)
     {
         Hit(damage);
     }
+    /// <summary> 실질적 데미지 입는 함수 </summary>
     private void Hit(float damege)
     {
         hpSlider.value -= damege - def;

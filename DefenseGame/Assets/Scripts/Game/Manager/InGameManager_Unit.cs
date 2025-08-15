@@ -45,7 +45,7 @@ public partial class InGameManager : MonoBehaviour
                 unitPool.Enqueue(UnitCreate());
             }
             GameObject obj = unitPool.Dequeue();
-            obj.GetComponent<RectTransform>().anchoredPosition = UnitRandomSpawn();
+            obj.GetComponent<UnitInfo>().Spawn(UnitRandomSpawn());
             obj.SetActive(true);
             nowUnitSpawnCount++;
         }

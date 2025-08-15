@@ -1,46 +1,25 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class UnitControl : MonoBehaviour
+public class UnitControl : MonoBehaviour
 {
+    [SerializeField] UnitInfo unitInfo;
     [SerializeField] Animator animator;
     [SerializeField] Image attackRangeImage;
     [SerializeField] UnitAttackTrigger atkTrigger;
 
-    private float atkRange = 5f;
-    private float atkPower = 10f;
-    private int atkCount = 3;
-    private float atkSpeed = 1f;
-    private float atkCoolTime = 0;
-    private float critical = 10f;
-    private float criPower = 1.5f;
-    private float damage = 0f;
-
     private UnitAniState unitAniState;
-
-    private void Awake()
-    {
-        unitRect = this.GetComponent<RectTransform>();
-        dragObjectRect = dragObject.GetComponent<RectTransform>();
-    }
-
-    private void Start()
-    {
-        ChangeUnitAnimation(UnitAniState.Idle);
-        attackRangeImage.rectTransform.localScale = new Vector3(atkRange, atkRange);
-        attackRangeImage.GetComponent<CircleCollider2D>().radius = atkRange * 10f;
-    }
 
     private void Update()
     {
         if (atkTrigger.targets.Count > 0)
         {
-            atkCoolTime += Time.deltaTime;
-            if (atkCoolTime >= atkSpeed)
+            unitInfo.atkCoolTime += Time.deltaTime;
+            if (unitInfo.atkCoolTime >= unitInfo.atkSpeed)
             {
-                if (atkTrigger.targets.Count >= atkCount)
+                if (atkTrigger.targets.Count >= unitInfo.atkCount)
                 {
-                    for (int i = 0; i < atkCount; i++)
+                    for (int i = 0; i < unitInfo.atkCount; i++)
                     {
                         Attack(atkTrigger.targets[i]);
                     }
@@ -53,14 +32,13 @@ public partial class UnitControl : MonoBehaviour
                     }
                 }
 
-                atkCoolTime = 0;
+                unitInfo.atkCoolTime = 0;
             }
         }
         else
-            atkCoolTime = 0;
-
+            unitInfo.atkCoolTime = 0;
     }
-
+    /// <summary> Unit 클릭 </summary>
     public void OnClick(bool isOn = true)
     {
         attackRangeImage.enabled = isOn;
@@ -83,18 +61,18 @@ public partial class UnitControl : MonoBehaviour
         }
         unitAniState = state;
     }
-
+    /// <summary> 공격 </summary>
     public void Attack(IDamage target)
     {
         if (target != null)
         {
             int ran = Random.Range(0, 101);
-            if (critical >= ran)
-                damage = atkPower * criPower;
+            if (unitInfo.critical >= ran)
+                unitInfo.damage = unitInfo.atkPower * unitInfo.criPower;
             else
-                damage = atkPower;
+                unitInfo.damage = unitInfo.atkPower;
 
-            target.OnDamage(damage);
+            target.OnDamage(unitInfo.damage);
         }
         // ChangeUnitAnimation(UnitAniState.Attack);
     }
