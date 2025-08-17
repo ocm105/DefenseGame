@@ -282,8 +282,8 @@ MonoBehaviour:
   hpSlider: {fileID: 6225098409199975801}
   hp: 100
   def: 0
-  gold: 10
   speed: 200
+  gold: 10
 --- !u!114 &5307552693244278967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,7 +298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterInfo: {fileID: 5565900065625581434}
   animator: {fileID: 8457618822142249677}
-  monsterRect: {fileID: 4103219736524693083}
+  monsterPos: {fileID: 4103219736524693083}
 --- !u!95 &8457618822142249677
 Animator:
   serializedVersion: 7

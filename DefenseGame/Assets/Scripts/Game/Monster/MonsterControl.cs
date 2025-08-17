@@ -5,8 +5,8 @@ public class MonsterControl : MonoBehaviour, IDamage
 {
     [SerializeField] MonsterInfo monsterInfo;
     [SerializeField] Animator animator;
-    [SerializeField] RectTransform monsterRect;
-    private RectTransform[] movePath;
+    [SerializeField] Transform monsterPos;
+    private Transform[] movePath;
     private int movePathIndex = 0;
     public Action<MonsterInfo> dieAction;
     private MonsterState monsterState;
@@ -22,7 +22,7 @@ public class MonsterControl : MonoBehaviour, IDamage
         switch (monsterState)
         {
             case MonsterState.Arive:
-                monsterRect.anchoredPosition = Vector2.MoveTowards(monsterRect.anchoredPosition, movePath[movePathIndex].anchoredPosition, monsterInfo.speed * Time.deltaTime);
+                monsterPos.position = Vector2.MoveTowards(monsterPos.position, movePath[movePathIndex].position, monsterInfo.speed * Time.deltaTime);
                 DistanceCheck();
                 break;
             case MonsterState.Stop:
@@ -33,7 +33,7 @@ public class MonsterControl : MonoBehaviour, IDamage
 
     #region Fuction
     /// <summary> 몬스터 이동경로 할당 </summary>
-    public void MovePath(RectTransform[] path)
+    public void MovePath(Transform[] path)
     {
         movePath = path;
     }
@@ -56,16 +56,16 @@ public class MonsterControl : MonoBehaviour, IDamage
     /// <summary> 도착 - 현재 거리 체크 </summary>
     private void DistanceCheck()
     {
-        if (Vector2.Distance(monsterRect.anchoredPosition, movePath[movePathIndex].anchoredPosition) <= 0.05f)
+        if (Vector2.Distance(monsterPos.position, movePath[movePathIndex].position) <= 0.05f)
         {
             movePathIndex++;
             if (movePathIndex >= movePath.Length)
                 movePathIndex = 0;
 
             if (movePathIndex >= movePath.Length * 0.5f)
-                monsterRect.localScale = new Vector2(-monsterRect.localScale.x, monsterRect.localScale.y);
+                monsterPos.localScale = new Vector2(-monsterPos.localScale.x, monsterPos.localScale.y);
             else
-                monsterRect.localScale = new Vector2(monsterRect.localScale.x, monsterRect.localScale.y);
+                monsterPos.localScale = new Vector2(monsterPos.localScale.x, monsterPos.localScale.y);
         }
     }
     #endregion

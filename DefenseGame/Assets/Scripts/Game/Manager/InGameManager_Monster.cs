@@ -37,9 +37,8 @@ public partial class InGameManager : MonoBehaviour
     private void MonsterInit(GameObject obj)
     {
         obj.SetActive(false);
-        RectTransform rect = obj.GetComponent<RectTransform>();
-        rect.anchoredPosition = monsterPathInfo.MonsterCreatePoint.anchoredPosition;
-        rect.rotation = Quaternion.identity;
+        obj.transform.position = monsterPathInfo.MonsterCreatePoint.position;
+        obj.transform.rotation = Quaternion.identity;
         monsterPool.Enqueue(obj);
     }
     /// <summary> 몬스터 스폰 </summary>
