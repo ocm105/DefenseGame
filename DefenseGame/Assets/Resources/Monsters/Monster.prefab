@@ -282,7 +282,7 @@ MonoBehaviour:
   hpSlider: {fileID: 6225098409199975801}
   hp: 100
   def: 0
-  speed: 200
+  speed: 0.5
   gold: 10
 --- !u!114 &5307552693244278967
 MonoBehaviour:
