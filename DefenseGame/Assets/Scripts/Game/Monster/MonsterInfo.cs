@@ -6,10 +6,8 @@ public class MonsterInfo : MonoBehaviour
     private MonsterControl monsterControl;
     [SerializeField] Slider hpSlider;
     public float HPvalue { get { return hpSlider.value; } set { hpSlider.value = value; } }
-    public float hp = 100f;
-    public float def = 0f;
-    public float speed = 200f;
-    public int gold = 10;
+    public MonsterData monsterData { get; set; }
+    public float speed = 1f;
 
     private void Awake()
     {
@@ -25,7 +23,7 @@ public class MonsterInfo : MonoBehaviour
     /// <summary> Moster 정보 설정 </summary>
     public void MonserInfoSet()
     {
-        hpSlider.maxValue = hp;
-        hpSlider.value = hp;
+        hpSlider.maxValue = monsterData.HP;
+        hpSlider.value = monsterData.HP;
     }
 }

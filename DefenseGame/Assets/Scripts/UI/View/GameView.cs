@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UISystem;
 using UnityEngine;
@@ -30,8 +31,15 @@ public class GameView : UIView
 
     private void Init()
     {
+        StartCoroutine(DataLoad());
     }
 
+    private IEnumerator DataLoad()
+    {
+        yield return StartCoroutine(GameDataManager.Instance.LoadData());
+        gameManager.ChangeGameState(GameState.Start);
+
+    }
     #region Event
     public void GoldSet(int gold)
     {

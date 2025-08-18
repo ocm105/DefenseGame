@@ -8,6 +8,8 @@ public class MonsterControl : MonoBehaviour, IDamage
     [SerializeField] Transform monsterPos;
     private Transform[] movePath;
     private int movePathIndex = 0;
+
+    private MonsterData monsterData;
     public Action<MonsterInfo> dieAction;
     private MonsterState monsterState;
     public MonsterState MonsterState { get { return monsterState; } }
@@ -79,7 +81,7 @@ public class MonsterControl : MonoBehaviour, IDamage
     /// <summary> 실질적 데미지 입는 함수 </summary>
     private void Hit(float damege)
     {
-        monsterInfo.HPvalue -= damege - monsterInfo.def;
+        monsterInfo.HPvalue -= damege - monsterInfo.monsterData.DEF;
 
         // Debug.Log($"{damege}를 입음 HP {monsterInfo.HPvalue}");
         if (monsterInfo.HPvalue <= 0) Die();

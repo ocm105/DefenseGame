@@ -497,10 +497,9 @@ public class CSVReader
         {
             actionList = SetUshort;
         }
-        else if (fieldType == typeof(List<int>))
+        else if (fieldType == typeof(List<string>))
         {
-            Debug.Log("Array");
-            actionList = SetIntList;
+            actionList = SetStringList;
         }
         else
         {
@@ -699,7 +698,7 @@ public class CSVReader
         int endIndex = node[key].Value.IndexOf(']') - startIndex;
         node[key].Value = node[key].Value.Substring(startIndex, endIndex + 1);
     }
-    private static void SetIntList(Type fieldType, string key, string value, JSONNode node)
+    private static void SetStringList(Type fieldType, string key, string value, JSONNode node)
     {
         string[] elements = value.TrimStart('{').TrimEnd('}').Split('&');
         if (elements.Length > 0)

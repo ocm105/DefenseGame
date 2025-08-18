@@ -7,23 +7,19 @@ using System.Collections.Generic;
 
 
 [Serializable]
-public class MonsterData
+public class WaveData
 {
     public int Index;
-    public int Level;
-    public int HP;
-    public int DEF;
-    public int GOLD;
-    public int DIAMOND;
+    public int Summon;
 }
 
 public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
 {
-    public const string MONSTER_DATA_PATH = "https://docs.google.com/spreadsheets/d/1foTDDD2nLIwpVGan5K3I70mewA4ugg6d1XAI_OKxzT4/export?format=csv";
+    public const string WAVE_DATA_PATH = "https://docs.google.com/spreadsheets/d/1Rhn07hnpBnHJQXAY2YIJRovY52ooUBfpJFE6WTL7Jd0/export?format=csv";
 
-    public IEnumerator GetMonsterDataRequest(Action<Dictionary<int, MonsterData>> callback = null)
+    public IEnumerator GetWaveDataRequest(Action<Dictionary<int, WaveData>> callback = null)
     {
-        yield return StartCoroutine(Request_Get(MONSTER_DATA_PATH, (dataState, resData) =>
+        yield return StartCoroutine(Request_Get(WAVE_DATA_PATH, (dataState, resData) =>
         {
             switch (dataState)
             {
@@ -34,7 +30,7 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
                     // popup.OnOK = p => Application.Quit();
                     break;
                 case GAMEDATA_STATE.REQUESTSUCCESS:
-                    callback?.Invoke(CSVReader.ReadFromResource<MonsterData>(resData));
+                    callback?.Invoke(CSVReader.ReadFromResource<WaveData>(resData));
                     break;
             }
         }));

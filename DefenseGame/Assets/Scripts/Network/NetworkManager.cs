@@ -81,7 +81,7 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
     {
         if (NetworkCheck())
         {
-            Les_UIManager.Instance.CurrentView.Loading = true;
+            // Les_UIManager.Instance.CurrentView.Loading = true;
 
             // Debug.Log($"<color=green>[Req_Get]</color>=> url: {url}");
 
@@ -111,7 +111,7 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
                 request.Dispose();
             }
 
-            Les_UIManager.Instance.CurrentView.Loading = false;
+            // Les_UIManager.Instance.CurrentView.Loading = false;
         }
     }
 
