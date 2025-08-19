@@ -21,14 +21,22 @@ public class MonsterControl : MonoBehaviour, IDamage
 
     private void Update()
     {
-        switch (monsterState)
+        switch (monsterInfo.inGameManager.GameState)
         {
-            case MonsterState.Arive:
-                monsterPos.position = Vector2.MoveTowards(monsterPos.position, movePath[movePathIndex].position, monsterInfo.speed * Time.deltaTime);
-                DistanceCheck();
+            case GameState.Start:
+                switch (monsterState)
+                {
+                    case MonsterState.Arive:
+                        monsterPos.position = Vector2.MoveTowards(monsterPos.position, movePath[movePathIndex].position, monsterInfo.speed * Time.deltaTime);
+                        DistanceCheck();
+                        break;
+                    case MonsterState.Stop:
+                    case MonsterState.Die:
+                        break;
+                }
                 break;
-            case MonsterState.Stop:
-            case MonsterState.Die:
+            case GameState.Pause:
+            case GameState.End:
                 break;
         }
     }

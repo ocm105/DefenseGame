@@ -23,6 +23,7 @@ public class GameView : UIView
     protected override void OnFirstShow()
     {
         unitSpawnBtn.onClick.AddListener(OnClick_UnitSpawn);
+        homeBtn.onClick.AddListener(OnClick_Home);
     }
     protected override void OnShow()
     {
@@ -65,10 +66,14 @@ public class GameView : UIView
         gameManager.UnitSpawn();
     }
 
-    private void OnClick_HomeBtn()
+    private void OnClick_Home()
     {
         // SoundManager.Instance.PlaySFXSound("Button");
-        LoadingManager.Instance.SceneLoad(Constants.Scene.Title);
+        PopupState state = Les_UIManager.Instance.Popup<BasePopup_TwoBtn>().Open("게임을 나가시겠습니까?");
+        gameManager.ChangeGameState(GameState.Pause);
+        state.OnYes = p => gameManager.ChangeGameState(GameState.Start);
+        state.OnNo = p => gameManager.ChangeGameState(GameState.Start);
+        // LoadingManager.Instance.SceneLoad(Constants.Scene.Title);
     }
     #endregion
 }

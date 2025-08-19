@@ -13,33 +13,41 @@ public class UnitControl : MonoBehaviour
 
     private void Update()
     {
-        if (atkTrigger.targets.Count > 0)
+        switch (unitInfo.inGameManager.GameState)
         {
-            unitInfo.atkCoolTime += Time.deltaTime;
-            if (unitInfo.atkCoolTime >= unitInfo.atkSpeed)
-            {
-                if (atkTrigger.targets.Count >= unitInfo.atkCount)
+            case GameState.Start:
+                if (atkTrigger.targets.Count > 0)
                 {
-                    // 공격하려는 갯수가 더 많을 때
-                    for (int i = 0; i < unitInfo.atkCount; i++)
+                    unitInfo.atkCoolTime += Time.deltaTime;
+                    if (unitInfo.atkCoolTime >= unitInfo.atkSpeed)
                     {
-                        Attack(atkTrigger.targets[i]);
+                        if (atkTrigger.targets.Count >= unitInfo.atkCount)
+                        {
+                            // 공격하려는 갯수가 더 많을 때
+                            for (int i = 0; i < unitInfo.atkCount; i++)
+                            {
+                                Attack(atkTrigger.targets[i]);
+                            }
+                        }
+                        else
+                        {
+                            // 공격하려는 갯수가 더 적을 때
+                            for (int i = 0; i < atkTrigger.targets.Count; i++)
+                            {
+                                Attack(atkTrigger.targets[i]);
+                            }
+                        }
+
+                        unitInfo.atkCoolTime = 0;
                     }
                 }
                 else
-                {
-                    // 공격하려는 갯수가 더 적을 때
-                    for (int i = 0; i < atkTrigger.targets.Count; i++)
-                    {
-                        Attack(atkTrigger.targets[i]);
-                    }
-                }
-
-                unitInfo.atkCoolTime = 0;
-            }
+                    unitInfo.atkCoolTime = 0;
+                break;
+            case GameState.Pause:
+            case GameState.End:
+                break;
         }
-        else
-            unitInfo.atkCoolTime = 0;
     }
 
     /// <summary> 몬스터 상태 변경 </summary>

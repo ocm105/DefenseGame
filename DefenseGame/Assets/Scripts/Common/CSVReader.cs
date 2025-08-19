@@ -501,6 +501,10 @@ public class CSVReader
         {
             actionList = SetStringList;
         }
+        // else if (fieldType == typeof(List<List<string>>))
+        // {
+        //     actionList = SetUnitStatList;
+        // }
         else
         {
             actionList = null;
@@ -700,23 +704,52 @@ public class CSVReader
     }
     private static void SetStringList(Type fieldType, string key, string value, JSONNode node)
     {
-        string[] elements = value.TrimStart('{').TrimEnd('}').Split('&');
+        string element = value.TrimStart('{').TrimEnd('}');
+        string[] elements;
+        if (element.Contains('|'))
+            elements = element.Split('|');
+        else
+            elements = element.Split('&');
+
         if (elements.Length > 0)
         {
-            int n;
-            int[] arr = new int[elements.Length];
-            for (int k = 0; k < elements.Length; ++k)
-            {
-                if (int.TryParse(elements[k], out n))
-                    arr[k] = n;
-            }
-            node[key].AsJson = new IntArray(arr);
+            node[key].AsJson = new StringArray(elements);
 
             int startIndex = node[key].Value.IndexOf('[');
             int endIndex = node[key].Value.IndexOf(']') - startIndex;
             node[key].Value = node[key].Value.Substring(startIndex, endIndex + 1);
         }
     }
+    // private static void SetUnitStatList(Type fieldType, string key, string value, JSONNode node)
+    // {
+    //     string[] elements = value.TrimStart('{').TrimEnd('}').Split('&');
+
+    //     if (elements.Length > 0)
+    //     {
+    //         JSONArray outerArray = new JSONArray();
+    //         // string[][] temp = new string[elements.Length][];
+    //         string[] elements2;
+    //         for (int i = 0; i < elements.Length; i++)
+    //         {
+    //             elements2 = elements[i].Split('|');
+    //             // string[] temp2 = new string[elements2.Length];
+    //             JSONArray innerArray = new JSONArray();
+    //             for (int j = 0; j < elements2.Length; j++)
+    //             {
+    //                 innerArray.Add(elements2[j].Trim());
+    //                 // temp2[j] = elements2[j];
+    //             }
+    //             // temp[i] = temp2;
+    //             outerArray.Add(innerArray);
+    //         }
+    //         node[key] = outerArray;
+    //         // node[key] = outerArray;
+
+    //         int startIndex = node[key].Value.IndexOf('[');
+    //         int endIndex = node[key].Value.IndexOf(']') - startIndex;
+    //         node[key].Value = node[key].Value.Substring(startIndex, endIndex + 1);
+    //     }
+    // }
 
     public static float ToFloat(string s)
     {

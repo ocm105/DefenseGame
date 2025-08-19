@@ -41,6 +41,13 @@ public enum UnitAniState
     Attack,
     Skill,
 }
+public enum UnitSynergy
+{
+    Fire,
+    Water,
+    Thunder,
+    Wind,
+}
 #endregion
 
 #region Monster

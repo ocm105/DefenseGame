@@ -13,6 +13,7 @@ public partial class InGameManager : MonoBehaviour
     private int gold = 0;
 
     private GameState gameState;
+    public GameState GameState { get { return gameState; } }
 
     private void Init()
     {

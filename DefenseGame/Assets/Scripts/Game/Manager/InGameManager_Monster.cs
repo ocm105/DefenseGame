@@ -28,6 +28,7 @@ public partial class InGameManager : MonoBehaviour
     {
         GameObject obj = Instantiate(Resources.Load<GameObject>(monsterSource), monsterGroup.transform);
         MonsterControl mc = obj.GetComponent<MonsterControl>();
+        obj.GetComponent<MonsterInfo>().inGameManager = this;
         mc.MovePath(monsterPathInfo.MonsterMovePath);
         mc.dieAction = (info) => MonsterDie(info);
         MonsterInit(obj);
