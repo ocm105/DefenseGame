@@ -1,4 +1,5 @@
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UISystem;
 using UnityEngine;
@@ -32,12 +33,12 @@ public class GameView : UIView
 
     private void Init()
     {
-        StartCoroutine(DataLoad());
+        DataLoad().Forget();
     }
 
-    private IEnumerator DataLoad()
+    private async UniTaskVoid DataLoad()
     {
-        yield return StartCoroutine(GameDataManager.Instance.LoadData());
+        await GameDataManager.Instance.LoadData();
         gameManager.ChangeGameState(GameState.Start);
 
     }

@@ -21,7 +21,6 @@ public partial class InGameManager : MonoBehaviour
         GoldSet(100);
         MonsterPooling();
         UnitPooling();
-        // ChangeGameState(GameState.Start);
     }
     private void Start()
     {

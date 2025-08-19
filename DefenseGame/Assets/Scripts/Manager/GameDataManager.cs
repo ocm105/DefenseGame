@@ -1,6 +1,5 @@
 using UnityEngine;
 using UISystem;
-using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 
@@ -17,12 +16,12 @@ public class GameDataManager : SingletonMonoBehaviour<GameDataManager>
         DontDestroyOnLoad(this);
     }
 
-    public IEnumerator LoadData()
+    public async UniTask LoadData()
     {
         if (isDataLoad_Completed == false)
         {
-            yield return StartCoroutine(NetworkManager.Instance.GetMonsterDataRequest((resData) => monsterData = resData));
-            yield return StartCoroutine(NetworkManager.Instance.GetWaveDataRequest((resData) => waveData = resData));
+            await NetworkManager.Instance.GetMonsterDataRequest((resData) => monsterData = resData);
+            await NetworkManager.Instance.GetWaveDataRequest((resData) => waveData = resData);
             // yield return StartCoroutine(NetworkManager.Instance.GetUnitDataRequest((resData) => unitData = resData));
             // for (int i = 0; i < unitData.Count; i++)
             // {
@@ -39,15 +38,4 @@ public class GameDataManager : SingletonMonoBehaviour<GameDataManager>
 
         isDataLoad_Completed = true;
     }
-
-    // public UniTask<bool> LoadData()
-    // {
-    //     if (isDataLoad_Completed == false)
-    //     {
-    //         yield return StartCoroutine(NetworkManager.Instance.GetMonsterDataRequest((resData) => monsterData = resData));
-    //         yield return StartCoroutine(NetworkManager.Instance.GetWaveDataRequest((resData) => waveData = resData));
-    //         isDataLoad_Completed = true;
-    //     }
-    //     yield return isDataLoad_Completed;
-    // }
 }
