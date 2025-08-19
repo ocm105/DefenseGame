@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UISystem;
 using UnityEngine.UI;
 using System;
+using DG.Tweening;
 
 public class BasePopup_OneBtn : BasePopup_Toast
 {
@@ -21,17 +20,16 @@ public class BasePopup_OneBtn : BasePopup_Toast
     private void OnClick_OkBtn()
     {
         // SoundManager.Instance.PlaySFXSound("Button");
-        // CloseTween(() => OnResult(PopupResults.OK));
-        OnResult(PopupResults.OK);
+        CloseTween(() => OnResult(PopupResults.OK));
     }
 
     private void ShowTween()
     {
-        // frame.transform.localScale = Vector3.zero;
-        // frame.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutCubic);
+        frame.transform.localScale = Vector3.zero;
+        frame.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutCubic);
     }
     private void CloseTween(Action call)
     {
-        // frame.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.OutCubic).OnComplete(call.Invoke);
+        frame.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.OutCubic).OnComplete(call.Invoke);
     }
 }
