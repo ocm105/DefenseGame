@@ -617,14 +617,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc349c62dc05964d8520a2fd2593170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <isDataLoad_Completed>k__BackingField: 0
-  gameMaxScoreInfo:
-    dongleMaxScore: 0
-  localSettingInfo:
-    bgmVolume: 1
-    sfxVolume: 1
-    isBgm: 1
-    isSfx: 1
 --- !u!4 &1858657291
 Transform:
   m_ObjectHideFlags: 0

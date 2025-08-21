@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UISystem;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -34,7 +35,7 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
         }
     }
 
-    public IEnumerator Request_Post(string url, WWWForm form, Action<GAMEDATA_STATE, string> resultAction = null)
+    public async UniTask Request_Post(string url, WWWForm form, Action<GAMEDATA_STATE, string> resultAction = null)
     {
         if (NetworkCheck())
         {
@@ -52,7 +53,7 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
 
                 // request.SetRequestHeader("Content-Type", "application/json");
 
-                yield return request.SendWebRequest();
+                await request.SendWebRequest();
 
                 // Debug.Log($"<color=yellow>[Res_Post]</color>=> url: {url}, resData: {request.downloadHandler.text}");
 
@@ -77,7 +78,7 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
         }
     }
 
-    public IEnumerator Request_Get(string url, Action<GAMEDATA_STATE, string> resultAction = null)
+    public async UniTask Request_Get(string url, Action<GAMEDATA_STATE, string> resultAction = null)
     {
         if (NetworkCheck())
         {
@@ -90,7 +91,7 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
                 request.downloadHandler = new DownloadHandlerBuffer();
                 request.SetRequestHeader("Content-Type", "application/json");
 
-                yield return request.SendWebRequest();
+                await request.SendWebRequest();
 
                 // Debug.Log($"<color=yellow>[Res_Get]</color>=> url: {url}, resData: {request.downloadHandler.text}");
 

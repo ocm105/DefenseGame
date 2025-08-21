@@ -3,6 +3,7 @@ using UnityEngine;
 using UISystem;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 
 
 
@@ -21,9 +22,9 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
 {
     public const string MONSTER_DATA_PATH = "https://docs.google.com/spreadsheets/d/1foTDDD2nLIwpVGan5K3I70mewA4ugg6d1XAI_OKxzT4/export?format=csv";
 
-    public IEnumerator GetMonsterDataRequest(Action<Dictionary<int, MonsterData>> callback = null)
+    public async UniTask GetMonsterDataRequest(Action<Dictionary<int, MonsterData>> callback = null)
     {
-        yield return StartCoroutine(Request_Get(MONSTER_DATA_PATH, (dataState, resData) =>
+        await Request_Get(MONSTER_DATA_PATH, (dataState, resData) =>
         {
             switch (dataState)
             {
@@ -37,7 +38,7 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
                     callback?.Invoke(CSVReader.ReadFromResource<MonsterData>(resData));
                     break;
             }
-        }));
+        });
     }
 }
 

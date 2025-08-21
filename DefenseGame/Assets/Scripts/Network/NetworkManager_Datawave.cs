@@ -3,6 +3,7 @@ using UnityEngine;
 using UISystem;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 
 
 
@@ -17,9 +18,9 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
 {
     public const string WAVE_DATA_PATH = "https://docs.google.com/spreadsheets/d/1Rhn07hnpBnHJQXAY2YIJRovY52ooUBfpJFE6WTL7Jd0/export?format=csv";
 
-    public IEnumerator GetWaveDataRequest(Action<Dictionary<int, WaveData>> callback = null)
+    public async UniTask GetWaveDataRequest(Action<Dictionary<int, WaveData>> callback = null)
     {
-        yield return StartCoroutine(Request_Get(WAVE_DATA_PATH, (dataState, resData) =>
+        await Request_Get(WAVE_DATA_PATH, (dataState, resData) =>
         {
             switch (dataState)
             {
@@ -33,7 +34,7 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
                     callback?.Invoke(CSVReader.ReadFromResource<WaveData>(resData));
                     break;
             }
-        }));
+        });
     }
 }
 

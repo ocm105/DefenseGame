@@ -2,6 +2,7 @@ using UnityEngine;
 using UISystem;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Unity.Android.Gradle.Manifest;
 
 public class GameDataManager : SingletonMonoBehaviour<GameDataManager>
 {
@@ -20,22 +21,33 @@ public class GameDataManager : SingletonMonoBehaviour<GameDataManager>
     {
         if (isDataLoad_Completed == false)
         {
-            await NetworkManager.Instance.GetMonsterDataRequest((resData) => monsterData = resData);
-            await NetworkManager.Instance.GetWaveDataRequest((resData) => waveData = resData);
-            // yield return StartCoroutine(NetworkManager.Instance.GetUnitDataRequest((resData) => unitData = resData));
-            // for (int i = 0; i < unitData.Count; i++)
-            // {
-            //     for (int j = 0; j < unitData[20001 + i].Effect.Count; j++)
-            //     {
-            //         // Debug.Log(unitData[20001 + i].Effect[j].Count);
-            //         for (int l = 0; l < unitData[20001 + i].Effect[j].Count; l++)
-            //         {
-            //             Debug.Log(unitData[20001 + i].Effect[j][l]);
-            //         }
-            //     }
-            // }
-        }
+            await UniTask.WhenAll
+            (
+                NetworkManager.Instance.GetMonsterDataRequest((resData) => monsterData = resData),
+                NetworkManager.Instance.GetWaveDataRequest((resData) => waveData = resData),
+                NetworkManager.Instance.GetUnitDataRequest((resData) => unitData = resData)
+            );
 
+            for (int i = 0; i < unitData.Count; i++)
+            {
+                unitData[20001 + i].SetUnitStat(unitData[20001 + i].Effect);
+            }
+
+            for (int i = 0; i < unitData.Count; i++)
+            {
+                for (int j = 0; j < unitData[20001 + i].unitStats.Length; j++)
+                {
+                    Debug.Log(unitData[20001 + i].unitStats[j].value1);
+                    Debug.Log(unitData[20001 + i].unitStats[j].value2);
+                    Debug.Log(unitData[20001 + i].unitStats[j].value3);
+                }
+            }
+
+        }
         isDataLoad_Completed = true;
     }
+}
+public class DataUnit
+{
+
 }

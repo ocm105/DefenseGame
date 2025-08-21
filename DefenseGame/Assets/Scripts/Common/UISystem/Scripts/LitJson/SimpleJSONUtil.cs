@@ -160,7 +160,7 @@ namespace SimpleJSONUtil
         #endregion common interface
 
         #region typecasting properties
-         public virtual int AsInt
+        public virtual int AsInt
         {
             get
             {
