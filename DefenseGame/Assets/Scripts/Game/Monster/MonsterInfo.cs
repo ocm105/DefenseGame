@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class MonsterInfo : MonoBehaviour
 {
-    public InGameManager inGameManager;
+    [HideInInspector] public InGameManager inGameManager;
     private MonsterControl monsterControl;
     [SerializeField] Slider hpSlider;
     public float HPvalue { get { return hpSlider.value; } set { hpSlider.value = value; } }

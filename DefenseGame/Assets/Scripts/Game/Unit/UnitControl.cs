@@ -7,7 +7,7 @@ public class UnitControl : MonoBehaviour
     public UnitInfo UnitInfo { get { return unitInfo; } }
     [SerializeField] Animator animator;
     [SerializeField] UnitAttackTrigger atkTrigger;
-    public float damage = 0f;
+    private float damage = 0f;
 
     private UnitAniState unitAniState;
 
@@ -19,12 +19,12 @@ public class UnitControl : MonoBehaviour
                 if (atkTrigger.targets.Count > 0)
                 {
                     unitInfo.atkCoolTime += Time.deltaTime;
-                    if (unitInfo.atkCoolTime >= unitInfo.atkSpeed)
+                    if (unitInfo.atkCoolTime >= unitInfo.unitData.AttackSpeed)
                     {
-                        if (atkTrigger.targets.Count >= unitInfo.atkCount)
+                        if (atkTrigger.targets.Count >= unitInfo.unitData.AttackCount)
                         {
                             // 공격하려는 갯수가 더 많을 때
-                            for (int i = 0; i < unitInfo.atkCount; i++)
+                            for (int i = 0; i < unitInfo.unitData.AttackCount; i++)
                             {
                                 Attack(atkTrigger.targets[i]);
                             }
@@ -56,7 +56,7 @@ public class UnitControl : MonoBehaviour
         switch (state)
         {
             case UnitAniState.Idle:
-                // animator.CrossFade("Idle", 0);
+                animator.CrossFade("Idle", 0);
                 break;
             case UnitAniState.Attack:
                 animator.SetBool("Attack", true);
@@ -73,10 +73,10 @@ public class UnitControl : MonoBehaviour
         if (target != null)
         {
             int ran = Random.Range(0, 101);
-            if (unitInfo.critical >= ran)
-                damage = unitInfo.atkPower * unitInfo.criPower;
+            if (unitInfo.unitData.Critical >= ran)
+                damage = unitInfo.unitData.Attack * unitInfo.unitData.CriticalPower;
             else
-                damage = unitInfo.atkPower;
+                damage = unitInfo.unitData.Attack;
 
             target.OnDamage(damage);
         }

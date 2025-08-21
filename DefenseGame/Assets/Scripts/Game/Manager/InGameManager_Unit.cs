@@ -49,10 +49,13 @@ public partial class InGameManager : MonoBehaviour
                     UnitCreate();
                 }
                 GameObject obj = unitPool.Dequeue();
-                obj.GetComponent<UnitInfo>().Spawn(UnitRandomSpawn());
+                int unitDataIndex = 20001;
+                UnitInfo unitInfo = obj.GetComponent<UnitInfo>();
+                unitInfo.unitData = GameDataManager.Instance.unitData[unitDataIndex];
                 obj.SetActive(true);
                 nowUnitSpawnCount++;
                 GoldSet(-20);
+                unitInfo.Spawn(UnitRandomSpawn());
             }
         }
     }
@@ -71,7 +74,7 @@ public partial class InGameManager : MonoBehaviour
     /// <summary> 유닛 Upgrade </summary>
     public void UnitUpgrade(UnitInfo info)
     {
-        gameView.UnitStatusOpen(info.UnitImage.sprite, info.atkPower, info.atkSpeed);
+        // gameView.UnitStatusOpen(info.UnitImage.sprite, info.unitData.Attack, info.unitData.AttackSpeed);
     }
 
     /// <summary> Unit 클릭 </summary>
