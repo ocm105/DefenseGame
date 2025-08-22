@@ -42,7 +42,10 @@ public class UnitControl : MonoBehaviour
                     }
                 }
                 else
+                {
+                    ChangeUnitAnimation(UnitAniState.Idle);
                     unitInfo.atkCoolTime = 0;
+                }
                 break;
             case GameState.Pause:
             case GameState.End:
@@ -56,15 +59,13 @@ public class UnitControl : MonoBehaviour
         switch (state)
         {
             case UnitAniState.Idle:
-                animator.CrossFade("Idle", 0);
                 break;
             case UnitAniState.Attack:
-                animator.SetBool("Attack", true);
                 break;
             case UnitAniState.Skill:
-                animator.SetBool("Skill", true);
                 break;
         }
+        animator.SetInteger("Index", (int)state);
         unitAniState = state;
     }
     /// <summary> 공격 </summary>
@@ -80,7 +81,7 @@ public class UnitControl : MonoBehaviour
 
             target.OnDamage(damage);
         }
-        // ChangeUnitAnimation(UnitAniState.Attack);
+        ChangeUnitAnimation(UnitAniState.Attack);
     }
 
 }
