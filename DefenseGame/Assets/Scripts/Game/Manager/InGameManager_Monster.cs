@@ -11,7 +11,7 @@ public partial class InGameManager : MonoBehaviour
     private int maxMonsterCreateCount = 60;                         // 몬스터 최고 생성 갯수
     private int maxMonsterSpawnCount = 10;                          // 라운드 스폰 갯수
     private int nowMonsterSpawnCount = 0;                           // 현재 스폰 갯수
-    [SerializeField] float monsterSpawnTime = 0.5f;                 // 몬스터 스폰 시간
+    private float monsterSpawnTime = 0.5f;                 // 몬스터 스폰 시간
     private Queue<GameObject> monsterPool = new Queue<GameObject>();
 
 

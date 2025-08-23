@@ -10,16 +10,16 @@ public class UnitAttackTrigger : MonoBehaviour
     {
         if (other.CompareTag("Monster"))
         {
-            MonsterControl mc = other.GetComponent<MonsterControl>();
-            monsters.Add(mc);
+            // MonsterControl mc = other.GetComponent<MonsterControl>();
+            // monsters.Add(mc);
             IDamage target = other.GetComponent<IDamage>();
             targets.Add(target);
         }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
-        MonsterControl mc = other.GetComponent<MonsterControl>();
-        monsters.Remove(mc);
+        // MonsterControl mc = other.GetComponent<MonsterControl>();
+        // monsters.Remove(mc);
         IDamage target = other.GetComponent<IDamage>();
         targets.Remove(target);
     }

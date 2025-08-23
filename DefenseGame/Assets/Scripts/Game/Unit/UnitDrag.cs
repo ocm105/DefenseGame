@@ -3,6 +3,8 @@ using UnityEngine.EventSystems;
 
 public class UnitDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    [SerializeField] UnitInfo unitInfo;
+    public UnitInfo UnitInfo { get { return unitInfo; } }
     [SerializeField] RectTransform dragObject;
     [SerializeField] RectTransform attackRange;
     [SerializeField] Vector2 gridCellSize;      // grid 크기 (1유닛)
@@ -18,6 +20,7 @@ public class UnitDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         unitRect = this.GetComponent<RectTransform>();
     }
+
     /// <summary> Drag 시작 </summary>
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -49,8 +52,7 @@ public class UnitDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnEndDrag(PointerEventData eventData)
     {
         isDragging = false;
-        unitRect.anchoredPosition = dragObject.anchoredPosition;
-        attackRange.anchoredPosition = unitRect.anchoredPosition;
+        unitInfo.inGameManager.ChangeGridUnit(unitInfo, unitRect.anchoredPosition, dragObject.anchoredPosition);
         dragObject.gameObject.SetActive(isDragging);
     }
 

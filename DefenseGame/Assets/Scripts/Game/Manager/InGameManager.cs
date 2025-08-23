@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public partial class InGameManager : MonoBehaviour
 {
     [SerializeField] GameView gameView;
-    [SerializeField] float roundTime = 20f;                         // 라운드 시간
+    private float roundTime = 20f;                         // 라운드 시간
     private float waveTime, spawnTime = 0;
     private int waveIndex = 0;
     private bool wave = false;

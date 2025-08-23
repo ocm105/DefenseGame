@@ -4,134 +4,134 @@ using UnityEngine.EventSystems;
 
 public partial class InGameManager : MonoBehaviour
 {
-    private string unitSource = Constants.Character.Unit + "/Unit";
+    private string unitSource = Constants.Character.Unit + "/UnitInfo";
     [SerializeField] GameObject unitGroup;
-    [SerializeField] GridInfo unitGridInfo;
+    [SerializeField] GridInfo gridInfo;
     private int maxUnitCreateCount = 17;            // 유닛 최고 생성 갯수
     private int nowUnitSpawnCount = 0;             // 현재 스폰 갯수
-    private Queue<GameObject> unitPool = new Queue<GameObject>();
-
-    private UnitInfo clickUnit;                  // 유닛 클릭 Event 용 변수
-    private PointerEventData pointerEventData;
-    private List<RaycastResult> pointerResults = new List<RaycastResult>();
-
+    private List<UnitInfo> unitPool = new List<UnitInfo>();
+    private Dictionary<Vector2, UnitInfo> UnitDic = new Dictionary<Vector2, UnitInfo>();
+    private bool IsFull
+    {
+        get
+        {
+            for (int i = 0; i < UnitDic.Count; i++)
+            {
+                if (UnitDic[gridInfo.GirdPos[i].anchoredPosition] == null) return false;
+            }
+            return true;
+        }
+    }
 
     /// <summary> 유닛 풀링 </summary>
     private void UnitPooling()
     {
-        for (int i = 0; i < maxUnitCreateCount; i++)
+        for (int i = 0; i < gridInfo.GirdPos.Length; i++)
         {
-            UnitCreate();
+            unitPool.Add(UnitCreate());
+            UnitDic.Add(gridInfo.GirdPos[i].anchoredPosition, null);
         }
     }
     /// <summary> 유닛 생성 </summary>
-    private GameObject UnitCreate()
+    private UnitInfo UnitCreate()
     {
         GameObject obj = Instantiate(Resources.Load<GameObject>(unitSource), unitGroup.transform);
-        obj.GetComponent<UnitInfo>().inGameManager = this;
-        UnitInit(obj);
-        return obj;
+        UnitInfo unitInfo = obj.GetComponent<UnitInfo>();
+        unitInfo.inGameManager = this;
+        obj.SetActive(false);
+        return unitInfo;
     }
     /// <summary> 유닛 초기화 </summary>
-    private void UnitInit(GameObject obj)
+    private void UnitInit(UnitInfo info)
     {
-        obj.SetActive(false);
-        unitPool.Enqueue(obj);
+        info.UnitIndex = -1;
+        info.gameObject.SetActive(false);
     }
     public void UnitSpawn()
     {
-        if (gold >= 20)
+        if (gold >= 20 && maxUnitCreateCount > nowUnitSpawnCount)
         {
-            if (maxUnitCreateCount > nowUnitSpawnCount)
+            if (IsFull == false)
             {
-                if (unitPool.Count <= 0)
+                bool isSpawn = false;
+                int unitIndex = UnitRandom();
+                for (int i = 0; i < unitPool.Count; i++)
                 {
-                    UnitCreate();
+                    // 소환하려는 같은 unit이 있을 때
+                    if (unitPool[i].UnitIndex == unitIndex && unitPool[i].isFull == false)
+                    {
+                        GoldSet(-20);
+                        unitPool[i].UnitCreate();
+                        nowUnitSpawnCount++;
+                        isSpawn = true;
+                        break;
+                    }
                 }
-                GameObject obj = unitPool.Dequeue();
-                int unitDataIndex = 20001;
-                UnitInfo unitInfo = obj.GetComponent<UnitInfo>();
-                unitInfo.unitData = GameDataManager.Instance.unitData[unitDataIndex];
-                obj.SetActive(true);
-                nowUnitSpawnCount++;
-                GoldSet(-20);
-                unitInfo.Spawn(UnitRandomSpawn());
+                if (isSpawn == false)
+                {
+                    for (int i = 0; i < unitPool.Count; i++)
+                    {
+                        // 같은 unit이 없지만 남은 pool이 있을 때
+                        if (unitPool[i].UnitIndex == -1)
+                        {
+                            GoldSet(-20);
+                            Vector2 grid = UnitRandomPos();
+
+                            unitPool[i].SetData(unitIndex);
+                            unitPool[i].SetPosition(grid);
+                            unitPool[i].UnitCreate();
+                            UnitDic[grid] = unitPool[i];
+                            nowUnitSpawnCount++;
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
-    /// <summary> 유닛 초기화 </summary>
-    private Vector2 UnitRandomSpawn()
+    /// <summary> 유닛 랜덤 </summary>
+    private int UnitRandom()
+    {
+        int unitDataIndex = 20000;
+
+        return unitDataIndex + 1;
+    }
+    /// <summary> 유닛 랜덤 위치 </summary>
+    private Vector2 UnitRandomPos()
     {
         int ran;
         do
         {
-            ran = Random.Range(0, unitGridInfo.GirdPos.Length);
-        } while (unitGridInfo.GridValue[ran] > 0);
+            ran = Random.Range(0, gridInfo.GirdPos.Length);
+        } while (UnitDic[gridInfo.GirdPos[ran].anchoredPosition] != null);
 
-        unitGridInfo.ChangeGridValue(unitGridInfo.GirdPos[ran].anchoredPosition);
-        return unitGridInfo.GirdPos[ran].anchoredPosition;
+        return gridInfo.GirdPos[ran].anchoredPosition;
     }
-    /// <summary> 유닛 Upgrade </summary>
-    public void UnitUpgrade(UnitInfo info)
+    /// <summary> Grid에 변경 </summary>
+    public void ChangeGridUnit(UnitInfo info, Vector2 prePos, Vector2 nextPos)
+    {
+        if (UnitDic[nextPos] == null)
+        {
+            UnitDic[prePos].SetPosition(nextPos);
+
+            UnitDic[prePos] = null;
+            UnitDic[nextPos] = info;
+        }
+        else
+        {
+            UnitDic[prePos].SetPosition(nextPos);
+            UnitDic[nextPos].SetPosition(prePos);
+
+            UnitInfo unitInfo = UnitDic[prePos];
+            UnitDic[prePos] = UnitDic[nextPos];
+            UnitDic[nextPos] = unitInfo;
+        }
+    }
+    /// <summary> 유닛 Undate </summary>
+    public void UnitUpdate(UnitInfo info)
     {
         // gameView.UnitStatusOpen(info.UnitImage.sprite, info.unitData.Attack, info.unitData.AttackSpeed);
     }
 
-    /// <summary> Unit 클릭 </summary>
-    private void UnitClickEvent()
-    {
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-        if (Input.GetMouseButtonDown(0))
-#elif UNITY_ANDROID
-        if (Input.touchCount > 0)
-#endif
-        {
-            pointerEventData = new PointerEventData(EventSystem.current);
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-            pointerEventData.position = Input.mousePosition;
-#elif UNITY_ANDROID
-            pointerEventData.position = Input.GetTouch(0).position;
-#endif
-            EventSystem.current.RaycastAll(pointerEventData, pointerResults);
 
-            if (pointerResults.Count > 0)
-            {
-                for (int i = 0; i < pointerResults.Count; i++)
-                {
-                    // 클릭한게 unit일때
-                    if (pointerResults[i].gameObject.CompareTag("Unit"))
-                    {
-                        // 이전에 클릭한 unit이 있을 때
-                        if (clickUnit != null)
-                        {
-                            // 같은 unit을 클릭하지 않았을 때
-                            if (clickUnit.gameObject != pointerResults[i].gameObject)
-                            {
-                                clickUnit.OnClick(false);
-                                clickUnit = pointerResults[i].gameObject.GetComponent<UnitControl>().UnitInfo;
-                            }
-                        }
-                        // 이전에 클릭한 unit이 없을 때
-                        else
-                        {
-                            clickUnit = pointerResults[i].gameObject.GetComponent<UnitControl>().UnitInfo;
-                        }
-                        clickUnit.OnClick(true);
-                        UnitUpgrade(clickUnit);
-                        break;
-                    }
-                }
-            }
-            // 클릭한게 없을 때
-            else
-            {
-                if (clickUnit != null)
-                {
-                    clickUnit.OnClick(false);
-                    gameView.UnitStatusClose();
-                    clickUnit = null;
-                }
-            }
-        }
-    }
 }

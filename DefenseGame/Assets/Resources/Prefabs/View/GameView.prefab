@@ -320,6 +320,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3492408346626369009}
   - {fileID: 8882146830971452181}
   - {fileID: 4110320447104838922}
   - {fileID: 1718533214549463224}
@@ -840,7 +841,7 @@ GameObject:
   - component: {fileID: 2375478605217392454}
   - component: {fileID: 5038149387548013335}
   m_Layer: 5
-  m_Name: Bg
+  m_Name: WaveTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -858,7 +859,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3492408346626369009}
   - {fileID: 7173820421445301092}
   - {fileID: 6878653932383654068}
   m_Father: {fileID: 6502626399062808935}
@@ -1286,16 +1286,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2405977331359339295}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8882146830971452181}
+  m_Father: {fileID: 6502626399062808935}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: 0}
+  m_AnchoredPosition: {x: 120, y: -89.5}
   m_SizeDelta: {x: 200, y: 179}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &280370054095695964
@@ -4797,12 +4797,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameView: {fileID: 7297706925772091920}
-  roundTime: 20
   monsterGroup: {fileID: 8191054696328116031}
   monsterPathInfo: {fileID: 3782976101420514930}
-  monsterSpawnTime: 0.5
   unitGroup: {fileID: 7402952864145988757}
-  unitGridInfo: {fileID: 4166927570144705143}
+  gridInfo: {fileID: 4166927570144705143}
 --- !u!1 &8116547337949855100
 GameObject:
   m_ObjectHideFlags: 0
