@@ -88,6 +88,7 @@ public partial class InGameManager : MonoBehaviour
                 }
             }
         }
+        gameView.UnitCountSet(nowUnitSpawnCount, maxUnitCreateCount);
     }
     /// <summary> 유닛 랜덤 </summary>
     private int UnitRandom()

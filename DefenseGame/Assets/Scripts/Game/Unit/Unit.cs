@@ -82,7 +82,6 @@ public class Unit : MonoBehaviour
             else
                 damage = unitInfo.UnitData.Attack;
 
-            Debug.Log(damage);
             target.OnDamage(damage);
         }
         ChangeUnitAnimation(UnitAniState.Attack);

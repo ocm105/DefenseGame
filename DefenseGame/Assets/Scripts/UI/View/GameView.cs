@@ -10,12 +10,14 @@ public class GameView : UIView
     [SerializeField] InGameManager gameManager;
     [SerializeField] Button unitSpawnBtn;
     [SerializeField] Button homeBtn;
-    [SerializeField] TextMeshProUGUI goldText;
+    [SerializeField] TextMeshProUGUI waveCountText;
     [SerializeField] TextMeshProUGUI waveTimeText;
     [SerializeField] GameObject unitStatWindow;
     [SerializeField] Image unitImage;
     [SerializeField] TextMeshProUGUI unitPowerText;
     [SerializeField] TextMeshProUGUI unitAtkSpeedText;
+    [SerializeField] TextMeshProUGUI goldText;
+    [SerializeField] TextMeshProUGUI unitCountText;
 
     public void Show()
     {
@@ -46,6 +48,14 @@ public class GameView : UIView
     public void GoldSet(int gold)
     {
         goldText.text = gold.ToString();
+    }
+    public void UnitCountSet(int now, int max)
+    {
+        unitCountText.text = $"{now}/{max}";
+    }
+    public void WaveCountSet(int count)
+    {
+        waveCountText.text = count.ToString();
     }
     public void WaveTimeSet(float time)
     {

@@ -21,6 +21,8 @@ public partial class InGameManager : MonoBehaviour
         GoldSet(100);
         MonsterPooling();
         UnitPooling();
+        gameView.WaveCountSet(1);
+        gameView.UnitCountSet(nowUnitSpawnCount, maxUnitCreateCount);
     }
     private void Start()
     {
@@ -39,6 +41,7 @@ public partial class InGameManager : MonoBehaviour
                     waveIndex++;
                     wave = true;
                     waveTime = roundTime;
+                    gameView.WaveCountSet(waveIndex);
                 }
                 if (wave)
                 {
