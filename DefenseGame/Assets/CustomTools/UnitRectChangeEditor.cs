@@ -12,6 +12,10 @@ public class UnitRectChangeEditor : Editor
         {
             unitRectChanger.UnitUIChange();
         }
+        if (GUILayout.Button("순서 변경하기", GUILayout.Height(50)))
+        {
+            unitRectChanger.ChangeSibling();
+        }
     }
 }
 

@@ -1,21 +1,20 @@
+using Cysharp.Threading.Tasks.Triggers;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 
 public class UnitRectChanger : MonoBehaviour
 {
     [SerializeField] GameObject[] units;
 
+
     public void UnitUIChange()
     {
-        GameObject unit;
         for (int i = 0; i < units.Length; i++)
         {
-            unit = Instantiate(units[i], this.transform);
-
-            SpriteRenderer[] sr = unit.GetComponentsInChildren<SpriteRenderer>();
+            SpriteRenderer[] sr = units[i].GetComponentsInChildren<SpriteRenderer>();
             Material mat;
-            for (int j = 0; j < sr.Length; j++)
+            for (int j = sr.Length - 1; j >= 0; j--)
             {
                 Image image = sr[j].AddComponent<Image>();
                 image.sprite = sr[j].sprite;
@@ -27,6 +26,33 @@ public class UnitRectChanger : MonoBehaviour
                 image.material = mat;
 
                 DestroyImmediate(sr[j]);
+            }
+        }
+    }
+    public void ChangeSibling()
+    {
+        for (int i = 0; i < units.Length; i++)
+        {
+            Transform[] tr = units[i].GetComponentsInChildren<Transform>();
+            for (int j = 0; j < tr.Length; j++)
+            {
+                if(tr[j].name == "BodySet")
+                {
+                    tr[j].SetAsLastSibling();
+                }
+                else if (tr[j].name == "ArmSet")
+                {
+                    tr[j].SetSiblingIndex(1);
+                }
+                else if (tr[j].name == "P_Head")
+                {
+                    tr[j].SetSiblingIndex(0);
+                }
+                else if (tr[j].name == "ArmR")
+                {
+                    tr[j].SetSiblingIndex(0);
+                }
+                
             }
         }
     }
