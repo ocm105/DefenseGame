@@ -41,12 +41,13 @@ public enum UnitAniState
     Attack,
     Skill,
 }
-public enum UnitSynergy
+public enum SynergyType
 {
     Fire,
     Water,
     Thunder,
     Wind,
+    Max
 }
 #endregion
 
