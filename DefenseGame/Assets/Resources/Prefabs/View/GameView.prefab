@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 120}
+  m_SizeDelta: {x: 280, y: 120}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &295719808881216915
 GameObject:
@@ -495,7 +495,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 120}
+  m_SizeDelta: {x: 280, y: 120}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &1525939424569128024
 GameObject:
@@ -1736,7 +1736,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 120}
+  m_SizeDelta: {x: 280, y: 120}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &3177161286794042116
 GameObject:
@@ -3327,7 +3327,7 @@ MonoBehaviour:
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
+  m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -4964,6 +4964,7 @@ MonoBehaviour:
   BgmKey: BGM_MAIN
   gameManager: {fileID: 1984275754251949617}
   unitSpawnBtn: {fileID: 18411470134712567}
+  synergyBtn: {fileID: 6707689665411693575}
   homeBtn: {fileID: 918783068506496945}
   waveCountText: {fileID: 7542105900230587349}
   waveTimeText: {fileID: 6588499308757578015}

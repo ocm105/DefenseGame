@@ -11,6 +11,8 @@ public partial class InGameManager : MonoBehaviour
     private int nowUnitSpawnCount = 0;             // 현재 스폰 갯수
     private List<UnitInfo> unitPool = new List<UnitInfo>();
     private Dictionary<Vector2, UnitInfo> UnitDic = new Dictionary<Vector2, UnitInfo>();
+    public Dictionary<SynergyType, int> SynergyDic = new Dictionary<SynergyType, int>();
+
     private bool IsFull
     {
         get

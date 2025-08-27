@@ -8,14 +8,20 @@ using UnityEngine.UI;
 public class GameView : UIView
 {
     [SerializeField] InGameManager gameManager;
+
     [SerializeField] Button unitSpawnBtn;
+    [SerializeField] Button synergyBtn;
+    private bool isSynergyOn = false;
     [SerializeField] Button homeBtn;
+
     [SerializeField] TextMeshProUGUI waveCountText;
     [SerializeField] TextMeshProUGUI waveTimeText;
+
     [SerializeField] GameObject unitStatWindow;
     [SerializeField] Image unitImage;
     [SerializeField] TextMeshProUGUI unitPowerText;
     [SerializeField] TextMeshProUGUI unitAtkSpeedText;
+
     [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] TextMeshProUGUI unitCountText;
 
@@ -25,6 +31,7 @@ public class GameView : UIView
     }
     protected override void OnFirstShow()
     {
+        synergyBtn.onClick.AddListener(OnClick_Synergy);
         unitSpawnBtn.onClick.AddListener(OnClick_UnitSpawn);
         homeBtn.onClick.AddListener(OnClick_Home);
     }
@@ -71,6 +78,19 @@ public class GameView : UIView
     public void UnitStatusClose()
     {
         unitStatWindow.SetActive(false);
+    }
+    private void OnClick_Synergy()
+    {
+        if (!isSynergyOn)
+        {
+            Les_UIManager.Instance.Popup<SynergyPopup>().Open(gameManager.SynergyDic);
+        }
+        else
+        {
+            Les_UIManager.Instance.Popup<SynergyPopup>().Close();
+        }
+
+        isSynergyOn = !isSynergyOn;
     }
     private void OnClick_UnitSpawn()
     {

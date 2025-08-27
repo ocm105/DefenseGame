@@ -207,6 +207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8457438650558919980}
   - component: {fileID: 6510786799071789816}
+  - component: {fileID: 5970726716222803995}
   m_Layer: 5
   m_Name: SynergyPopup
   m_TagString: Untagged
@@ -246,6 +247,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a689a06a307df54a957b3b99ab1cec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5970726716222803995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2362925192746472369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f0afb5f7bb6ed409ee0b7d6ef3204a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DestroyOnHide: 0
+  TargetFrameRate: -1
+  TopMost: 0
+  CancelOnBack: 1
+  frame: {fileID: 2124143732584333230}
+  contentPos: {fileID: 7854584874603443685}
 --- !u!1 &2935217485649763152
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,7 +337,7 @@ MonoBehaviour:
   m_Spacing: 20
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
+  m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0

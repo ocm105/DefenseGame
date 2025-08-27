@@ -17,8 +17,8 @@ public class UnitData
     public int AttackCount;         // 1타격에 몇마리 때리는지
     public int Critical;            // 100% 기준 크리티컬 %
     public float CriticalPower;     // 크리티컬 공격력 배수
-    public List<string> Synergy;    // 시너지
-    public List<string> Effect;    // { "Atk|10|10", "DEF|5|5" }
+    public SynergyType[] Synergy;   // 시너지
+    public List<string> Effect;     // { "Atk|10|10", "DEF|5|5" }
     public UnitStat[] unitStats;
 
     public void SetUnitStat(List<string> strs)
