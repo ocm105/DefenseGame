@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class UnitInfo : MonoBehaviour
 {
     private string unitSource = Constants.Character.Unit + "/Unit";
+    private string LevelSource = "Image/Level/";
     [HideInInspector] public InGameManager inGameManager;
     [HideInInspector] public int UnitIndex = -1;
     private UnitData unitData;
@@ -27,9 +28,11 @@ public class UnitInfo : MonoBehaviour
     [SerializeField] RectTransform unitParent;
     [SerializeField] RectTransform dragPos;
     [SerializeField] RectTransform rangePos;
+    [SerializeField] RectTransform levelpos;
     [SerializeField] RectTransform upGradePos;
     public UnitAttackTrigger AtkTrigger { get; private set; }
     [SerializeField] GameObject rangeObject;
+    [SerializeField] Image level;
     [SerializeField] Button upgradBtn;
 
     private void Awake()
@@ -48,12 +51,14 @@ public class UnitInfo : MonoBehaviour
         UnitIndex = index;
         unitData = GameDataManager.Instance.unitData[index];
         rangePos.localScale = new Vector3(unitData.Range, unitData.Range);
+        level.sprite = Resources.Load<Sprite>($"{LevelSource}{unitData.Level}");
     }
     public void SetPosition(Vector2 pos)
     {
         unitParent.anchoredPosition = pos;
         dragPos.anchoredPosition = pos;
         rangePos.anchoredPosition = pos;
+        levelpos.anchoredPosition = pos;
         upGradePos.anchoredPosition = pos;
     }
     public void UnitCreate()
@@ -73,7 +78,7 @@ public class UnitInfo : MonoBehaviour
     public void OnClick(bool isOn = true)
     {
         rangeObject.SetActive(isOn);
-        upGradePos.gameObject.SetActive(isOn);
+        upgradBtn.gameObject.SetActive(isOn);
     }
     private void OnUpgrade()
     {
