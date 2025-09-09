@@ -3,10 +3,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UnitRectChanger : MonoBehaviour
+public class UnitCostom : MonoBehaviour
 {
     [SerializeField] GameObject[] units;
-
 
     public void UnitUIChange()
     {
@@ -36,7 +35,7 @@ public class UnitRectChanger : MonoBehaviour
             Transform[] tr = units[i].GetComponentsInChildren<Transform>();
             for (int j = 0; j < tr.Length; j++)
             {
-                if(tr[j].name == "BodySet")
+                if (tr[j].name == "BodySet")
                 {
                     tr[j].SetAsLastSibling();
                 }
@@ -52,7 +51,20 @@ public class UnitRectChanger : MonoBehaviour
                 {
                     tr[j].SetSiblingIndex(0);
                 }
-                
+
+            }
+        }
+    }
+
+    public void DeletScript()
+    {
+        for (int i = 0; i < units.Length; i++)
+        {
+            GameObject obj = Instantiate(units[i], this.transform);
+            SpritePos[] spritePos = obj.GetComponentsInChildren<SpritePos>();
+            for (int j = 0; j < spritePos.Length; j++)
+            {
+                DestroyImmediate(spritePos[j]);
             }
         }
     }
