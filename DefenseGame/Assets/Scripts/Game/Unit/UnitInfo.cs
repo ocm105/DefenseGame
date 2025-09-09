@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,9 +58,17 @@ public class UnitInfo : MonoBehaviour
     {
         unitParent.anchoredPosition = pos;
         dragPos.anchoredPosition = pos;
-        rangePos.anchoredPosition = pos;
-        levelpos.anchoredPosition = pos;
-        upGradePos.anchoredPosition = pos;
+        // rangePos.anchoredPosition = pos;
+        // levelpos.anchoredPosition = pos;
+        // upGradePos.anchoredPosition = pos;
+    }
+    public async UniTaskVoid MovePosition(Vector2 pos)
+    {
+        while (Vector2.Distance(unitParent.anchoredPosition, pos) > 0.05f)
+        {
+            unitParent.anchoredPosition = Vector2.MoveTowards(unitParent.anchoredPosition, pos, Time.deltaTime * 1000);
+            await UniTask.Yield();
+        }
     }
     public void UnitCreate()
     {

@@ -6,7 +6,6 @@ public class UnitDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     [SerializeField] UnitInfo unitInfo;
     public UnitInfo UnitInfo { get { return unitInfo; } }
     [SerializeField] RectTransform dragObject;
-    [SerializeField] RectTransform attackRange;
     [SerializeField] Vector2 gridCellSize;      // grid 크기 (1유닛)
     [SerializeField] Vector2 dragClampPos;      // Drag 한정위치
     private Vector2 snapPos;                    // snap 위치

@@ -145,6 +145,9 @@ RectTransform:
   - {fileID: 5303320544327106369}
   - {fileID: 8067398228214256314}
   - {fileID: 3740155758963798364}
+  - {fileID: 3903550582263832544}
+  - {fileID: 2531743570902256705}
+  - {fileID: 2038758204991743163}
   m_Father: {fileID: 7112544742875334740}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -250,7 +253,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitInfo: {fileID: 6441245061107504989}
   dragObject: {fileID: 4642926775850073506}
-  attackRange: {fileID: 3903550582263832544}
   gridCellSize: {x: 115, y: 130}
   dragClampPos: {x: 230, y: 99}
 --- !u!1 &843841915764770735
@@ -422,7 +424,7 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5578397694477204678}
-  m_Father: {fileID: 7112544742875334740}
+  m_Father: {fileID: 8048424593223458864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -501,13 +503,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2457631047539049230}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4847489081798339450}
-  m_Father: {fileID: 7112544742875334740}
+  m_Father: {fileID: 8048424593223458864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -693,13 +695,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3568128615890135587}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5023292034133679177}
-  m_Father: {fileID: 7112544742875334740}
+  m_Father: {fileID: 8048424593223458864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -846,10 +848,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4642926775850073506}
-  - {fileID: 3903550582263832544}
   - {fileID: 8048424593223458864}
-  - {fileID: 2531743570902256705}
-  - {fileID: 2038758204991743163}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 1, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -878,7 +877,7 @@ MonoBehaviour:
   unitParent: {fileID: 8048424593223458864}
   dragPos: {fileID: 4642926775850073506}
   rangePos: {fileID: 3903550582263832544}
-  levelpos: {fileID: 2531743570902256705}
+  levelpos: {fileID: 0}
   upGradePos: {fileID: 2038758204991743163}
   rangeObject: {fileID: 8239795369330880475}
   level: {fileID: 7265909608076725901}

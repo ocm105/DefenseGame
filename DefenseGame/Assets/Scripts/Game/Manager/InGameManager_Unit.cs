@@ -115,15 +115,15 @@ public partial class InGameManager : MonoBehaviour
     {
         if (UnitDic[nextPos] == null)
         {
-            UnitDic[prePos].SetPosition(nextPos);
+            UnitDic[prePos].MovePosition(nextPos).Forget();
 
             UnitDic[prePos] = null;
             UnitDic[nextPos] = info;
         }
         else
         {
-            UnitDic[prePos].SetPosition(nextPos);
-            UnitDic[nextPos].SetPosition(prePos);
+            UnitDic[prePos].MovePosition(nextPos).Forget();
+            UnitDic[nextPos].MovePosition(prePos).Forget();
 
             UnitInfo unitInfo = UnitDic[prePos];
             UnitDic[prePos] = UnitDic[nextPos];
