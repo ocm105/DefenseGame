@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UnitInfo : MonoBehaviour
 {
-    private string unitSource = Constants.Character.Unit + "/Unit";
+    private string unitSource = Constants.Character.Unit + "/Unit2";
     private string LevelSource = "Image/Level/";
     [HideInInspector] public InGameManager inGameManager;
     [HideInInspector] public int UnitIndex = -1;
