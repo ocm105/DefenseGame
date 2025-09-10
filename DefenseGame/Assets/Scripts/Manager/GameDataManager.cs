@@ -2,7 +2,6 @@ using UnityEngine;
 using UISystem;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Unity.Android.Gradle.Manifest;
 
 public class GameDataManager : SingletonMonoBehaviour<GameDataManager>
 {
@@ -33,15 +32,15 @@ public class GameDataManager : SingletonMonoBehaviour<GameDataManager>
                 unitData[20001 + i].SetUnitStat(unitData[20001 + i].Effect);
             }
 
-            for (int i = 0; i < unitData.Count; i++)
-            {
-                for (int j = 0; j < unitData[20001 + i].unitStats.Length; j++)
-                {
-                    Debug.Log(unitData[20001 + i].unitStats[j].value1);
-                    Debug.Log(unitData[20001 + i].unitStats[j].value2);
-                    Debug.Log(unitData[20001 + i].unitStats[j].value3);
-                }
-            }
+            // for (int i = 0; i < unitData.Count; i++)
+            // {
+            //     for (int j = 0; j < unitData[20001 + i].unitStats.Length; j++)
+            //     {
+            //         Debug.Log(unitData[20001 + i].unitStats[j].value1);
+            //         Debug.Log(unitData[20001 + i].unitStats[j].value2);
+            //         Debug.Log(unitData[20001 + i].unitStats[j].value3);
+            //     }
+            // }
 
         }
         isDataLoad_Completed = true;
