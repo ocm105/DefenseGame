@@ -13,17 +13,6 @@ public partial class InGameManager : MonoBehaviour
     private Dictionary<Vector2, UnitInfo> UnitDic = new Dictionary<Vector2, UnitInfo>();
     public Dictionary<SynergyType, int> SynergyDic = new Dictionary<SynergyType, int>();
 
-    private bool IsFull
-    {
-        get
-        {
-            for (int i = 0; i < UnitDic.Count; i++)
-            {
-                if (UnitDic[gridInfo.GirdPos[i].anchoredPosition] == null) return false;
-            }
-            return true;
-        }
-    }
 
     /// <summary> 유닛 풀링 </summary>
     private void UnitPooling()
@@ -31,7 +20,7 @@ public partial class InGameManager : MonoBehaviour
         for (int i = 0; i < gridInfo.GirdPos.Length; i++)
         {
             unitPool.Add(UnitCreate());
-            UnitDic.Add(gridInfo.GirdPos[i].anchoredPosition, null);
+            UnitDic.Add(gridInfo.GirdPos[i], null);
         }
     }
     /// <summary> 유닛 생성 </summary>
@@ -49,43 +38,56 @@ public partial class InGameManager : MonoBehaviour
         info.UnitIndex = -1;
         info.gameObject.SetActive(false);
     }
+    private string GetGridAbility(Vector2 pos)
+    {
+        int index = 0;
+        for (int i = 0; i < gridInfo.GirdPos.Length; i++)
+        {
+            if (gridInfo.GirdPos[i] == pos)
+            {
+                index = i;
+                break;
+            }
+        }
+        string ability = "ability";
+        // 테이블에서 능력 가져와서 설정
+        return ability;
+    }
     public void UnitSpawn()
     {
         if (gold >= 20 && maxUnitCreateCount > nowUnitSpawnCount)
         {
-            if (IsFull == false)
+            bool isSpawn = false;
+            int unitIndex = UnitRandom();
+            for (int i = 0; i < unitPool.Count; i++)
             {
-                bool isSpawn = false;
-                int unitIndex = UnitRandom();
+                // 소환하려는 같은 unit이 있을 때
+                if (unitPool[i].UnitIndex == unitIndex && unitPool[i].isFull == false)
+                {
+                    GoldSet(-20);
+                    unitPool[i].UnitCreate((UnitType)unitIndex);
+                    nowUnitSpawnCount++;
+                    isSpawn = true;
+                    break;
+                }
+            }
+            if (isSpawn == false)
+            {
                 for (int i = 0; i < unitPool.Count; i++)
                 {
-                    // 소환하려는 같은 unit이 있을 때
-                    if (unitPool[i].UnitIndex == unitIndex && unitPool[i].isFull == false)
+                    // 같은 unit이 없지만 남은 pool이 있을 때
+                    if (unitPool[i].UnitIndex == -1)
                     {
                         GoldSet(-20);
-                        unitPool[i].UnitCreate((UnitType)unitIndex);
-                        nowUnitSpawnCount++;
-                        isSpawn = true;
-                        break;
-                    }
-                }
-                if (isSpawn == false)
-                {
-                    for (int i = 0; i < unitPool.Count; i++)
-                    {
-                        // 같은 unit이 없지만 남은 pool이 있을 때
-                        if (unitPool[i].UnitIndex == -1)
-                        {
-                            GoldSet(-20);
-                            Vector2 grid = UnitRandomPos();
+                        Vector2 grid = UnitRandomPos();
 
-                            unitPool[i].SetData(unitIndex);
-                            unitPool[i].SetPosition(grid);
-                            unitPool[i].UnitCreate((UnitType)unitIndex);
-                            UnitDic[grid] = unitPool[i];
-                            nowUnitSpawnCount++;
-                            break;
-                        }
+                        unitPool[i].SetData(unitIndex);
+                        unitPool[i].SetPosition(grid);
+                        unitPool[i].UnitCreate((UnitType)unitIndex);
+                        unitPool[i].Ability = GetGridAbility(grid);
+                        UnitDic[grid] = unitPool[i];
+                        nowUnitSpawnCount++;
+                        break;
                     }
                 }
             }
@@ -106,9 +108,9 @@ public partial class InGameManager : MonoBehaviour
         do
         {
             ran = Random.Range(0, gridInfo.GirdPos.Length);
-        } while (UnitDic[gridInfo.GirdPos[ran].anchoredPosition] != null);
+        } while (UnitDic[gridInfo.GirdPos[ran]] != null);
 
-        return gridInfo.GirdPos[ran].anchoredPosition;
+        return gridInfo.GirdPos[ran];
     }
     /// <summary> Grid에 변경 </summary>
     public void ChangeGridUnit(UnitInfo info, Vector2 prePos, Vector2 nextPos)
@@ -119,6 +121,7 @@ public partial class InGameManager : MonoBehaviour
 
             UnitDic[prePos] = null;
             UnitDic[nextPos] = info;
+            UnitDic[nextPos].Ability = GetGridAbility(nextPos);
         }
         else
         {
@@ -128,6 +131,9 @@ public partial class InGameManager : MonoBehaviour
             UnitInfo unitInfo = UnitDic[prePos];
             UnitDic[prePos] = UnitDic[nextPos];
             UnitDic[nextPos] = unitInfo;
+
+            UnitDic[prePos].Ability = GetGridAbility(prePos);
+            UnitDic[nextPos].Ability = GetGridAbility(nextPos);
         }
     }
     /// <summary> 유닛 Undate </summary>

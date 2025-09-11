@@ -7,6 +7,7 @@ public class MonsterControl : MonoBehaviour, IDamage
     [SerializeField] Animator animator;
     [SerializeField] Transform monsterPos;
     private Transform[] movePath;
+    private float monsterRotX;
     private int movePathIndex = 0;
 
     private MonsterData monsterData;
@@ -14,6 +15,10 @@ public class MonsterControl : MonoBehaviour, IDamage
     private MonsterState monsterState;
     public MonsterState MonsterState { get { return monsterState; } }
 
+    private void Start()
+    {
+        monsterRotX = monsterPos.localScale.x;
+    }
     public void MonsterStart()
     {
         movePathIndex = 0;
@@ -73,9 +78,9 @@ public class MonsterControl : MonoBehaviour, IDamage
                 movePathIndex = 0;
 
             if (movePathIndex >= movePath.Length * 0.5f)
-                monsterPos.localScale = new Vector2(-monsterPos.localScale.x, monsterPos.localScale.y);
+                monsterPos.localScale = new Vector2(-monsterRotX, monsterPos.localScale.y);
             else
-                monsterPos.localScale = new Vector2(monsterPos.localScale.x, monsterPos.localScale.y);
+                monsterPos.localScale = new Vector2(monsterRotX, monsterPos.localScale.y);
         }
     }
     #endregion
@@ -101,5 +106,6 @@ public class MonsterControl : MonoBehaviour, IDamage
     public void AniEvent_Die()
     {
         dieAction.Invoke(monsterInfo);
+        monsterPos.localScale = new Vector2(monsterRotX, monsterPos.localScale.y);
     }
 }

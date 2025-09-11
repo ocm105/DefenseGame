@@ -13,6 +13,9 @@ public class UnitInfo : MonoBehaviour
     private UnitData unitData;
     public UnitData UnitData { get { return unitData; } }
 
+    private string ability;
+    public string Ability { set { ability = value; } }
+
     [SerializeField] GameObject[] unitPositions;
     public bool isFull
     {
@@ -30,8 +33,6 @@ public class UnitInfo : MonoBehaviour
     [SerializeField] RectTransform unitParent;
     [SerializeField] RectTransform dragPos;
     [SerializeField] RectTransform rangePos;
-    [SerializeField] RectTransform levelpos;
-    [SerializeField] RectTransform upGradePos;
     public UnitAttackTrigger AtkTrigger { get; private set; }
     [SerializeField] GameObject rangeObject;
     [SerializeField] Image level;
@@ -59,9 +60,6 @@ public class UnitInfo : MonoBehaviour
     {
         unitParent.anchoredPosition = pos;
         dragPos.anchoredPosition = pos;
-        // rangePos.anchoredPosition = pos;
-        // levelpos.anchoredPosition = pos;
-        // upGradePos.anchoredPosition = pos;
     }
     public async UniTaskVoid MovePosition(Vector2 pos)
     {
@@ -70,6 +68,7 @@ public class UnitInfo : MonoBehaviour
             unitParent.anchoredPosition = Vector2.MoveTowards(unitParent.anchoredPosition, pos, Time.deltaTime * 1000);
             await UniTask.Yield();
         }
+        SetPosition(pos);
     }
     public void UnitCreate(UnitType type)
     {
