@@ -51,7 +51,7 @@ public partial class InGameManager : MonoBehaviour
         }
         GameObject obj = monsterPool.Dequeue();
         MonsterInfo mc = obj.GetComponent<MonsterInfo>();
-        int monsterDataIndex = GameDataManager.Instance.waveData[50000 + waveIndex].Summon;
+        int monsterDataIndex = GameDataManager.Instance.waveData[500000 + waveIndex].Summon;
         mc.monsterData = GameDataManager.Instance.monsterData[monsterDataIndex];
         obj.SetActive(true);
         mc.Spawn();

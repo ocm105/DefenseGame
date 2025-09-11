@@ -95,7 +95,7 @@ public partial class InGameManager : MonoBehaviour
     /// <summary> 유닛 랜덤 </summary>
     private int UnitRandom()
     {
-        int unitDataIndex = 20000;
+        int unitDataIndex = 200000;
 
         return unitDataIndex + 1;
     }
