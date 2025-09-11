@@ -19,4 +19,13 @@ public static class Constants
         public const string Unit = "Units";
         public const string Monster = "Monsters";
     }
+    public static class GameIndex
+    {
+        public const int Wave = 500000;
+        public const int Unit = 200000;
+        public const int Monster = 100000;
+        public const int Synergy = 30000;
+        public const int Item = 40000;
+        public const int Stage = 700000;
+    }
 }

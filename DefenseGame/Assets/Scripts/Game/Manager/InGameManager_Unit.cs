@@ -63,7 +63,7 @@ public partial class InGameManager : MonoBehaviour
                     if (unitPool[i].UnitIndex == unitIndex && unitPool[i].isFull == false)
                     {
                         GoldSet(-20);
-                        unitPool[i].UnitCreate();
+                        unitPool[i].UnitCreate((UnitType)unitIndex);
                         nowUnitSpawnCount++;
                         isSpawn = true;
                         break;
@@ -81,7 +81,7 @@ public partial class InGameManager : MonoBehaviour
 
                             unitPool[i].SetData(unitIndex);
                             unitPool[i].SetPosition(grid);
-                            unitPool[i].UnitCreate();
+                            unitPool[i].UnitCreate((UnitType)unitIndex);
                             UnitDic[grid] = unitPool[i];
                             nowUnitSpawnCount++;
                             break;
@@ -95,9 +95,9 @@ public partial class InGameManager : MonoBehaviour
     /// <summary> 유닛 랜덤 </summary>
     private int UnitRandom()
     {
-        int unitDataIndex = 20000;
+        int unitDataIndex = Random.Range((int)UnitType.Unit1, (int)UnitType.Max);
 
-        return unitDataIndex + 1;
+        return unitDataIndex;
     }
     /// <summary> 유닛 랜덤 위치 </summary>
     private Vector2 UnitRandomPos()

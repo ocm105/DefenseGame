@@ -1,11 +1,12 @@
 using System;
+using System.Text;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UnitInfo : MonoBehaviour
 {
-    private string unitSource = Constants.Character.Unit + "/Unit2";
+    private string unitSource = Constants.Character.Unit;
     private string LevelSource = "Image/Level/";
     [HideInInspector] public InGameManager inGameManager;
     [HideInInspector] public int UnitIndex = -1;
@@ -70,13 +71,17 @@ public class UnitInfo : MonoBehaviour
             await UniTask.Yield();
         }
     }
-    public void UnitCreate()
+    public void UnitCreate(UnitType type)
     {
+        StringBuilder sb = new StringBuilder();
+        sb.Append(unitSource);
+        sb.Append('/');
+        sb.Append(type.ToString());
         for (int i = 0; i < unitPositions.Length; i++)
         {
             if (unitPositions[i].transform.childCount <= 0)
             {
-                Instantiate(Resources.Load<GameObject>(unitSource), unitPositions[i].transform);
+                Instantiate(Resources.Load<GameObject>(sb.ToString()), unitPositions[i].transform);
                 break;
             }
         }
@@ -91,7 +96,7 @@ public class UnitInfo : MonoBehaviour
     }
     private void OnUpgrade()
     {
-        unitData = GameDataManager.Instance.unitData[UnitIndex + 1];
+        // unitData = GameDataManager.Instance.unitData[UnitIndex + 1];
         unitData.AttackSpeed *= 0.5f;
         upgradBtn.interactable = false;
         inGameManager.UnitUpdate(this);

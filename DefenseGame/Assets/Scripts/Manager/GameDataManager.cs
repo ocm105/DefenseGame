@@ -27,9 +27,9 @@ public class GameDataManager : SingletonMonoBehaviour<GameDataManager>
                 NetworkManager.Instance.GetUnitDataRequest((resData) => unitData = resData)
             );
 
-            for (int i = 0; i < unitData.Count; i++)
+            for (int i = 1; i < unitData.Count + 1; i++)
             {
-                unitData[20001 + i].SetUnitStat(unitData[20001 + i].Effect);
+                unitData[Constants.GameIndex.Unit + i].SetUnitStat(unitData[Constants.GameIndex.Unit + i].Effect);
             }
 
             // for (int i = 0; i < unitData.Count; i++)
