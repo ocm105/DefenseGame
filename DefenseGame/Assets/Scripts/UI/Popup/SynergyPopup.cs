@@ -4,19 +4,20 @@ using System;
 using DG.Tweening;
 using System.Collections.Generic;
 
+
+
 public class SynergyPopup : UIPopup
 {
-    private const string Synergy = "Synergy";
+    private const string Synergy = "Prefabs/Synergy";
     [SerializeField] GameObject frame;
     [SerializeField] Transform contentPos;
 
     private Synergy[] synergys;
-    private Dictionary<SynergyType, int> SynergyDic = new Dictionary<SynergyType, int>();
 
-    public PopupState Open(Dictionary<SynergyType, int> dic)
+    public PopupState Open(int[] infos)
     {
         ShowLayer();
-        SynergyDic = dic;
+        SetSynergy(infos);
         return state;
     }
     public override void Close()
@@ -26,16 +27,17 @@ public class SynergyPopup : UIPopup
     protected override void OnFirstShow()
     {
         CreateSynergyPrefab();
+
     }
     protected override void OnShow()
     {
         ShowTween();
-        SetSynergy(SynergyDic);
     }
 
     private void CreateSynergyPrefab()
     {
         synergys = new Synergy[(int)SynergyType.Max];
+
         for (int i = 0; i < synergys.Length; i++)
         {
             synergys[i] = Instantiate(Resources.Load<GameObject>(Synergy), contentPos).GetComponent<Synergy>();
@@ -43,14 +45,14 @@ public class SynergyPopup : UIPopup
         }
     }
 
-    private void SetSynergy(Dictionary<SynergyType, int> dic)
+    private void SetSynergy(int[] infos)
     {
         SynergyType type;
-        for (int i = 0; i < dic.Count; i++)
+        for (int i = 0; i < infos.Length; i++)
         {
             type = (SynergyType)i;
-            synergys[i].SetInfo(type, dic[type]);
-            if (dic[type] > 0)
+            synergys[i].SetInfo(type, infos[i]);
+            if (infos[i] > 0)
                 synergys[i].gameObject.SetActive(true);
         }
     }

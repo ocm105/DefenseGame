@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.EventSystems;
+using System;
 
 public partial class InGameManager : MonoBehaviour
 {
@@ -11,8 +11,7 @@ public partial class InGameManager : MonoBehaviour
     private int nowUnitSpawnCount = 0;             // 현재 스폰 갯수
     private List<UnitInfo> unitPool = new List<UnitInfo>();
     private Dictionary<Vector2, UnitInfo> UnitDic = new Dictionary<Vector2, UnitInfo>();
-    public Dictionary<SynergyType, int> SynergyDic = new Dictionary<SynergyType, int>();
-
+    public int[] SynergyInfos = new int[(int)SynergyType.Max];
 
     /// <summary> 유닛 풀링 </summary>
     private void UnitPooling()
@@ -59,6 +58,7 @@ public partial class InGameManager : MonoBehaviour
         {
             bool isSpawn = false;
             int unitIndex = UnitRandom();
+            SetSynergy(unitIndex);
             for (int i = 0; i < unitPool.Count; i++)
             {
                 // 소환하려는 같은 unit이 있을 때
@@ -97,7 +97,7 @@ public partial class InGameManager : MonoBehaviour
     /// <summary> 유닛 랜덤 </summary>
     private int UnitRandom()
     {
-        int unitDataIndex = Random.Range((int)UnitType.Unit1, (int)UnitType.Max);
+        int unitDataIndex = UnityEngine.Random.Range((int)UnitType.Unit1, (int)UnitType.Max);
 
         return unitDataIndex;
     }
@@ -107,7 +107,7 @@ public partial class InGameManager : MonoBehaviour
         int ran;
         do
         {
-            ran = Random.Range(0, gridInfo.GirdPos.Length);
+            ran = UnityEngine.Random.Range(0, gridInfo.GirdPos.Length);
         } while (UnitDic[gridInfo.GirdPos[ran]] != null);
 
         return gridInfo.GirdPos[ran];
@@ -142,5 +142,14 @@ public partial class InGameManager : MonoBehaviour
         gameView.UnitStatusOpen(info.unitSprite, info.UnitData.Attack, info.UnitData.AttackSpeed);
     }
 
+    private void SetSynergy(int index)
+    {
+        int num = GameDataManager.Instance.unitData[index].Synergy.Length;
+        for (int i = 0; i < num; i++)
+        {
+            SynergyType type = Enum.Parse<SynergyType>(GameDataManager.Instance.unitData[index].Synergy[i]);
+            SynergyInfos[(int)type]++;
+        }
+    }
 
 }

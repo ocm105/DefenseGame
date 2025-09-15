@@ -661,7 +661,7 @@ public class CSVReader
 
     private static void SetDefaultArray(Type fieldType, string key, string value, JSONNode node)
     {
-        string[] elements = value.TrimStart('{').TrimEnd('}').Split(',');
+        string[] elements = value.TrimStart('{').TrimEnd('}').Split('&');
         if (elements.Length > 0)
         {
             node[key].AsJson = new StringArray(elements);

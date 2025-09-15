@@ -83,7 +83,7 @@ public class GameView : UIView
     {
         if (!isSynergyOn)
         {
-            Les_UIManager.Instance.Popup<SynergyPopup>().Open(gameManager.SynergyDic);
+            Les_UIManager.Instance.Popup<SynergyPopup>().Open(gameManager.SynergyInfos);
         }
         else
         {
