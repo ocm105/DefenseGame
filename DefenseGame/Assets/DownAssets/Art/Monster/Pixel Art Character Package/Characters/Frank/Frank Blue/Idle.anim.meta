@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 79577f2b5b9fa6c4ba2e93ac630dd552
+guid: 5428c51602627fa44b69b05095efecba
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 7400000
@@ -12,5 +12,5 @@ AssetOrigin:
   packageName: Pixel Art Character Package
   packageVersion: 1.0
   assetPath: Assets/GDD - Quinnipiac/Pixel Art Character Package/Characters/Frank/Frank
-    Blue/Idle.anim
+    Dark Blue/Idle.anim
   uploadId: 746928

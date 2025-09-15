@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4e37e8d99b5ee81438d734e00729449f
+guid: ce6b7a4ae87d4e046a1a991629723871
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 7400000
@@ -12,5 +12,5 @@ AssetOrigin:
   packageName: Pixel Art Character Package
   packageVersion: 1.0
   assetPath: Assets/GDD - Quinnipiac/Pixel Art Character Package/Characters/Frank/Frank
-    Dark Blue/Crouch.anim
+    Blue/Crouch.anim
   uploadId: 746928

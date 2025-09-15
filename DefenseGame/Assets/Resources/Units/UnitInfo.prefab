@@ -85,7 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3740155758963798364}
   m_Layer: 5
-  m_Name: pos3
+  m_Name: pos2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +107,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 20, y: -30}
+  m_AnchoredPosition: {x: 20, y: -20}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &539303005872866917
@@ -143,8 +143,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5303320544327106369}
-  - {fileID: 8067398228214256314}
   - {fileID: 3740155758963798364}
+  - {fileID: 8067398228214256314}
   - {fileID: 3903550582263832544}
   - {fileID: 2531743570902256705}
   - {fileID: 2038758204991743163}
@@ -479,7 +479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbd7b6bd3407344ea2afb39ae7f71ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsters: []
 --- !u!1 &2457631047539049230
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,7 +525,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8067398228214256314}
   m_Layer: 5
-  m_Name: pos2
+  m_Name: pos3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -548,7 +547,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20, y: -30}
+  m_AnchoredPosition: {x: -20, y: -20}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3532800009376133552
@@ -587,7 +586,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -50}
+  m_AnchoredPosition: {x: 0, y: -85}
   m_SizeDelta: {x: 90, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &906838834295246030
@@ -815,7 +814,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 20}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8175454975981020975
@@ -872,13 +871,11 @@ MonoBehaviour:
   UnitIndex: -1
   unitPositions:
   - {fileID: 5207788742709132692}
-  - {fileID: 3513944853195233704}
   - {fileID: 456771814009061424}
+  - {fileID: 3513944853195233704}
   unitParent: {fileID: 8048424593223458864}
   dragPos: {fileID: 4642926775850073506}
   rangePos: {fileID: 3903550582263832544}
-  levelpos: {fileID: 0}
-  upGradePos: {fileID: 2038758204991743163}
   rangeObject: {fileID: 8239795369330880475}
   level: {fileID: 7265909608076725901}
   upgradBtn: {fileID: 6142811853652591680}
