@@ -12,6 +12,7 @@ public class UnitInfo : MonoBehaviour
     [HideInInspector] public int UnitIndex = -1;
     private UnitData unitData;
     public UnitData UnitData { get { return unitData; } }
+    public Sprite unitSprite;
 
     private string ability;
     public string Ability { set { ability = value; } }
@@ -76,6 +77,7 @@ public class UnitInfo : MonoBehaviour
         sb.Append(unitSource);
         sb.Append('/');
         sb.Append(type.ToString());
+        unitSprite = Resources.Load<Sprite>($"Image/{sb.ToString()}");
         for (int i = 0; i < unitPositions.Length; i++)
         {
             if (unitPositions[i].transform.childCount <= 0)
@@ -95,7 +97,6 @@ public class UnitInfo : MonoBehaviour
     }
     private void OnUpgrade()
     {
-        // unitData = GameDataManager.Instance.unitData[UnitIndex + 1];
         unitData.AttackSpeed *= 0.5f;
         upgradBtn.interactable = false;
         inGameManager.UnitUpdate(this);

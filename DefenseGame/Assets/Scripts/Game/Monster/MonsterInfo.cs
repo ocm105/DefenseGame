@@ -8,7 +8,7 @@ public class MonsterInfo : MonoBehaviour
     [SerializeField] Slider hpSlider;
     public float HPvalue { get { return hpSlider.value; } set { hpSlider.value = value; } }
     public MonsterData monsterData { get; set; }
-    public float speed = 1f;
+    public float speed = 100f;
 
     private void Awake()
     {

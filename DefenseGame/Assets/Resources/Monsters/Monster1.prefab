@@ -279,11 +279,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5bce314ae9cc44eae6babfd5dd4882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inGameManager: {fileID: 0}
   hpSlider: {fileID: 6225098409199975801}
-  hp: 100
-  def: 0
-  speed: 0.5
-  gold: 10
+  speed: 100
 --- !u!114 &5307552693244278967
 MonoBehaviour:
   m_ObjectHideFlags: 0

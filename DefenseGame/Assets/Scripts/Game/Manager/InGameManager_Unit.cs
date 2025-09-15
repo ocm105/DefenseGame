@@ -139,7 +139,7 @@ public partial class InGameManager : MonoBehaviour
     /// <summary> 유닛 Undate </summary>
     public void UnitUpdate(UnitInfo info)
     {
-        // gameView.UnitStatusOpen(info.UnitImage.sprite, info.unitData.Attack, info.unitData.AttackSpeed);
+        gameView.UnitStatusOpen(info.unitSprite, info.UnitData.Attack, info.UnitData.AttackSpeed);
     }
 
 
