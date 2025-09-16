@@ -51,10 +51,10 @@ public enum SynergyType
 }
 public enum UnitType
 {
-    Unit1 = Constants.GameIndex.Unit + 1,
-    Unit2 = Constants.GameIndex.Unit + 2,
-    Unit3 = Constants.GameIndex.Unit + 3,
-    Unit4 = Constants.GameIndex.Unit + 4,
+    Unit1 = GameIndex.Unit + 1,
+    Unit2 = GameIndex.Unit + 2,
+    Unit3 = GameIndex.Unit + 3,
+    Unit4 = GameIndex.Unit + 4,
     // Unit5 = Constants.GameIndex.Unit + 5,
     // Unit6 = Constants.GameIndex.Unit + 6,
     // Unit7 = Constants.GameIndex.Unit + 7,
@@ -83,7 +83,7 @@ public enum MonsterState
 }
 public enum MonsterType
 {
-    Monster1 = Constants.GameIndex.Monster + 1,
+    Monster1 = GameIndex.Monster + 1,
 }
 #endregion
 

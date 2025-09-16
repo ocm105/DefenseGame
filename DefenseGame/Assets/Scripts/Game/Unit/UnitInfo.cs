@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class UnitInfo : MonoBehaviour
 {
-    private string unitSource = Constants.Character.Unit;
     private string LevelSource = "Image/Level/";
     [HideInInspector] public InGameManager inGameManager;
     [HideInInspector] public int UnitIndex = -1;
@@ -73,16 +72,13 @@ public class UnitInfo : MonoBehaviour
     }
     public void UnitCreate(UnitType type)
     {
-        StringBuilder sb = new StringBuilder();
-        sb.Append(unitSource);
-        sb.Append('/');
-        sb.Append(type.ToString());
-        unitSprite = Resources.Load<Sprite>($"Image/{sb.ToString()}");
+        unitSprite = Resources.Load<Sprite>(UnitResource.GetImage(unitData.Level, type.ToString()));
+
         for (int i = 0; i < unitPositions.Length; i++)
         {
             if (unitPositions[i].transform.childCount <= 0)
             {
-                Instantiate(Resources.Load<GameObject>(sb.ToString()), unitPositions[i].transform);
+                Instantiate(Resources.Load<GameObject>(UnitResource.GetPrefab(unitData.Level, type.ToString())), unitPositions[i].transform);
                 break;
             }
         }
@@ -93,10 +89,14 @@ public class UnitInfo : MonoBehaviour
     public void OnClick(bool isOn = true)
     {
         rangeObject.SetActive(isOn);
-        upgradBtn.gameObject.SetActive(isOn);
+        if (isFull) upgradBtn.gameObject.SetActive(isOn);
     }
     private void OnUpgrade()
     {
+        for (int i = 0; i < unitPositions.Length; i++)
+        {
+            Destroy(unitPositions[i].transform.GetChild(0).gameObject);
+        }
         unitData.AttackSpeed *= 0.5f;
         upgradBtn.interactable = false;
         inGameManager.UnitUpdate(this);

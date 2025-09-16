@@ -4,7 +4,6 @@ using System;
 
 public partial class InGameManager : MonoBehaviour
 {
-    private string unitSource = Constants.Character.Unit + "/UnitInfo";
     [SerializeField] GameObject unitGroup;
     [SerializeField] GridInfo gridInfo;
     private int maxUnitCreateCount = 17;            // 유닛 최고 생성 갯수
@@ -25,7 +24,7 @@ public partial class InGameManager : MonoBehaviour
     /// <summary> 유닛 생성 </summary>
     private UnitInfo UnitCreate()
     {
-        GameObject obj = Instantiate(Resources.Load<GameObject>(unitSource), unitGroup.transform);
+        GameObject obj = Instantiate(Resources.Load<GameObject>(UnitResource.UnitInfo), unitGroup.transform);
         UnitInfo unitInfo = obj.GetComponent<UnitInfo>();
         unitInfo.inGameManager = this;
         obj.SetActive(false);

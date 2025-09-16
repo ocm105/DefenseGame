@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public partial class InGameManager : MonoBehaviour
 {
-    private string monsterSource = Constants.Character.Monster + "/Monster1";
     [SerializeField] GameObject monsterGroup;
     [SerializeField] PathInfo monsterPathInfo;
     private int maxMonsterCreateCount = 60;                         // 몬스터 최고 생성 갯수
@@ -26,7 +25,7 @@ public partial class InGameManager : MonoBehaviour
     /// <summary> 몬스터 생성 </summary>
     private GameObject MonsterCreate()
     {
-        GameObject obj = Instantiate(Resources.Load<GameObject>(monsterSource), monsterGroup.transform);
+        GameObject obj = Instantiate(Resources.Load<GameObject>(UnitResource.Monster), monsterGroup.transform);
         MonsterControl mc = obj.GetComponent<MonsterControl>();
         obj.GetComponent<MonsterInfo>().inGameManager = this;
         mc.MovePath(monsterPathInfo.MonsterMovePath);
@@ -51,7 +50,7 @@ public partial class InGameManager : MonoBehaviour
         }
         GameObject obj = monsterPool.Dequeue();
         MonsterInfo mc = obj.GetComponent<MonsterInfo>();
-        int monsterDataIndex = GameDataManager.Instance.waveData[Constants.GameIndex.Wave + +waveIndex].Summon;
+        int monsterDataIndex = GameDataManager.Instance.waveData[GameIndex.Wave + +waveIndex].Summon;
 
         mc.monsterData = GameDataManager.Instance.monsterData[monsterDataIndex];
         obj.SetActive(true);

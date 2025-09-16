@@ -29,7 +29,7 @@ public class GameDataManager : SingletonMonoBehaviour<GameDataManager>
 
             for (int i = 1; i < unitData.Count + 1; i++)
             {
-                unitData[Constants.GameIndex.Unit + i].SetUnitStat(unitData[Constants.GameIndex.Unit + i].Effect);
+                unitData[GameIndex.Unit + i].SetUnitStat(unitData[GameIndex.Unit + i].Effect);
             }
 
             // for (int i = 0; i < unitData.Count; i++)
