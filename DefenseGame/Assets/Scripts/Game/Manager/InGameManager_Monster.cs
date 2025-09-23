@@ -13,6 +13,12 @@ public partial class InGameManager : MonoBehaviour
     private float monsterSpawnTime = 0.5f;                 // 몬스터 스폰 시간
     private Queue<GameObject> monsterPool = new Queue<GameObject>();
 
+    private int stageLevel = 1;
+
+    private GameObject MonsterResource()
+    {
+        return Resources.Load<GameObject>(UnitResource.GetMonster(GameDataManager.Instance.stageData[GameIndex.Stage + stageLevel].ResourceMonster));
+    }
 
     /// <summary> 몬스터 풀링 </summary>
     private void MonsterPooling()
@@ -25,7 +31,7 @@ public partial class InGameManager : MonoBehaviour
     /// <summary> 몬스터 생성 </summary>
     private GameObject MonsterCreate()
     {
-        GameObject obj = Instantiate(Resources.Load<GameObject>(UnitResource.Monster), monsterGroup.transform);
+        GameObject obj = Instantiate(MonsterResource(), monsterGroup.transform);
         MonsterControl mc = obj.GetComponent<MonsterControl>();
         obj.GetComponent<MonsterInfo>().inGameManager = this;
         mc.MovePath(monsterPathInfo.MonsterMovePath);

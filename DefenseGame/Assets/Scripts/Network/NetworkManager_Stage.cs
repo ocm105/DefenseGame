@@ -16,7 +16,7 @@ public class StageData
 }
 public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
 {
-    public const string STAGE_DATA_PATH = "https://docs.google.com/spreadsheets/d/1e4GXhna_NQs46TP6zfRHyQNMeJgYcRHuq3SaiJMA37A/export?format=csv";
+    public const string STAGE_DATA_PATH = "https://docs.google.com/spreadsheets/d/1taP-VXQClrxg7wuJeHwsN3dFriGW2LTNAI10S6jLw3A/export?format=csv";
 
     public async UniTask GetStageDataRequest(Action<Dictionary<int, StageData>> callback = null)
     {

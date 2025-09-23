@@ -15,7 +15,7 @@ public static class Scene
 public static class UnitResource
 {
     public const string UnitInfo = "Units/UnitInfo";
-    public const string Monster = "Monsters/Monster1";
+    public const string Monster = "Monsters/";
     public static string GetPrefab(int lv, string str)
     {
         StringBuilder sb = new StringBuilder();
@@ -31,6 +31,13 @@ public static class UnitResource
         sb.Append("Units/Lv");
         sb.Append(lv);
         sb.Append('/');
+        sb.Append(str);
+        return sb.ToString();
+    }
+    public static string GetMonster(string str)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("Monsters/");
         sb.Append(str);
         return sb.ToString();
     }
