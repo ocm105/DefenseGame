@@ -29,9 +29,9 @@ public class GameDataManager : SingletonMonoBehaviour<GameDataManager>
                 NetworkManager.Instance.GetStageDataRequest((resData) => stageData = resData)
             );
 
-            for (int i = 1; i < unitData.Count + 1; i++)
+            foreach (var unit in unitData.Values)
             {
-                unitData[GameIndex.Unit + i].SetUnitStat(unitData[GameIndex.Unit + i].Effect);
+                unit.SetUnitStat(unit.Effect);
             }
         }
         isDataLoad_Completed = true;

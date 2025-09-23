@@ -1,6 +1,7 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public partial class InGameManager : MonoBehaviour
 {
@@ -64,7 +65,7 @@ public partial class InGameManager : MonoBehaviour
                 if (unitPool[i].UnitIndex == unitIndex && unitPool[i].isFull == false)
                 {
                     GoldSet(-20);
-                    unitPool[i].UnitCreate((UnitType)unitIndex);
+                    unitPool[i].UnitCreate();
                     nowUnitSpawnCount++;
                     isSpawn = true;
                     break;
@@ -82,7 +83,7 @@ public partial class InGameManager : MonoBehaviour
 
                         unitPool[i].SetData(unitIndex);
                         unitPool[i].SetPosition(grid);
-                        unitPool[i].UnitCreate((UnitType)unitIndex);
+                        unitPool[i].UnitCreate();
                         unitPool[i].Ability = GetGridAbility(grid);
                         UnitDic[grid] = unitPool[i];
                         nowUnitSpawnCount++;
@@ -96,10 +97,31 @@ public partial class InGameManager : MonoBehaviour
     /// <summary> 유닛 랜덤 </summary>
     private int UnitRandom()
     {
-        int unitDataIndex = UnityEngine.Random.Range((int)UnitType.Unit1, (int)UnitType.Max);
+        int totalWeight = 0;
+        var list = GameDataManager.Instance.unitData.Values;
+        foreach (var item in list)
+        {
+            totalWeight += item.Weight;
+        }
 
-        return unitDataIndex;
+        int randomValue = UnityEngine.Random.Range(0, totalWeight);
+
+        int cumulative = 0;
+        foreach (var item in list)
+        {
+            cumulative += item.Weight;
+            if (randomValue < cumulative)
+            {
+                return item.Index;
+            }
+        }
+
+        return 0;
+        //int unitDataIndex = UnityEngine.Random.Range((int)UnitType.Unit1, (int)UnitType.Max);
+
+        //return unitDataIndex;
     }
+
     /// <summary> 유닛 랜덤 위치 </summary>
     private Vector2 UnitRandomPos()
     {

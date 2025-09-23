@@ -70,15 +70,15 @@ public class UnitInfo : MonoBehaviour
         }
         SetPosition(pos);
     }
-    public void UnitCreate(UnitType type)
+    public void UnitCreate()
     {
-        unitSprite = Resources.Load<Sprite>(UnitResource.GetImage(unitData.Level, type.ToString()));
+        unitSprite = Resources.Load<Sprite>(UnitResource.GetImage(unitData.Level, unitData.Resource));
 
         for (int i = 0; i < unitPositions.Length; i++)
         {
             if (unitPositions[i].transform.childCount <= 0)
             {
-                Instantiate(Resources.Load<GameObject>(UnitResource.GetPrefab(unitData.Level, type.ToString())), unitPositions[i].transform);
+                Instantiate(Resources.Load<GameObject>(UnitResource.GetPrefab(unitData.Level, unitData.Resource)), unitPositions[i].transform);
                 break;
             }
         }
