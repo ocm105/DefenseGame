@@ -8,6 +8,7 @@ public class GameDataManager : SingletonMonoBehaviour<GameDataManager>
     public Dictionary<int, MonsterData> monsterData = new Dictionary<int, MonsterData>();
     public Dictionary<int, WaveData> waveData = new Dictionary<int, WaveData>();
     public Dictionary<int, UnitData> unitData = new Dictionary<int, UnitData>();
+    public Dictionary<int, StageData> stageData = new Dictionary<int, StageData>();
     public bool isDataLoad_Completed { get; private set; }
 
     protected override void OnAwakeSingleton()
@@ -24,24 +25,14 @@ public class GameDataManager : SingletonMonoBehaviour<GameDataManager>
             (
                 NetworkManager.Instance.GetMonsterDataRequest((resData) => monsterData = resData),
                 NetworkManager.Instance.GetWaveDataRequest((resData) => waveData = resData),
-                NetworkManager.Instance.GetUnitDataRequest((resData) => unitData = resData)
+                NetworkManager.Instance.GetUnitDataRequest((resData) => unitData = resData),
+                NetworkManager.Instance.GetStageDataRequest((resData) => stageData = resData)
             );
 
             for (int i = 1; i < unitData.Count + 1; i++)
             {
                 unitData[GameIndex.Unit + i].SetUnitStat(unitData[GameIndex.Unit + i].Effect);
             }
-
-            // for (int i = 0; i < unitData.Count; i++)
-            // {
-            //     for (int j = 0; j < unitData[20001 + i].unitStats.Length; j++)
-            //     {
-            //         Debug.Log(unitData[20001 + i].unitStats[j].value1);
-            //         Debug.Log(unitData[20001 + i].unitStats[j].value2);
-            //         Debug.Log(unitData[20001 + i].unitStats[j].value3);
-            //     }
-            // }
-
         }
         isDataLoad_Completed = true;
     }

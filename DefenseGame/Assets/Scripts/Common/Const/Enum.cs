@@ -32,6 +32,15 @@ public enum GameState
     Pause,
     End
 }
+public enum StageType
+{
+    PLAINS,
+    DESERT,
+    BEACH,
+    JUNGLE,
+    SNOWYFIELD,
+    DUNGEON
+}
 #endregion
 
 #region Unit
@@ -72,7 +81,6 @@ public enum UnitType
     Max
 }
 #endregion
-
 
 #region Monster
 public enum MonsterState

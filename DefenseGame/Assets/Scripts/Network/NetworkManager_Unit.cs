@@ -1,9 +1,7 @@
 using System;
 using UnityEngine;
 using UISystem;
-using System.Collections;
 using System.Collections.Generic;
-using SimpleJSONUtil;
 using Cysharp.Threading.Tasks;
 
 [Serializable]
