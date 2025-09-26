@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Unit
   - Monster
+  - UnitGrid
   layers:
   - Default
   - TransparentFX

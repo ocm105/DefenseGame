@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using Cysharp.Threading.Tasks;
 
 public partial class InGameManager : MonoBehaviour
 {
@@ -12,11 +13,12 @@ public partial class InGameManager : MonoBehaviour
     private bool wave = false;
     private int gold = 0;
 
-    private GameState gameState;
+    private GameState gameState = GameState.End;
     public GameState GameState { get { return gameState; } }
 
-    private void Init()
+    private async UniTask Init()
     {
+        await UniTask.WaitUntil(() => gameState == GameState.Start);
         waveTime = 3;
         GoldSet(100);
         MonsterPooling();
@@ -26,7 +28,7 @@ public partial class InGameManager : MonoBehaviour
     }
     private void Start()
     {
-        Init();
+        Init().Forget();
     }
 
     private void Update()
@@ -74,6 +76,7 @@ public partial class InGameManager : MonoBehaviour
         switch (state)
         {
             case GameState.Start:
+
                 break;
             case GameState.Pause:
                 break;

@@ -1,58 +1,82 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UnitDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class UnitDrag : MonoBehaviour
 {
-    [SerializeField] UnitInfo unitInfo;
-    public UnitInfo UnitInfo { get { return unitInfo; } }
-    [SerializeField] RectTransform dragObject;
-    [SerializeField] Vector2 gridCellSize;      // grid 크기 (1유닛)
-    [SerializeField] Vector2 dragClampPos;      // Drag 한정위치
-    private Vector2 snapPos;                    // snap 위치
-    private Vector2 dragPos;                    // Drag 하고 있는 위치
-    private Vector2 offset;                     // 클릭시 Pivot 과 ClickPoint의 격차
-    private float gridOffsetX;
-    private RectTransform unitRect;
-
+    private UnitGrid originGrid;
+    private UnitGrid otherGrid;
+    private UnitInfo unitInfo;
+    private Camera mainCamera;
+    private Ray ray;
+    private RaycastHit hit;
     private bool isDragging = false;
-    private void Awake()
-    {
-        unitRect = this.GetComponent<RectTransform>();
-    }
 
-    /// <summary> Drag 시작 </summary>
-    public void OnBeginDrag(PointerEventData eventData)
+    private void Start()
     {
-        isDragging = true;
-        dragPos = eventData.position;
-        offset = dragObject.anchoredPosition - new Vector2(dragPos.x, dragPos.y);
-        dragObject.gameObject.SetActive(isDragging);
+        mainCamera = Camera.main;
     }
-    /// <summary> Drag 중 </summary>
-    public void OnDrag(PointerEventData eventData)
+    private void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.CompareTag("UnitGrid"))
+                {
+                    originGrid = hit.collider.GetComponent<UnitGrid>();
+
+                    // 클릭한 grid에 유닛이 있을 때
+                    if (originGrid.IsUnit && unitInfo == null)
+                    {
+                        unitInfo = originGrid.UnitInfo;
+                        originGrid.ChageColor(isDragging);
+                        isDragging = true;
+                    }
+                }
+            }
+        }
         if (isDragging)
         {
-            dragPos = eventData.position + offset;
+            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.CompareTag("UnitGrid"))
+                {
+                    if (otherGrid == null || otherGrid != hit.collider.GetComponent<UnitGrid>())
+                    {
+                        originGrid.ChageColor(false);
+                        otherGrid.ChageColor(false);
+                        otherGrid = hit.collider.GetComponent<UnitGrid>();
+                        otherGrid.ChageColor(isDragging);
+                    }
+                }
+            }
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            isDragging = false;
 
-            snapPos.y = Mathf.Round(dragPos.y / gridCellSize.y) * gridCellSize.y;
+            if (unitInfo != null)
+            {
+                if (otherGrid != null && otherGrid.IsUnit)
+                {
+                    UnitInfo temp = unitInfo;
+                    originGrid.UnitMove(otherGrid.UnitInfo);
+                    otherGrid.UnitMove(temp);
+                }
+                else
+                {
+                    otherGrid.UnitMove(originGrid.UnitInfo);
+                    originGrid.UnitInfo = null;
+                }
+            }
 
-            gridOffsetX = snapPos.y == 0 ? 0 : gridCellSize.x * 0.5f;
-            snapPos.x = Mathf.Round((dragPos.x - gridOffsetX) / gridCellSize.x) * gridCellSize.x + gridOffsetX;
-
-            dragObject.anchoredPosition = new Vector2
-            (
-                Mathf.Clamp(snapPos.x, -dragClampPos.x - gridOffsetX, dragClampPos.x + gridOffsetX),
-                Mathf.Clamp(snapPos.y, -dragClampPos.y, dragClampPos.y)
-            );
+            originGrid.ChageColor(isDragging);
+            otherGrid.ChageColor(isDragging);
+            originGrid = null;
+            otherGrid = null;
+            unitInfo = null;
         }
     }
-    /// <summary> Drag 끝 </summary>
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        isDragging = false;
-        unitInfo.inGameManager.ChangeGridUnit(unitInfo, unitRect.anchoredPosition, dragObject.anchoredPosition);
-        dragObject.gameObject.SetActive(isDragging);
-    }
-
 }

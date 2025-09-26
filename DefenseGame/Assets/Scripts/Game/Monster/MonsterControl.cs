@@ -3,21 +3,20 @@ using UnityEngine;
 
 public class MonsterControl : MonoBehaviour, IDamage
 {
-    [SerializeField] MonsterInfo monsterInfo;
-    [SerializeField] Animator animator;
-    [SerializeField] Transform monsterPos;
+    private MonsterInfo monsterInfo;
+    private Animator animator;
+    private SpriteRenderer sprite;
     private Transform[] movePath;
-    private float monsterRotX;
     private int movePathIndex = 0;
-
-    private MonsterData monsterData;
     public Action<MonsterInfo> dieAction;
     private MonsterState monsterState;
     public MonsterState MonsterState { get { return monsterState; } }
 
-    private void Start()
+    private void Awake()
     {
-        monsterRotX = monsterPos.localScale.x;
+        monsterInfo = this.GetComponent<MonsterInfo>();
+        animator = this.GetComponent<Animator>();
+        sprite = this.GetComponent<SpriteRenderer>();
     }
     public void MonsterStart()
     {
@@ -32,7 +31,7 @@ public class MonsterControl : MonoBehaviour, IDamage
                 switch (monsterState)
                 {
                     case MonsterState.Arive:
-                        monsterPos.position = Vector2.MoveTowards(monsterPos.position, movePath[movePathIndex].position, monsterInfo.speed * Time.deltaTime);
+                        this.transform.position = Vector2.MoveTowards(this.transform.position, movePath[movePathIndex].position, monsterInfo.speed * Time.deltaTime);
                         DistanceCheck();
                         break;
                     case MonsterState.Stop:
@@ -71,16 +70,16 @@ public class MonsterControl : MonoBehaviour, IDamage
     /// <summary> 도착 - 현재 거리 체크 </summary>
     private void DistanceCheck()
     {
-        if (Vector2.Distance(monsterPos.position, movePath[movePathIndex].position) <= 0.05f)
+        if (Vector2.Distance(this.transform.position, movePath[movePathIndex].position) <= 0.05f)
         {
             movePathIndex++;
             if (movePathIndex >= movePath.Length)
                 movePathIndex = 0;
 
             if (movePathIndex >= movePath.Length * 0.5f)
-                monsterPos.localScale = new Vector2(-monsterRotX, monsterPos.localScale.y);
+                sprite.flipX = true;
             else
-                monsterPos.localScale = new Vector2(monsterRotX, monsterPos.localScale.y);
+                sprite.flipX = false;
         }
     }
     #endregion
@@ -94,7 +93,7 @@ public class MonsterControl : MonoBehaviour, IDamage
     /// <summary> 실질적 데미지 입는 함수 </summary>
     private void Hit(float damege)
     {
-        monsterInfo.HPvalue -= damege - monsterInfo.monsterData.DEF;
+        monsterInfo.MonserHpSet(damege - monsterInfo.monsterData.DEF);
 
         // Debug.Log($"{damege}를 입음 HP {monsterInfo.HPvalue}");
         if (monsterInfo.HPvalue <= 0) Die();
@@ -106,6 +105,6 @@ public class MonsterControl : MonoBehaviour, IDamage
     public void AniEvent_Die()
     {
         dieAction.Invoke(monsterInfo);
-        monsterPos.localScale = new Vector2(monsterRotX, monsterPos.localScale.y);
+        sprite.flipX = false;
     }
 }

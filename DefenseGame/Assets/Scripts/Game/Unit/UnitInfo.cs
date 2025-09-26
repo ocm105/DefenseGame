@@ -11,10 +11,7 @@ public class UnitInfo : MonoBehaviour
     [HideInInspector] public int UnitIndex = -1;
     private UnitData unitData;
     public UnitData UnitData { get { return unitData; } }
-    public Sprite unitSprite;
-
-    private string ability;
-    public string Ability { set { ability = value; } }
+    public Sprite unitSprite { get; private set; }
 
     [SerializeField] GameObject[] unitPositions;
     public bool isFull
@@ -30,12 +27,10 @@ public class UnitInfo : MonoBehaviour
         }
     }
 
-    [SerializeField] RectTransform unitParent;
-    [SerializeField] RectTransform dragPos;
-    [SerializeField] RectTransform rangePos;
+    [SerializeField] Transform rangePos;
     public UnitAttackTrigger AtkTrigger { get; private set; }
     [SerializeField] GameObject rangeObject;
-    [SerializeField] Image level;
+    [SerializeField] SpriteRenderer level;
     [SerializeField] Button upgradBtn;
 
     private void Awake()
@@ -56,19 +51,10 @@ public class UnitInfo : MonoBehaviour
         rangePos.localScale = new Vector3(unitData.Range, unitData.Range);
         level.sprite = Resources.Load<Sprite>($"{LevelSource}{unitData.Level}");
     }
-    public void SetPosition(Vector2 pos)
+    public void SetPosition(Transform parent)
     {
-        unitParent.anchoredPosition = pos;
-        dragPos.anchoredPosition = pos;
-    }
-    public async UniTaskVoid MovePosition(Vector2 pos)
-    {
-        while (Vector2.Distance(unitParent.anchoredPosition, pos) > 0.05f)
-        {
-            unitParent.anchoredPosition = Vector2.MoveTowards(unitParent.anchoredPosition, pos, Time.deltaTime * 1000);
-            await UniTask.Yield();
-        }
-        SetPosition(pos);
+        this.transform.parent = parent;
+        this.transform.localPosition = Vector2.zero;
     }
     public void UnitCreate()
     {

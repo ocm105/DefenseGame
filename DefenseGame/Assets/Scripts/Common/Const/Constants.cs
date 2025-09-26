@@ -19,19 +19,13 @@ public static class UnitResource
     public static string GetPrefab(int lv, string str)
     {
         StringBuilder sb = new StringBuilder();
-        sb.Append("Units/Lv");
-        sb.Append(lv);
-        sb.Append('/');
-        sb.Append(str);
+        sb.Append("Units/Unit1");
         return sb.ToString();
     }
     public static string GetImage(int lv, string str)
     {
         StringBuilder sb = new StringBuilder();
-        sb.Append("Units/Lv");
-        sb.Append(lv);
-        sb.Append('/');
-        sb.Append(str);
+        sb.Append("Units/Unit1");
         return sb.ToString();
     }
     public static string GetMonster(string str)
