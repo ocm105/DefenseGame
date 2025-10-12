@@ -5,8 +5,13 @@ using UnityEngine.EventSystems;
 public partial class InGameManager : MonoBehaviour
 {
     private UnitInfo clickUnit;                  // 유닛 클릭 Event 용 변수
-    private PointerEventData pointerEventData;
-    private List<RaycastResult> pointerResults = new List<RaycastResult>();
+    private Camera mainCam;
+    private Vector2 clickPos;
+    private RaycastHit2D[] hits;
+    private void Awake()
+    {
+        mainCam = Camera.main;
+    }
 
     /// <summary> Unit 클릭 </summary>
     private void UnitClickEvent()
@@ -17,38 +22,40 @@ public partial class InGameManager : MonoBehaviour
         if (Input.touchCount > 0)
 #endif
         {
-            pointerEventData = new PointerEventData(EventSystem.current);
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-            pointerEventData.position = Input.mousePosition;
+            clickPos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 #elif UNITY_ANDROID
-            pointerEventData.position = Input.GetTouch(0).position;
+            clickPos = mainCam.ScreenToWorldPoint(Input.GetTouch(0).position);
 #endif
-            EventSystem.current.RaycastAll(pointerEventData, pointerResults);
-
-            if (pointerResults.Count > 0)
+            hits = Physics2D.RaycastAll(clickPos, Vector2.zero);
+            if (hits.Length > 0)
             {
-                for (int i = 0; i < pointerResults.Count; i++)
+                for (int i = 0; i < hits.Length; i++)
                 {
                     // 클릭한게 unit일때
-                    if (pointerResults[i].gameObject.CompareTag("UnitGrid"))
+                    if (hits[i].collider.CompareTag("UnitGrid"))
                     {
                         // 이전에 클릭한 unit이 있을 때
                         if (clickUnit != null)
                         {
                             // 같은 unit을 클릭하지 않았을 때
-                            if (clickUnit.gameObject != pointerResults[i].gameObject)
+                            if (clickUnit.gameObject != hits[i].collider.gameObject)
                             {
                                 clickUnit.OnClick(false);
-                                clickUnit = pointerResults[i].gameObject.GetComponent<UnitGrid>().UnitInfo;
+                                clickUnit = hits[i].collider.gameObject.GetComponent<UnitGrid>().UnitInfo;
                             }
                         }
                         // 이전에 클릭한 unit이 없을 때
                         else
                         {
-                            clickUnit = pointerResults[i].gameObject.GetComponent<UnitGrid>().UnitInfo;
+                            clickUnit = hits[i].collider.gameObject.GetComponent<UnitGrid>().UnitInfo;
                         }
-                        clickUnit.OnClick(true);
-                        UnitUpdate(clickUnit);
+
+                        if (clickUnit != null)
+                        {
+                            clickUnit.OnClick(true);
+                            UnitUpdate(clickUnit);
+                        }
                         break;
                     }
                 }
