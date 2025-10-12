@@ -31,7 +31,7 @@ public class UnitGrid : MonoBehaviour
     {
         while (Vector2.Distance(unit.transform.localPosition, Vector3.zero) > 0.05f)
         {
-            unit.transform.localPosition = Vector2.MoveTowards(unit.transform.localPosition, Vector3.zero, Time.deltaTime * 3f);
+            unit.transform.localPosition = Vector2.MoveTowards(unit.transform.localPosition, Vector3.zero, Time.deltaTime * 10f);
             await UniTask.Yield();
         }
         unit.transform.localPosition = Vector2.zero;

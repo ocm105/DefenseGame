@@ -22,7 +22,7 @@ public static class UnitResource
         sb.Append("Units/Unit1");
         return sb.ToString();
     }
-    public static string GetImage(int lv, string str)
+    public static string GetImage()
     {
         StringBuilder sb = new StringBuilder();
         sb.Append("Units/Unit1");

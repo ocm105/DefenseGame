@@ -9,34 +9,22 @@ public class UnitInfo : MonoBehaviour
     private string LevelSource = "Image/Level/";
     [HideInInspector] public InGameManager inGameManager;
     [HideInInspector] public int UnitIndex = -1;
-    private UnitData unitData;
-    public UnitData UnitData { get { return unitData; } }
+    public UnitData UnitData { get; private set; }
     public Sprite unitSprite { get; private set; }
 
     [SerializeField] GameObject[] unitPositions;
-    public bool isFull
-    {
-        get
-        {
-            for (int i = 0; i < unitPositions.Length; i++)
-            {
-                if (unitPositions[i].transform.childCount <= 0)
-                    return false;
-            }
-            return true;
-        }
-    }
+    public int UnitCount { get; private set; }
+    public bool isFull { get { return UnitCount >= 3; } }
 
     [SerializeField] Transform rangePos;
     public UnitAttackTrigger AtkTrigger { get; private set; }
     [SerializeField] GameObject rangeObject;
     [SerializeField] SpriteRenderer level;
-    [SerializeField] Button upgradBtn;
 
     private void Awake()
     {
         AtkTrigger = rangePos.GetComponent<UnitAttackTrigger>();
-        upgradBtn.onClick.AddListener(OnUpgrade);
+        UnitCount = 0;
     }
     private void OnDisable()
     {
@@ -47,9 +35,9 @@ public class UnitInfo : MonoBehaviour
     public void SetData(int index)
     {
         UnitIndex = index;
-        unitData = GameDataManager.Instance.unitData[index];
-        rangePos.localScale = new Vector3(unitData.Range, unitData.Range);
-        level.sprite = Resources.Load<Sprite>($"{LevelSource}{unitData.Level}");
+        UnitData = GameDataManager.Instance.unitData[index];
+        rangePos.localScale = new Vector3(UnitData.Range, UnitData.Range);
+        level.sprite = Resources.Load<Sprite>($"{LevelSource}{UnitData.Level}");
     }
     public void SetPosition(Transform parent)
     {
@@ -58,15 +46,12 @@ public class UnitInfo : MonoBehaviour
     }
     public void UnitCreate()
     {
-        unitSprite = Resources.Load<Sprite>(UnitResource.GetImage(unitData.Level, unitData.Resource));
+        // unitSprite = Resources.Load<Sprite>(UnitResource.GetImage(unitData.Level, unitData.Resource));
 
-        for (int i = 0; i < unitPositions.Length; i++)
+        if (isFull == false)
         {
-            if (unitPositions[i].transform.childCount <= 0)
-            {
-                Instantiate(Resources.Load<GameObject>(UnitResource.GetPrefab(unitData.Level, unitData.Resource)), unitPositions[i].transform);
-                break;
-            }
+            Instantiate(Resources.Load<GameObject>(UnitResource.GetPrefab(UnitData.Level, UnitData.Resource)), unitPositions[UnitCount].transform);
+            UnitCount++;
         }
         this.gameObject.SetActive(true);
     }
@@ -75,7 +60,6 @@ public class UnitInfo : MonoBehaviour
     public void OnClick(bool isOn = true)
     {
         rangeObject.SetActive(isOn);
-        if (isFull) upgradBtn.gameObject.SetActive(isOn);
     }
     private void OnUpgrade()
     {
@@ -83,8 +67,7 @@ public class UnitInfo : MonoBehaviour
         {
             Destroy(unitPositions[i].transform.GetChild(0).gameObject);
         }
-        unitData.AttackSpeed *= 0.5f;
-        upgradBtn.interactable = false;
+        UnitData.AttackSpeed *= 0.5f;
         inGameManager.UnitUpdate(this);
     }
 }

@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 220029325040579988}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 90, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -680,7 +680,6 @@ MonoBehaviour:
   rangePos: {fileID: 3903550582263832544}
   rangeObject: {fileID: 8239795369330880475}
   level: {fileID: 3021935190320529260}
-  upgradBtn: {fileID: 6142811853652591680}
 --- !u!61 &985341096890412345
 BoxCollider2D:
   m_ObjectHideFlags: 0

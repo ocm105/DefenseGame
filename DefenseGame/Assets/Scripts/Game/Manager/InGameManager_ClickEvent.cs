@@ -4,10 +4,16 @@ using UnityEngine.EventSystems;
 
 public partial class InGameManager : MonoBehaviour
 {
-    private UnitInfo clickUnit;                  // 유닛 클릭 Event 용 변수
+    private UnitInfo unitInfo;                  // 유닛 클릭 Event 용 변수
     private Camera mainCam;
     private Vector2 clickPos;
     private RaycastHit2D[] hits;
+    private bool isUnitClick = false;
+
+    private UnitGrid preGrid;
+    private UnitGrid nextGrid;
+    private bool isDragging = false;
+
     private void Awake()
     {
         mainCam = Camera.main;
@@ -28,47 +34,83 @@ public partial class InGameManager : MonoBehaviour
             clickPos = mainCam.ScreenToWorldPoint(Input.GetTouch(0).position);
 #endif
             hits = Physics2D.RaycastAll(clickPos, Vector2.zero);
-            if (hits.Length > 0)
+            isUnitClick = false;
+            foreach (RaycastHit2D hit in hits)
             {
-                for (int i = 0; i < hits.Length; i++)
+                if (hit.collider.CompareTag("UnitGrid"))
                 {
-                    // 클릭한게 unit일때
-                    if (hits[i].collider.CompareTag("UnitGrid"))
+                    // 이전에 클릭한 unit이 있을 때
+                    if (unitInfo != null)
                     {
-                        // 이전에 클릭한 unit이 있을 때
-                        if (clickUnit != null)
-                        {
-                            // 같은 unit을 클릭하지 않았을 때
-                            if (clickUnit.gameObject != hits[i].collider.gameObject)
-                            {
-                                clickUnit.OnClick(false);
-                                clickUnit = hits[i].collider.gameObject.GetComponent<UnitGrid>().UnitInfo;
-                            }
-                        }
-                        // 이전에 클릭한 unit이 없을 때
-                        else
-                        {
-                            clickUnit = hits[i].collider.gameObject.GetComponent<UnitGrid>().UnitInfo;
-                        }
-
-                        if (clickUnit != null)
-                        {
-                            clickUnit.OnClick(true);
-                            UnitUpdate(clickUnit);
-                        }
-                        break;
+                        unitInfo.OnClick(false);
+                        unitInfo = null;
                     }
+
+                    preGrid = hit.collider.GetComponent<UnitGrid>();
+
+                    // 클릭한 grid에 유닛이 있을 때
+                    if (preGrid.IsUnit)
+                    {
+                        unitInfo = preGrid.UnitInfo;
+                        unitInfo.OnClick(true);
+                        UnitUpdate(unitInfo);
+                        preGrid.ChageColor(isDragging);
+
+                        isUnitClick = true;
+                        isDragging = true;
+                    }
+                    break;
                 }
             }
             // 클릭한게 없을 때
-            else
+            if (isUnitClick == false)
             {
-                if (clickUnit != null)
+                if (unitInfo != null)
                 {
-                    clickUnit.OnClick(false);
-                    gameView.UnitStatusClose();
-                    clickUnit = null;
+                    unitInfo.OnClick(false);
+                    unitInfo = null;
                 }
+                gameView.UnitStatusClose();
+            }
+        }
+
+        if (isDragging)
+        {
+            clickPos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+            hits = Physics2D.RaycastAll(clickPos, Vector2.zero);
+            foreach (RaycastHit2D hit in hits)
+            {
+                if (hit.collider.CompareTag("UnitGrid"))
+                {
+                    if (nextGrid != null)
+                        nextGrid.ChageColor(false);
+
+                    preGrid.ChageColor(false);
+                    nextGrid = hit.collider.GetComponent<UnitGrid>();
+                    nextGrid.ChageColor(isDragging);
+                    break;
+                }
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                isDragging = false;
+
+                if (nextGrid != null && nextGrid.IsUnit)
+                {
+                    preGrid.UnitMove(nextGrid.UnitInfo);
+                    nextGrid.UnitMove(unitInfo);
+                }
+                else
+                {
+                    nextGrid.UnitMove(unitInfo);
+                    preGrid.UnitInfo = null;
+                }
+
+                preGrid.ChageColor(isDragging);
+                nextGrid.ChageColor(isDragging);
+                preGrid = null;
+                nextGrid = null;
             }
         }
     }
