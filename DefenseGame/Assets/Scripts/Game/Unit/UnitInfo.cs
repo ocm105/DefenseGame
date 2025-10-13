@@ -46,11 +46,10 @@ public class UnitInfo : MonoBehaviour
     }
     public void UnitCreate()
     {
-        // unitSprite = Resources.Load<Sprite>(UnitResource.GetImage(unitData.Level, unitData.Resource));
-
         if (isFull == false)
         {
-            Instantiate(Resources.Load<GameObject>(UnitResource.GetPrefab(UnitData.Level, UnitData.Resource)), unitPositions[UnitCount].transform);
+            GameObject unit = Instantiate(Resources.Load<GameObject>(UnitResource.GetPrefab(UnitData.Resource)), unitPositions[UnitCount].transform);
+            unit.GetComponent<Unit>().unitInfo = this;
             UnitCount++;
         }
         this.gameObject.SetActive(true);
@@ -60,6 +59,7 @@ public class UnitInfo : MonoBehaviour
     public void OnClick(bool isOn = true)
     {
         rangeObject.SetActive(isOn);
+        level.gameObject.SetActive(isOn);
     }
     private void OnUpgrade()
     {

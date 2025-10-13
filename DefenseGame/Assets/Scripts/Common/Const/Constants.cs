@@ -16,16 +16,11 @@ public static class UnitResource
 {
     public const string UnitInfo = "Units/UnitInfo";
     public const string Monster = "Monsters/";
-    public static string GetPrefab(int lv, string str)
+    public static string GetPrefab(string str)
     {
         StringBuilder sb = new StringBuilder();
-        sb.Append("Units/Unit1");
-        return sb.ToString();
-    }
-    public static string GetImage()
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.Append("Units/Unit1");
+        sb.Append("Units/");
+        sb.Append(str);
         return sb.ToString();
     }
     public static string GetMonster(string str)

@@ -8,7 +8,9 @@ using Cysharp.Threading.Tasks;
 public class UnitData
 {
     public int Index;
+    public string Name;
     public int Level;               // 업글
+    public string Job;
     public int Range;               // 공격범위
     public float AttackSpeed;       // 공격속도
     public int Attack;              // 공격력
@@ -16,7 +18,7 @@ public class UnitData
     public int Critical;            // 100% 기준 크리티컬 %
     public float CriticalPower;     // 크리티컬 공격력 배수
     public string[] Synergy;        // 시너지
-    public string Resource;         
+    public string Resource;
     public int Weight;              // 가중치
     public List<string> Effect;     // { "Atk|10|10", "DEF|5|5" }
     public UnitStat[] unitStats;
@@ -42,8 +44,6 @@ public class UnitStat
     public string value2;
     public string value3;
 }
-
-
 
 public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
 {
