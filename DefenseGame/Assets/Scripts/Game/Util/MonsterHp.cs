@@ -24,6 +24,7 @@ public class MonsterHp : MonoBehaviour
     }
     public void SetHp(float _hp)
     {
+        this.transform.SetAsLastSibling();
         hp.fillAmount = _hp;
     }
 }
