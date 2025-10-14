@@ -24,10 +24,8 @@ public partial class InGameManager : MonoBehaviour
     private UnitInfo UnitCreate()
     {
         GameObject obj = Instantiate(Resources.Load<GameObject>(UnitResource.UnitInfo), unitPoolPos);
-        UnitInfo unitInfo = obj.GetComponent<UnitInfo>();
-        unitInfo.inGameManager = this;
         obj.SetActive(false);
-        return unitInfo;
+        return obj.GetComponent<UnitInfo>();
     }
     public void UnitSpawn()
     {

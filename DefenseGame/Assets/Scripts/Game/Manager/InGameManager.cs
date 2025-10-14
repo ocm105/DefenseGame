@@ -6,6 +6,17 @@ using Cysharp.Threading.Tasks;
 
 public partial class InGameManager : MonoBehaviour
 {
+    private static InGameManager instance = null;
+    public static InGameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = FindFirstObjectByType(typeof(InGameManager)) as InGameManager;
+            return instance;
+        }
+    }
+
     [SerializeField] GameView gameView;
     private float roundTime = 20f;                         // 라운드 시간
     private float waveTime, spawnTime = 0;

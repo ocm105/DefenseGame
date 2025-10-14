@@ -12,6 +12,8 @@ public class MonsterControl : MonoBehaviour, IDamage
     private MonsterState monsterState;
     public MonsterState MonsterState { get { return monsterState; } }
 
+    [SerializeField] Transform hpPos;
+
     private void Awake()
     {
         monsterInfo = this.GetComponent<MonsterInfo>();
@@ -21,17 +23,19 @@ public class MonsterControl : MonoBehaviour, IDamage
     public void MonsterStart()
     {
         movePathIndex = 0;
+        monsterInfo.monsterHp.SetPosition(hpPos.position);
     }
 
     private void Update()
     {
-        switch (monsterInfo.inGameManager.GameState)
+        switch (InGameManager.Instance.GameState)
         {
             case GameState.Start:
                 switch (monsterState)
                 {
                     case MonsterState.Arive:
                         this.transform.position = Vector2.MoveTowards(this.transform.position, movePath[movePathIndex].position, monsterInfo.speed * Time.deltaTime);
+                        monsterInfo.monsterHp.SetPosition(hpPos.position);
                         DistanceCheck();
                         break;
                     case MonsterState.Stop:
@@ -100,6 +104,7 @@ public class MonsterControl : MonoBehaviour, IDamage
     }
     private void Die()
     {
+        monsterInfo.monsterHp.SetActive(false);
         ChangeMonsterState(MonsterState.Die);
     }
     public void AniEvent_Die()

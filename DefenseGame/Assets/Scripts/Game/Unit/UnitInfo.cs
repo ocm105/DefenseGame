@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class UnitInfo : MonoBehaviour
 {
     private string LevelSource = "Image/Level/";
-    [HideInInspector] public InGameManager inGameManager;
     [HideInInspector] public int UnitIndex = -1;
     public UnitData UnitData { get; private set; }
     public Sprite unitSprite { get; private set; }
@@ -68,6 +67,6 @@ public class UnitInfo : MonoBehaviour
             Destroy(unitPositions[i].transform.GetChild(0).gameObject);
         }
         UnitData.AttackSpeed *= 0.5f;
-        inGameManager.UnitUpdate(this);
+        InGameManager.Instance.UnitUpdate(this);
     }
 }

@@ -2,13 +2,12 @@ using System.Collections;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UISystem;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameView : UIView
 {
-    [SerializeField] InGameManager gameManager;
-
     [SerializeField] Button unitSpawnBtn;
     [SerializeField] Button synergyBtn;
     private bool isSynergyOn = false;
@@ -24,6 +23,9 @@ public class GameView : UIView
 
     [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] TextMeshProUGUI unitCountText;
+
+    [SerializeField] MonsterUI monsterUI;
+    public MonsterUI MonsterUI { get { return monsterUI; } }
 
     public void Show()
     {
@@ -48,7 +50,7 @@ public class GameView : UIView
     private async UniTaskVoid DataLoad()
     {
         await GameDataManager.Instance.LoadData();
-        gameManager.ChangeGameState(GameState.Start);
+        InGameManager.Instance.ChangeGameState(GameState.Start);
 
     }
     #region Event
@@ -83,7 +85,7 @@ public class GameView : UIView
     {
         if (!isSynergyOn)
         {
-            Les_UIManager.Instance.Popup<SynergyPopup>().Open(gameManager.SynergyInfos);
+            Les_UIManager.Instance.Popup<SynergyPopup>().Open(InGameManager.Instance.SynergyInfos);
         }
         else
         {
@@ -94,16 +96,16 @@ public class GameView : UIView
     }
     private void OnClick_UnitSpawn()
     {
-        gameManager.UnitSpawn();
+        InGameManager.Instance.UnitSpawn();
     }
 
     private void OnClick_Home()
     {
         // SoundManager.Instance.PlaySFXSound("Button");
         PopupState state = Les_UIManager.Instance.Popup<BasePopup_TwoBtn>().Open("게임을 나가시겠습니까?");
-        gameManager.ChangeGameState(GameState.Pause);
-        state.OnYes = p => gameManager.ChangeGameState(GameState.Start);
-        state.OnNo = p => gameManager.ChangeGameState(GameState.Start);
+        InGameManager.Instance.ChangeGameState(GameState.Pause);
+        state.OnYes = p => InGameManager.Instance.ChangeGameState(GameState.Start);
+        state.OnNo = p => InGameManager.Instance.ChangeGameState(GameState.Start);
         // LoadingManager.Instance.SceneLoad(Constants.Scene.Title);
     }
     #endregion

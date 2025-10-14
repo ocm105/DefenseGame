@@ -33,7 +33,6 @@ public partial class InGameManager : MonoBehaviour
     {
         GameObject obj = Instantiate(MonsterResource(), monsterGroup.transform);
         MonsterControl mc = obj.GetComponent<MonsterControl>();
-        obj.GetComponent<MonsterInfo>().inGameManager = this;
         mc.MovePath(monsterPathInfo.MonsterMovePath);
         mc.dieAction = (info) => MonsterDie(info);
         MonsterInit(obj);
@@ -54,13 +53,13 @@ public partial class InGameManager : MonoBehaviour
         {
             MonsterCreate();
         }
+        int monsterDataIndex = GameDataManager.Instance.waveData[GameIndex.Wave + waveIndex].Summon;
         GameObject obj = monsterPool.Dequeue();
-        MonsterInfo mc = obj.GetComponent<MonsterInfo>();
-        int monsterDataIndex = GameDataManager.Instance.waveData[GameIndex.Wave + +waveIndex].Summon;
-
-        mc.monsterData = GameDataManager.Instance.monsterData[monsterDataIndex];
+        MonsterInfo info = obj.GetComponent<MonsterInfo>();
+        info.monsterData = GameDataManager.Instance.monsterData[monsterDataIndex];
+        info.monsterHp = gameView.MonsterUI.SetMonsterHP();
+        info.Spawn();
         obj.SetActive(true);
-        mc.Spawn();
     }
     /// <summary> 몬스터 죽었을 때 함수 </summary>
     private void MonsterDie(MonsterInfo info)

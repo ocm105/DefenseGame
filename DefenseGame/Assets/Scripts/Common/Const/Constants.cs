@@ -19,8 +19,8 @@ public static class UnitResource
     public static string GetPrefab(string str)
     {
         StringBuilder sb = new StringBuilder();
-        sb.Append("Units/");
-        sb.Append(str);
+        sb.Append("Units/Unit1");
+        // sb.Append(str);
         return sb.ToString();
     }
     public static string GetMonster(string str)

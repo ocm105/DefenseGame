@@ -17,7 +17,7 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        switch (unitInfo.inGameManager.GameState)
+        switch (InGameManager.Instance.GameState)
         {
             case GameState.Start:
                 if (unitInfo.AtkTrigger.targets.Count > 0)
