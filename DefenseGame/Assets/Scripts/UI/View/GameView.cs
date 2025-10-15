@@ -24,6 +24,8 @@ public class GameView : UIView
     [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] TextMeshProUGUI unitCountText;
 
+    [SerializeField] UnitUI unitUI;
+    public UnitUI UnitUI { get { return unitUI; } }
     [SerializeField] MonsterUI monsterUI;
     public MonsterUI MonsterUI { get { return monsterUI; } }
 
@@ -70,9 +72,8 @@ public class GameView : UIView
     {
         waveTimeText.text = Mathf.CeilToInt(time).ToString();
     }
-    public void UnitStatusOpen(Sprite unit, float power, float atkSpeed)
+    public void UnitStatusOpen(float power, float atkSpeed)
     {
-        unitImage.sprite = unit;
         unitPowerText.text = power.ToString();
         unitAtkSpeedText.text = atkSpeed.ToString();
         unitStatWindow.SetActive(true);

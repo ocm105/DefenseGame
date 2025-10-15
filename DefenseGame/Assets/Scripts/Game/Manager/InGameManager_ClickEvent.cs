@@ -53,7 +53,7 @@ public partial class InGameManager : MonoBehaviour
                     {
                         unitInfo = preGrid.UnitInfo;
                         unitInfo.OnClick(true);
-                        UnitUpdate(unitInfo);
+                        UnitStatusOpen(unitInfo);
                         preGrid.ChageColor(isDragging);
 
                         isUnitClick = true;

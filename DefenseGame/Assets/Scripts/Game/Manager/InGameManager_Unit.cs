@@ -24,8 +24,10 @@ public partial class InGameManager : MonoBehaviour
     private UnitInfo UnitCreate()
     {
         GameObject obj = Instantiate(Resources.Load<GameObject>(UnitResource.UnitInfo), unitPoolPos);
+        UnitInfo info = obj.GetComponent<UnitInfo>();
+        info.unitUpgrade = gameView.UnitUI.UnitUpgrade;
         obj.SetActive(false);
-        return obj.GetComponent<UnitInfo>();
+        return info;
     }
     public void UnitSpawn()
     {
@@ -104,9 +106,9 @@ public partial class InGameManager : MonoBehaviour
         return gridInfo.UnitGrids[ran];
     }
     /// <summary> 유닛 Update </summary>
-    public void UnitUpdate(UnitInfo info)
+    public void UnitStatusOpen(UnitInfo info)
     {
-        gameView.UnitStatusOpen(info.unitSprite, info.UnitData.Attack, info.UnitData.AttackSpeed);
+        gameView.UnitStatusOpen(info.UnitData.Attack, info.UnitData.AttackSpeed);
     }
 
     private void SetSynergy(int index)

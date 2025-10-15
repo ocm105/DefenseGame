@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IDamage
 {
-    void OnDamage(float damage);
+    public void OnDamage(float damage);
+
 }

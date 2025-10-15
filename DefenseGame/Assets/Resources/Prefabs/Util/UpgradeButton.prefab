@@ -12,13 +12,14 @@ GameObject:
   - component: {fileID: 4339379490899587095}
   - component: {fileID: 2655330635102452936}
   - component: {fileID: 7319063455021430937}
+  - component: {fileID: 2480384423072733407}
   m_Layer: 5
   m_Name: UpgradeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8352086147499906979
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26,7 +27,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119953825984515433}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -121,6 +122,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2480384423072733407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119953825984515433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e0fd45dd3f50149b4232b101b00e54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnitUpgrade
+  ui: {fileID: 8352086147499906979}
+  button: {fileID: 7319063455021430937}
 --- !u!1 &4258367281041734518
 GameObject:
   m_ObjectHideFlags: 0

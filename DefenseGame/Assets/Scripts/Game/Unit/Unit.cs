@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +9,30 @@ public class Unit : MonoBehaviour
     private float atkCoolTime = 0;
     private float damage = 0f;
     private int atkCount = 0;
+    private IDamage[] damageTargets;
     private UnitAniState unitAniState;
 
     private void Awake()
     {
         animator = this.GetComponent<Animator>();
+    }
+    private void Start()
+    {
+        Create();
+    }
+    public void Create()
+    {
+        atkCoolTime = 0;
+        animator.Rebind();
+        ChangeUnitAnimation(UnitAniState.Idle);
+        this.gameObject.SetActive(true);
+    }
+    public void Delete()
+    {
+        atkCoolTime = 0;
+        animator.Rebind();
+        ChangeUnitAnimation(UnitAniState.Idle);
+        this.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -25,17 +45,7 @@ public class Unit : MonoBehaviour
                     atkCoolTime += Time.deltaTime;
                     if (atkCoolTime >= unitInfo.UnitData.AttackSpeed)
                     {
-                        // 공격하려는 갯수가 더 많을 때
-                        if (unitInfo.AtkTrigger.targets.Count >= unitInfo.UnitData.AttackCount)
-                            atkCount = unitInfo.UnitData.AttackCount;
-                        // 공격하려는 갯수가 더 적을 때
-                        else
-
-                            atkCount = unitInfo.AtkTrigger.targets.Count;
-                        for (int i = 0; i < atkCount; i++)
-                        {
-                            Attack(unitInfo.AtkTrigger.targets[i]);
-                        }
+                        ChangeUnitAnimation(UnitAniState.Attack);
                         atkCoolTime = 0;
                     }
                 }
@@ -52,7 +62,7 @@ public class Unit : MonoBehaviour
     }
 
     /// <summary> 유닛 상태 변경 </summary>
-    public void ChangeUnitAnimation(UnitAniState state)
+    private void ChangeUnitAnimation(UnitAniState state)
     {
         switch (state)
         {
@@ -66,21 +76,27 @@ public class Unit : MonoBehaviour
         animator.SetInteger("Index", (int)state);
         unitAniState = state;
     }
-    /// <summary> 공격 </summary>
-    public void Attack(IDamage target)
+
+    /// <summary> 애니메이션에서 공격 </summary>
+    private void Attack()
     {
-        if (target != null)
+        // 공격하려는 갯수가 더 많을 때
+        if (unitInfo.AtkTrigger.targets.Count >= unitInfo.UnitData.AttackCount)
+            atkCount = unitInfo.UnitData.AttackCount;
+        // 공격하려는 갯수가 더 적을 때
+        else
+            atkCount = unitInfo.AtkTrigger.targets.Count;
+
+        for (int i = 0; i < atkCount; i++)
         {
             if (Critical())
                 damage = unitInfo.UnitData.Attack * unitInfo.UnitData.CriticalPower;
             else
                 damage = unitInfo.UnitData.Attack;
 
-            target.OnDamage(damage);
+            unitInfo.AtkTrigger.targets[i].OnDamage(damage);
         }
-        ChangeUnitAnimation(UnitAniState.Attack);
     }
-
     private bool Critical()
     {
         int ran = Random.Range(0, 101);
