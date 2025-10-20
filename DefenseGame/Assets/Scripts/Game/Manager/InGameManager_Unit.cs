@@ -106,9 +106,13 @@ public partial class InGameManager : MonoBehaviour
         return gridInfo.UnitGrids[ran];
     }
     /// <summary> 유닛 Update </summary>
-    public void UnitStatusOpen(UnitInfo info)
+    public void UnitStatusOpen(UnitData data)
     {
-        gameView.UnitStatusOpen(info.UnitData.Attack, info.UnitData.AttackSpeed);
+        gameView.UnitStatusActive(true, data);
+    }
+    public void UnitStatusClose()
+    {
+        gameView.UnitStatusActive(false);
     }
 
     private void SetSynergy(int index)

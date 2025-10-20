@@ -16,11 +16,7 @@ public class GameView : UIView
     [SerializeField] TextMeshProUGUI waveCountText;
     [SerializeField] TextMeshProUGUI waveTimeText;
 
-    [SerializeField] GameObject unitStatWindow;
-    [SerializeField] Image unitImage;
-    [SerializeField] TextMeshProUGUI unitPowerText;
-    [SerializeField] TextMeshProUGUI unitAtkSpeedText;
-
+    [SerializeField] UnitInfoWindow unitInfoWindow;
     [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] TextMeshProUGUI unitCountText;
 
@@ -46,6 +42,7 @@ public class GameView : UIView
 
     private void Init()
     {
+        UnitStatusActive(false);
         DataLoad().Forget();
     }
 
@@ -72,15 +69,9 @@ public class GameView : UIView
     {
         waveTimeText.text = Mathf.CeilToInt(time).ToString();
     }
-    public void UnitStatusOpen(float power, float atkSpeed)
+    public void UnitStatusActive(bool isActive, UnitData data = null)
     {
-        unitPowerText.text = power.ToString();
-        unitAtkSpeedText.text = atkSpeed.ToString();
-        unitStatWindow.SetActive(true);
-    }
-    public void UnitStatusClose()
-    {
-        unitStatWindow.SetActive(false);
+        unitInfoWindow.SetActive(isActive, data);
     }
     private void OnClick_Synergy()
     {

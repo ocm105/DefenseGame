@@ -11,6 +11,7 @@ public class UnitData
     public string Name;
     public int Level;               // 업글
     public string Job;
+    public int Mana;
     public int Range;               // 공격범위
     public float AttackSpeed;       // 공격속도
     public int Attack;              // 공격력
