@@ -81,12 +81,20 @@ public partial class InGameManager : MonoBehaviour
             {
                 if (hit.collider.CompareTag("UnitGrid"))
                 {
-                    if (nextGrid != null)
-                        nextGrid.ChageColor(false);
+                    nextGrid?.ChageColor(false);
+                    UnitGrid unitGrid = hit.collider.GetComponent<UnitGrid>();
 
-                    preGrid.ChageColor(false);
-                    nextGrid = hit.collider.GetComponent<UnitGrid>();
-                    nextGrid.ChageColor(isDragging);
+                    if (preGrid != unitGrid)
+                    {
+                        nextGrid = unitGrid;
+                        nextGrid.ChageColor(true);
+                        preGrid.ChageColor(false);
+                    }
+                    else
+                    {
+                        preGrid.ChageColor(true);
+                        nextGrid = null;
+                    }
                     break;
                 }
             }
@@ -95,21 +103,31 @@ public partial class InGameManager : MonoBehaviour
             {
                 isDragging = false;
 
-                if (nextGrid != null && nextGrid.IsUnit)
+                if (nextGrid != null)
                 {
-                    preGrid.UnitMove(nextGrid.UnitInfo);
-                    nextGrid.UnitMove(unitInfo);
+                    if (nextGrid.IsUnit)
+                    {
+                        preGrid.UnitMove(nextGrid.UnitInfo);
+                        nextGrid.UnitMove(unitInfo);
+                    }
+                    else
+                    {
+                        nextGrid.UnitMove(unitInfo);
+                        preGrid.UnitInfo = null;
+                    }
+                    nextGrid.ChageColor(isDragging);
+                    nextGrid = null;
+                    preGrid.ChageColor(isDragging);
+                    preGrid = null;
                 }
                 else
                 {
-                    nextGrid.UnitMove(unitInfo);
-                    preGrid.UnitInfo = null;
+                    preGrid.ChageColor(isDragging);
+                    preGrid = null;
                 }
 
-                preGrid.ChageColor(isDragging);
-                nextGrid.ChageColor(isDragging);
-                preGrid = null;
-                nextGrid = null;
+
+
             }
         }
     }

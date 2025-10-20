@@ -25,6 +25,7 @@ public class UnitGrid : MonoBehaviour
     {
         UnitInfo = unit;
         unit.transform.parent = this.transform;
+        unit.OnClick(false);
         Move(unit).Forget();
     }
     private async UniTask Move(UnitInfo unit)

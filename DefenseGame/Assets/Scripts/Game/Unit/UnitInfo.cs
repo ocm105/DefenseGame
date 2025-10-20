@@ -80,7 +80,7 @@ public class UnitInfo : MonoBehaviour
     private void OnUpgrade()
     {
         level++;
-        SetData(UnitIndex + level);
+        SetData(UnitIndex + level - 1);
         InGameManager.Instance.UnitStatusOpen(UnitData);
         unitUpgrade.SetActive(false);
 
