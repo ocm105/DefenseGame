@@ -9,7 +9,6 @@ public class Unit : MonoBehaviour
     private float atkCoolTime = 0;
     private float damage = 0f;
     private int atkCount = 0;
-    private IDamage[] damageTargets;
     private UnitAniState unitAniState;
 
     private void Awake()

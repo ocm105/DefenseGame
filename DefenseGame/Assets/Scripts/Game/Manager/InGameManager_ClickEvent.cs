@@ -10,7 +10,7 @@ public partial class InGameManager : MonoBehaviour
     private RaycastHit2D[] hits;
     private bool isUnitClick = false;
 
-    private UnitGrid preGrid;
+    private UnitGrid nowGrid;
     private UnitGrid nextGrid;
     private bool isDragging = false;
 
@@ -39,21 +39,20 @@ public partial class InGameManager : MonoBehaviour
             {
                 if (hit.collider.CompareTag("UnitGrid"))
                 {
-                    // 이전에 클릭한 unit이 있을 때
                     if (unitInfo != null)
                     {
                         unitInfo.OnClick(false);
                         unitInfo = null;
                     }
 
-                    preGrid = hit.collider.GetComponent<UnitGrid>();
+                    nowGrid = hit.collider.GetComponent<UnitGrid>();
 
                     // 클릭한 grid에 유닛이 있을 때
-                    if (preGrid.IsUnit)
+                    if (nowGrid.IsUnit)
                     {
-                        unitInfo = preGrid.UnitInfo;
+                        unitInfo = nowGrid.UnitInfo;
                         unitInfo.OnClick(true);
-                        preGrid.ChageColor(isDragging);
+                        nowGrid.ChageColor(true);
 
                         isUnitClick = true;
                         isDragging = true;
@@ -84,15 +83,15 @@ public partial class InGameManager : MonoBehaviour
                     nextGrid?.ChageColor(false);
                     UnitGrid unitGrid = hit.collider.GetComponent<UnitGrid>();
 
-                    if (preGrid != unitGrid)
+                    if (nowGrid != unitGrid)
                     {
                         nextGrid = unitGrid;
                         nextGrid.ChageColor(true);
-                        preGrid.ChageColor(false);
+                        nowGrid.ChageColor(false);
                     }
                     else
                     {
-                        preGrid.ChageColor(true);
+                        nowGrid.ChageColor(true);
                         nextGrid = null;
                     }
                     break;
@@ -107,23 +106,23 @@ public partial class InGameManager : MonoBehaviour
                 {
                     if (nextGrid.IsUnit)
                     {
-                        preGrid.UnitMove(nextGrid.UnitInfo);
+                        nowGrid.UnitMove(nextGrid.UnitInfo);
                         nextGrid.UnitMove(unitInfo);
                     }
                     else
                     {
                         nextGrid.UnitMove(unitInfo);
-                        preGrid.UnitInfo = null;
+                        nowGrid.UnitInfo = null;
                     }
                     nextGrid.ChageColor(isDragging);
                     nextGrid = null;
-                    preGrid.ChageColor(isDragging);
-                    preGrid = null;
+                    nowGrid.ChageColor(isDragging);
+                    nowGrid = null;
                 }
                 else
                 {
-                    preGrid.ChageColor(isDragging);
-                    preGrid = null;
+                    nowGrid.ChageColor(isDragging);
+                    nowGrid = null;
                 }
 
 
