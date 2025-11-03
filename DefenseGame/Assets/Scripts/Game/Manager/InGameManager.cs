@@ -18,7 +18,7 @@ public partial class InGameManager : MonoBehaviour
     }
 
     [SerializeField] GameView gameView;
-    private float roundTime = 20f;                         // 라운드 시간
+    [SerializeField] GameSetting gameSetting;
     private float waveTime, spawnTime = 0;
     private int waveIndex = 0;
     private bool wave = false;
@@ -30,7 +30,7 @@ public partial class InGameManager : MonoBehaviour
     private async UniTask Init()
     {
         await UniTask.WaitUntil(() => gameState == GameState.Start);
-        waveTime = 3;
+        waveTime = gameSetting.startTime;
         GoldSet(100);
         MonsterPooling();
         UnitPooling();
@@ -53,7 +53,7 @@ public partial class InGameManager : MonoBehaviour
                 {
                     waveIndex++;
                     wave = true;
-                    waveTime = roundTime;
+                    waveTime = gameSetting.waveTime;
                     gameView.WaveCountSet(waveIndex);
                 }
                 if (wave)
