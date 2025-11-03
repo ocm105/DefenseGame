@@ -26,6 +26,6 @@ public class MonsterInfo : MonoBehaviour
     public void MonserHpSet(float damage)
     {
         hp -= damage;
-        monsterHp.SetHp(hp / monsterData.HP);
+        monsterHp.SetHp(Mathf.Clamp01(hp / monsterData.HP));
     }
 }

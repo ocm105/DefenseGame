@@ -92,6 +92,7 @@ public class MonsterControl : MonoBehaviour, IDamage
     /// <summary> interface 데미지 입는 함수 </summary>
     public void OnDamage(float damage)
     {
+        if (monsterState == MonsterState.Die) return;
         Hit(damage);
     }
     /// <summary> 실질적 데미지 입는 함수 </summary>
@@ -104,8 +105,8 @@ public class MonsterControl : MonoBehaviour, IDamage
     }
     private void Die()
     {
-        monsterInfo.monsterHp.SetActive(false);
         ChangeMonsterState(MonsterState.Die);
+        monsterInfo.monsterHp.SetActive(false);
     }
     public void AniEvent_Die()
     {
