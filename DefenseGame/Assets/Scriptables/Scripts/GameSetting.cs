@@ -8,5 +8,6 @@ public class GameSetting : ScriptableObject
     public float bossTime;
     public float star2;
     public float star3;
+    public int unitGold;
 
 }

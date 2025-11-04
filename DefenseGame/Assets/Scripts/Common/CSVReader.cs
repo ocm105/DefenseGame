@@ -706,9 +706,6 @@ public class CSVReader
     {
         string element = value.TrimStart('{').TrimEnd('}');
         string[] elements;
-        // if (element.Contains('|'))
-        //     elements = element.Split('|');
-        // else
         elements = element.Split('&');
 
         if (elements.Length > 0)

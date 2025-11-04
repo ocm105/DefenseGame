@@ -2,8 +2,7 @@ using System;
 using UISystem;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-
-
+using UnityEngine;
 
 [Serializable]
 public class WaveData
@@ -24,9 +23,9 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
             {
                 case GAMEDATA_STATE.CONNECTDATAERROR:
                 case GAMEDATA_STATE.PROTOCOLERROR:
-                    // PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("데이터를 받아오지 못했습니다.");
-                    // popup.OnClose = p => Application.Quit();
-                    // popup.OnOK = p => Application.Quit();
+                    PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("데이터를 받아오지 못했습니다.");
+                    popup.OnClose = p => Application.Quit();
+                    popup.OnOK = p => Application.Quit();
                     break;
                 case GAMEDATA_STATE.REQUESTSUCCESS:
                     callback?.Invoke(CSVReader.ReadFromResource<WaveData>(resData));

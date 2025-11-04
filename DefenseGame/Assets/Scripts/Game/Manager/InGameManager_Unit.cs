@@ -31,7 +31,7 @@ public partial class InGameManager : MonoBehaviour
     }
     public void UnitSpawn()
     {
-        if (gold >= 20 && maxUnitCreateCount > nowUnitSpawnCount)
+        if (gold >= gameSetting.unitGold && maxUnitCreateCount > nowUnitSpawnCount)
         {
             bool isSpawn = false;
             int unitIndex = UnitRandom();
@@ -41,7 +41,7 @@ public partial class InGameManager : MonoBehaviour
                 // 소환하려는 같은 unit이 있을 때
                 if (unitPool[i].UnitIndex == unitIndex && unitPool[i].isFull == false)
                 {
-                    GoldSet(-20);
+                    GoldSet(-gameSetting.unitGold);
                     unitPool[i].UnitCreate();
                     nowUnitSpawnCount++;
                     isSpawn = true;
