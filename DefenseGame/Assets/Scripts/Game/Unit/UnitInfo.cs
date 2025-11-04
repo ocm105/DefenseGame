@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UnitInfo : MonoBehaviour
 {
@@ -45,7 +42,9 @@ public class UnitInfo : MonoBehaviour
     {
         if (unitList.Count < 3)
         {
-            GameObject unit = Instantiate(Resources.Load<GameObject>(UnitResource.GetPrefab(UnitData.Resource)), unitPositions[UnitCount].transform);
+            string address = UnitResource.GetPrefab(UnitData.Resource);
+            GameObject loadObject = Resources.Load<GameObject>(address);
+            GameObject unit = Instantiate(loadObject, unitPositions[UnitCount].transform);
             unitList.Add(unit.GetComponent<Unit>());
             unitList[UnitCount].unitInfo = this;
         }

@@ -3856,6 +3856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameView: {fileID: 941518776767790396}
+  gameSetting: {fileID: 11400000, guid: b238c97ea529ef343a437381871e2062, type: 2}
   monsterGroup: {fileID: 1474953384349877831}
   monsterPathInfo: {fileID: 1182304286}
   unitPoolPos: {fileID: 1444103119}
