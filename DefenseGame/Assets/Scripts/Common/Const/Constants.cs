@@ -16,18 +16,18 @@ public static class UnitResource
 {
     public const string UnitInfo = "Units/UnitInfo";
     public const string Monster = "Monsters/";
-    public static string GetPrefab(string str)
+    public static string GetPrefab(string resource)
     {
         StringBuilder sb = new StringBuilder();
-        sb.Append("Units/Unit1");
-        // sb.Append(str);
+        sb.Append("Units/");
+        sb.Append(resource);
         return sb.ToString();
     }
-    public static string GetMonster(string str)
+    public static string GetMonster(string resource)
     {
         StringBuilder sb = new StringBuilder();
         sb.Append("Monsters/");
-        sb.Append(str);
+        sb.Append(resource);
         return sb.ToString();
     }
 }
