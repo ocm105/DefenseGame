@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public partial class InGameManager : MonoBehaviour
 {
     [SerializeField] Transform unitPoolPos;
     [SerializeField] GridInfo gridInfo;
-    private int maxUnitCreateCount = 17;            // 유닛 최고 생성 갯수
     private int nowUnitSpawnCount = 0;             // 현재 스폰 갯수
     private List<UnitInfo> unitPool = new List<UnitInfo>();
     public int[] SynergyInfos = new int[(int)SynergyType.Max];
@@ -15,7 +13,7 @@ public partial class InGameManager : MonoBehaviour
     /// <summary> 유닛 풀링 </summary>
     private void UnitPooling()
     {
-        for (int i = 0; i < maxUnitCreateCount; i++)
+        for (int i = 0; i < gameSetting.maximumUnitCount; i++)
         {
             unitPool.Add(UnitCreate());
         }
@@ -31,7 +29,7 @@ public partial class InGameManager : MonoBehaviour
     }
     public void UnitSpawn()
     {
-        if (gold >= gameSetting.unitGold && maxUnitCreateCount > nowUnitSpawnCount)
+        if (gold >= gameSetting.unitGold && gameSetting.maximumUnitCount > nowUnitSpawnCount)
         {
             bool isSpawn = false;
             int unitIndex = UnitRandom();
@@ -68,7 +66,7 @@ public partial class InGameManager : MonoBehaviour
                 }
             }
         }
-        gameView.UnitCountSet(nowUnitSpawnCount, maxUnitCreateCount);
+        gameView.UnitCountSet(nowUnitSpawnCount, gameSetting.maximumUnitCount);
     }
     /// <summary> 유닛 랜덤 </summary>
     private int UnitRandom()

@@ -17,3 +17,7 @@ MonoBehaviour:
   bossTime: 20
   star2: 3.5
   star3: 12
+  unitGold: 20
+  maximumMonsterCount: 80
+  maximumUnitCount: 17
+  maxmumWave: 30

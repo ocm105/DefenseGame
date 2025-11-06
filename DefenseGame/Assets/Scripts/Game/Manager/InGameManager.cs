@@ -1,7 +1,4 @@
 using UnityEngine;
-using System;
-using System.Collections.Generic;
-using UnityEngine.EventSystems;
 using Cysharp.Threading.Tasks;
 
 public partial class InGameManager : MonoBehaviour
@@ -35,7 +32,7 @@ public partial class InGameManager : MonoBehaviour
         MonsterPooling();
         UnitPooling();
         gameView.WaveCountSet(1);
-        gameView.UnitCountSet(nowUnitSpawnCount, maxUnitCreateCount);
+        gameView.UnitCountSet(nowUnitSpawnCount, gameSetting.maximumUnitCount);
     }
     private void Start()
     {
@@ -63,8 +60,8 @@ public partial class InGameManager : MonoBehaviour
                     {
                         nowMonsterSpawnCount++;
                         MonsterSpawn();
-                        spawnTime = monsterSpawnTime;
-                        if (nowMonsterSpawnCount >= maxMonsterSpawnCount)
+                        spawnTime = gameSetting.monsterSpawnTime;
+                        if (nowMonsterSpawnCount >= gameSetting.waveMonsterCount)
                         {
                             nowMonsterSpawnCount = 0;
                             wave = false;
