@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 public class MonsterControl : MonoBehaviour, IDamage
 {
@@ -14,6 +16,7 @@ public class MonsterControl : MonoBehaviour, IDamage
 
     [SerializeField] Transform hpPos;
 
+    private CancellationTokenSource cancel;
     private void Awake()
     {
         monsterInfo = this.GetComponent<MonsterInfo>();
@@ -24,28 +27,44 @@ public class MonsterControl : MonoBehaviour, IDamage
     {
         movePathIndex = 0;
         monsterInfo.monsterHp.SetPosition(hpPos.position);
+        MonsterUpdate().Forget();
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        switch (InGameManager.Instance.GameState)
+        cancel?.Cancel();
+    }
+    private void OnDestroy()
+    {
+        cancel?.Cancel();
+        cancel?.Dispose();
+    }
+
+    private async UniTaskVoid MonsterUpdate()
+    {
+        cancel = new CancellationTokenSource();
+        while (InGameManager.Instance.GameState != GameState.End || monsterState != MonsterState.Die)
         {
-            case GameState.Start:
-                switch (monsterState)
-                {
-                    case MonsterState.Arive:
-                        this.transform.position = Vector2.MoveTowards(this.transform.position, movePath[movePathIndex].position, monsterInfo.speed * Time.deltaTime);
-                        monsterInfo.monsterHp.SetPosition(hpPos.position);
-                        DistanceCheck();
-                        break;
-                    case MonsterState.Stop:
-                    case MonsterState.Die:
-                        break;
-                }
-                break;
-            case GameState.Pause:
-            case GameState.End:
-                break;
+            switch (InGameManager.Instance.GameState)
+            {
+                case GameState.Start:
+                    switch (monsterState)
+                    {
+                        case MonsterState.Arive:
+                            this.transform.position = Vector2.MoveTowards(this.transform.position, movePath[movePathIndex].position, monsterInfo.speed * Time.deltaTime);
+                            monsterInfo.monsterHp.SetPosition(hpPos.position);
+                            DistanceCheck();
+                            break;
+                        case MonsterState.Stop:
+                        case MonsterState.Die:
+                            break;
+                    }
+                    break;
+                case GameState.Pause:
+                case GameState.End:
+                    break;
+            }
+            await UniTask.Yield(cancellationToken: cancel.Token);
         }
     }
 

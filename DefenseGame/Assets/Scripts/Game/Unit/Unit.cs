@@ -1,6 +1,6 @@
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public class Unit : MonoBehaviour
     private float damage = 0f;
     private int atkCount = 0;
     private UnitAniState unitAniState;
-
+    private CancellationTokenSource cancel;
     private void Awake()
     {
         animator = this.GetComponent<Animator>();
@@ -19,12 +19,18 @@ public class Unit : MonoBehaviour
     {
         Create();
     }
+    private void OnDestroy()
+    {
+        cancel?.Cancel();
+        cancel?.Dispose();
+    }
     public void Create()
     {
         atkCoolTime = 0;
         animator.Rebind();
         ChangeUnitAnimation(UnitAniState.Idle);
         this.gameObject.SetActive(true);
+        UnitUpdate().Forget();
     }
     public void Delete()
     {
@@ -32,32 +38,41 @@ public class Unit : MonoBehaviour
         animator.Rebind();
         ChangeUnitAnimation(UnitAniState.Idle);
         this.gameObject.SetActive(false);
+        cancel?.Cancel();
     }
 
-    private void Update()
+    private async UniTaskVoid UnitUpdate()
     {
-        switch (InGameManager.Instance.GameState)
+        cancel = new CancellationTokenSource();
+        while (InGameManager.Instance.GameState != GameState.End)
         {
-            case GameState.Start:
-                if (unitInfo.AtkTrigger.targets.Count > 0)
-                {
-                    atkCoolTime += Time.deltaTime;
-                    if (atkCoolTime >= unitInfo.UnitData.AttackSpeed)
+            switch (InGameManager.Instance.GameState)
+            {
+                case GameState.Start:
+                    if (unitInfo.AtkTrigger.targets.Count > 0)
                     {
-                        ChangeUnitAnimation(UnitAniState.Attack);
+                        atkCoolTime += Time.deltaTime;
+                        if (atkCoolTime >= unitInfo.UnitData.AttackSpeed)
+                        {
+                            ChangeUnitAnimation(UnitAniState.Attack);
+                            atkCoolTime = 0;
+                        }
+                    }
+                    else
+                    {
+                        ChangeUnitAnimation(UnitAniState.Idle);
                         atkCoolTime = 0;
                     }
-                }
-                else
-                {
-                    ChangeUnitAnimation(UnitAniState.Idle);
-                    atkCoolTime = 0;
-                }
-                break;
-            case GameState.Pause:
-            case GameState.End:
-                break;
+                    break;
+                case GameState.Pause:
+                case GameState.End:
+
+                    break;
+            }
+            await UniTask.Yield(cancellationToken: cancel.Token);
         }
+        atkCoolTime = 0;
+        ChangeUnitAnimation(UnitAniState.Idle);
     }
 
     /// <summary> 유닛 상태 변경 </summary>

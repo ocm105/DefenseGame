@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using UISystem;
 
 public partial class InGameManager : MonoBehaviour
 {
@@ -52,6 +53,10 @@ public partial class InGameManager : MonoBehaviour
                     wave = true;
                     waveTime = gameSetting.waveTime;
                     gameView.WaveCountSet(waveIndex);
+
+                    // 최대 웨이브가 되면 종료
+                    if (gameSetting.maxmumWave < waveIndex)
+                        ChangeGameState(GameState.End);
                 }
                 if (wave)
                 {
@@ -89,6 +94,7 @@ public partial class InGameManager : MonoBehaviour
             case GameState.Pause:
                 break;
             case GameState.End:
+                PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("게임 끝!!");
                 break;
         }
         gameState = state;
