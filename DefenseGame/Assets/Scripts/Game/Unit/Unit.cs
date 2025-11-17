@@ -13,7 +13,7 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
-        animator = this.transform.GetChild(0).GetComponent<Animator>();
+        animator = this.GetComponent<Animator>();
     }
     private void Start()
     {
