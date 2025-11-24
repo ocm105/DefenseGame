@@ -3,14 +3,8 @@ using System.Text;
 
 public static class Scene
 {
-    public const string Title = "1.TitleScene";
-    public const string GoogleAds = "2.GoogleAdsScene";
-    public const string UnityAds = "3.UnityAdsScene";
-    public const string Localization = "4.LocalizatoinScene";
-    public const string CameraView = "5.CameraScene";
-    public const string PlayerMove = "6.PlayerMoveScene";
-    public const string WebView = "7.WebviewScene";
-    public const string DongleGame = "8.DongleGameScene";
+    public const string TitleScene = "1_TitleScene";
+    public const string GameScene = "GameScene";
 }
 public static class UnitResource
 {

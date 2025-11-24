@@ -43,14 +43,7 @@ public class GameView : UIView
     private void Init()
     {
         UnitStatusActive(false);
-        DataLoad().Forget();
-    }
-
-    private async UniTaskVoid DataLoad()
-    {
-        await GameDataManager.Instance.LoadData();
         InGameManager.Instance.ChangeGameState(GameState.Start);
-
     }
     #region Event
     public void GoldSet(int gold)

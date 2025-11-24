@@ -48,22 +48,29 @@ public class UnitStat
 
 public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
 {
-    public const string Unit_DATA_PATH = "https://docs.google.com/spreadsheets/d/13F6AfUVGakrPEFcEH-h2PHvT_kzbpjJtDOg-B0yNWWo/export?format=csv";
+    public const string UNIT_DATA_PATH = "https://docs.google.com/spreadsheets/d/13F6AfUVGakrPEFcEH-h2PHvT_kzbpjJtDOg-B0yNWWo/export?format=csv";
 
     public async UniTask GetUnitDataRequest(Action<Dictionary<int, UnitData>> callback = null)
     {
-        await Request_Get(Unit_DATA_PATH, (dataState, resData) =>
+        await Request_Get(UNIT_DATA_PATH, (dataState, resData) =>
         {
             switch (dataState)
             {
                 case GAMEDATA_STATE.CONNECTDATAERROR:
                 case GAMEDATA_STATE.PROTOCOLERROR:
-                    PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("데이터를 받아오지 못했습니다.");
+                    PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("Unit_DATA를 받아오지 못했습니다.");
                     popup.OnClose = p => Application.Quit();
                     popup.OnOK = p => Application.Quit();
                     break;
                 case GAMEDATA_STATE.REQUESTSUCCESS:
-                    callback?.Invoke(CSVReader.ReadFromResource<UnitData>(resData));
+                    var unitData = CSVReader.ReadFromResource<UnitData>(resData);
+
+                    foreach (var unit in unitData.Values)
+                    {
+                        unit.SetUnitStat(unit.Effect);
+                    }
+                    Debug.Log("UNIT_DATA 완료");
+                    callback?.Invoke(unitData);
                     break;
             }
         });

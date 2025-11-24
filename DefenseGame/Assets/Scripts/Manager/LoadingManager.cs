@@ -1,11 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UISystem;
 using UnityEngine;
 using UnityEngine.UI;
-// using DG.Tweening;
+using DG.Tweening;
 using UnityEngine.SceneManagement;
 using System;
+using Cysharp.Threading.Tasks;
 
 public class LoadingManager : SingletonMonoBehaviour<LoadingManager>
 {
@@ -28,53 +28,49 @@ public class LoadingManager : SingletonMonoBehaviour<LoadingManager>
     #region Fade
     public void SetFadeIn(Action call = null)
     {
-        // fadeImage.DOColor(fadeInColor, fadeTime).onComplete =
-        // () =>
-        // {
-        //     isFade = false;
-        //     fadeCanvas.SetActive(false);
-        //     fadeImage.gameObject.SetActive(false);
-        //     call.Invoke();
-        // };
+        fadeImage.DOColor(fadeInColor, fadeTime).onComplete =
+        () =>
+        {
+            isFade = false;
+            fadeCanvas.SetActive(false);
+            fadeImage.gameObject.SetActive(false);
+            call.Invoke();
+        };
     }
     public void SetFadeOut(Action call = null)
     {
         fadeCanvas.SetActive(true);
         fadeImage.gameObject.SetActive(true);
-        // fadeImage.DOColor(fadeOutColor, fadeTime).onComplete =
-        // () =>
-        // {
-        //     isFade = true;
-        //     call.Invoke();
-        // };
+        fadeImage.DOColor(fadeOutColor, fadeTime).onComplete =
+        () =>
+        {
+            isFade = true;
+            call.Invoke();
+        };
     }
     #endregion
 
     #region SceneLoad
-    public void SceneLoad(string sceneName)
+    public async UniTask SceneLoad(string sceneName)
     {
-        StartCoroutine(SceneLoadCoroutine(sceneName));
-    }
-    private IEnumerator SceneLoadCoroutine(string sceneName)
-    {
+        Debug.Log($"{sceneName} 이동 시작");
         string currentSceneName = SceneManager.GetActiveScene().name;
-        SetFadeOut();
-        yield return new WaitUntil(() => isFade == true);
+        // SetFadeOut();
+        // await UniTask.WaitUntil(() => isFade == true);
 
         AsyncOperation load_op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         load_op.allowSceneActivation = false;
 
-        yield return new WaitUntil(() => load_op.progress >= 0.9f);
+        await UniTask.WaitUntil(() => load_op.progress >= 0.9f);
         load_op.allowSceneActivation = true;
-        yield return new WaitUntil(() => load_op.isDone);
+        await UniTask.WaitUntil(() => load_op.isDone);
 
-        yield return null;
+        Debug.Log($"{sceneName} 이동 완료");
+        // await UniTask.Yield();
 
         // SceneManager.UnloadSceneAsync(currentSceneName);
-        SetFadeIn();
-        yield return new WaitUntil(() => isFade == false);
-
-        yield break;
+        // SetFadeIn();
+        // await UniTask.WaitUntil(() => isFade == false);
     }
     #endregion
 

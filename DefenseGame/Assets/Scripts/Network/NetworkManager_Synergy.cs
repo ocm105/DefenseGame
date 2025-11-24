@@ -47,12 +47,19 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
             {
                 case GAMEDATA_STATE.CONNECTDATAERROR:
                 case GAMEDATA_STATE.PROTOCOLERROR:
-                    PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("데이터를 받아오지 못했습니다.");
+                    PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("SYNERGY_DATA를 받아오지 못했습니다.");
                     popup.OnClose = p => Application.Quit();
                     popup.OnOK = p => Application.Quit();
                     break;
                 case GAMEDATA_STATE.REQUESTSUCCESS:
-                    callback?.Invoke(CSVReader.ReadFromResource<SynergyData>(resData));
+                    var synergyData = CSVReader.ReadFromResource<SynergyData>(resData);
+
+                    foreach (var synergy in synergyData.Values)
+                    {
+                        synergy.SetPassiveSynergy(synergy.PassiveSynergy);
+                    }
+                    Debug.Log("SYNERGY_DATA 완료");
+                    callback?.Invoke(synergyData);
                     break;
             }
         });
