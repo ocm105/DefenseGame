@@ -54,18 +54,19 @@ public class LoadingManager : SingletonMonoBehaviour<LoadingManager>
     public async UniTask SceneLoad(string sceneName)
     {
         Debug.Log($"{sceneName} 이동 시작");
-        string currentSceneName = SceneManager.GetActiveScene().name;
+        await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+        Debug.Log($"{sceneName} 이동 완료");
+        // string currentSceneName = SceneManager.GetActiveScene().name;
         // SetFadeOut();
         // await UniTask.WaitUntil(() => isFade == true);
 
-        AsyncOperation load_op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
-        load_op.allowSceneActivation = false;
+        // AsyncOperation load_op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+        // load_op.allowSceneActivation = false;
 
-        await UniTask.WaitUntil(() => load_op.progress >= 0.9f);
-        load_op.allowSceneActivation = true;
-        await UniTask.WaitUntil(() => load_op.isDone);
+        // await UniTask.WaitUntil(() => load_op.progress >= 0.9f);
+        // load_op.allowSceneActivation = true;
+        // await UniTask.WaitUntil(() => load_op.isDone);
 
-        Debug.Log($"{sceneName} 이동 완료");
         // await UniTask.Yield();
 
         // SceneManager.UnloadSceneAsync(currentSceneName);

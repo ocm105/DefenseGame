@@ -18,6 +18,6 @@ public class TitleView : UIView
     {
         await GameDataManager.Instance.LoadData();
         Debug.Log("DataLoad 완료");
-        await LoadingManager.Instance.SceneLoad(Scene.GameScene);
+        await LoadingManager.Instance.SceneLoad(Scene.LobbyScene);
     }
 }

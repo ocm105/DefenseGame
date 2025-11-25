@@ -1,10 +1,11 @@
 
-
-// 메인화면 스테이트
-public enum MainState
+public enum LobbyState
 {
-    Loading,
-    Start
+    None = 0,
+    Character,
+    Home,
+    Library,
+    Shop
 }
 
 #region Setting
