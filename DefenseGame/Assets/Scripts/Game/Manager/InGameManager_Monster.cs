@@ -27,9 +27,9 @@ public partial class InGameManager : MonoBehaviour
     private GameObject MonsterCreate()
     {
         GameObject obj = Instantiate(MonsterResource(), monsterGroup.transform);
-        MonsterControl mc = obj.GetComponent<MonsterControl>();
-        mc.MovePath(monsterPathInfo.MonsterMovePath);
-        mc.dieAction = (info) => MonsterDie(info);
+        Monster monster = obj.GetComponent<Monster>();
+        monster.MovePath(monsterPathInfo.MonsterMovePath);
+        monster.dieAction = (info) => MonsterDie(info);
         MonsterInit(obj);
         return obj;
     }
@@ -50,16 +50,16 @@ public partial class InGameManager : MonoBehaviour
         }
         int monsterDataIndex = GameDataManager.Instance.waveData[GameIndex.Wave + waveIndex].Summon;
         GameObject obj = monsterPool.Dequeue();
-        MonsterInfo info = obj.GetComponent<MonsterInfo>();
-        info.monsterData = GameDataManager.Instance.monsterData[monsterDataIndex];
-        info.monsterHp = gameView.MonsterUI.SetMonsterHP();
-        info.Spawn();
+        Monster monster = obj.GetComponent<Monster>();
+        monster.monsterData = GameDataManager.Instance.monsterData[monsterDataIndex];
+        monster.monsterHp = gameView.MonsterUI.SetMonsterHP();
+        monster.Spawn();
         obj.SetActive(true);
     }
     /// <summary> 몬스터 죽었을 때 함수 </summary>
-    private void MonsterDie(MonsterInfo info)
+    private void MonsterDie(Monster monster)
     {
-        MonsterInit(info.gameObject);
-        GoldSet(info.monsterData.GOLD);
+        MonsterInit(monster.gameObject);
+        GoldSet(monster.monsterData.GOLD);
     }
 }

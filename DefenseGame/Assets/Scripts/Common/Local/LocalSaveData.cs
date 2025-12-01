@@ -17,14 +17,3 @@ public class LocalSettingInfo
         isSfx = true;
     }
 }
-
-[Serializable]
-public class GameMaxScoreInfo
-{
-    public int dongleMaxScore;
-
-    public GameMaxScoreInfo()
-    {
-        dongleMaxScore = 0;
-    }
-}

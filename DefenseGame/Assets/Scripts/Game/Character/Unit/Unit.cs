@@ -49,6 +49,7 @@ public class Unit : MonoBehaviour
             switch (InGameManager.Instance.GameState)
             {
                 case GameState.Start:
+
                     if (unitInfo.AtkTrigger.targets.Count > 0)
                     {
                         atkCoolTime += Time.deltaTime;
@@ -96,7 +97,10 @@ public class Unit : MonoBehaviour
     {
         // 공격하려는 갯수가 더 많을 때
         if (unitInfo.AtkTrigger.targets.Count >= unitInfo.UnitData.AttackCount)
+        {
+
             atkCount = unitInfo.UnitData.AttackCount;
+        }
         // 공격하려는 갯수가 더 적을 때
         else
             atkCount = unitInfo.AtkTrigger.targets.Count;

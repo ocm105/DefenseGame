@@ -18,6 +18,4 @@ public class UnitAttackTrigger : MonoBehaviour
         IDamage target = other.GetComponent<IDamage>();
         targets.Remove(target);
     }
-
-
 }

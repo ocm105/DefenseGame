@@ -1,45 +1,15 @@
-using System;
 using UnityEngine;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-public class MonsterControl : MonoBehaviour, IDamage
+public partial class Monster : MonoBehaviour, IDamage // Control
 {
-    private MonsterInfo monsterInfo;
-    private Animator animator;
-    private SpriteRenderer sprite;
+    [SerializeField] Transform hpPos;
+    [SerializeField] SpriteRenderer sprite;
     private Transform[] movePath;
     private int movePathIndex = 0;
-    public Action<MonsterInfo> dieAction;
-    private MonsterState monsterState;
-    public MonsterState MonsterState { get { return monsterState; } }
 
-    [SerializeField] Transform hpPos;
-
-    private CancellationTokenSource cancel;
-    private void Awake()
-    {
-        monsterInfo = this.GetComponent<MonsterInfo>();
-        animator = this.GetComponent<Animator>();
-        sprite = this.GetComponent<SpriteRenderer>();
-    }
-    public void MonsterStart()
-    {
-        movePathIndex = 0;
-        monsterInfo.monsterHp.SetPosition(hpPos.position);
-        MonsterUpdate().Forget();
-    }
-
-    private void OnDisable()
-    {
-        cancel?.Cancel();
-    }
-    private void OnDestroy()
-    {
-        cancel?.Cancel();
-        cancel?.Dispose();
-    }
-
+    public bool Death { get; set; }
     private async UniTaskVoid MonsterUpdate()
     {
         cancel = new CancellationTokenSource();
@@ -51,8 +21,8 @@ public class MonsterControl : MonoBehaviour, IDamage
                     switch (monsterState)
                     {
                         case MonsterState.Arive:
-                            this.transform.position = Vector2.MoveTowards(this.transform.position, movePath[movePathIndex].position, monsterInfo.speed * Time.deltaTime);
-                            monsterInfo.monsterHp.SetPosition(hpPos.position);
+                            this.transform.position = Vector2.MoveTowards(this.transform.position, movePath[movePathIndex].position, speed * Time.deltaTime);
+                            monsterHp.SetPosition(hpPos.position);
                             DistanceCheck();
                             break;
                         case MonsterState.Stop:
@@ -69,27 +39,31 @@ public class MonsterControl : MonoBehaviour, IDamage
     }
 
     #region Fuction
-    /// <summary> 몬스터 이동경로 할당 </summary>
-    public void MovePath(Transform[] path)
-    {
-        movePath = path;
-    }
     /// <summary> 몬스터 상태 변경 </summary>
-    public void ChangeMonsterState(MonsterState state)
+    private void ChangeMonsterState(MonsterState state)
     {
         switch (state)
         {
             case MonsterState.Arive:
+                Death = false;
                 animator.CrossFade("Walk", 0);
                 break;
             case MonsterState.Stop:
                 break;
             case MonsterState.Die:
+                Death = true;
+                monsterHp.SetActive(false);
                 animator.CrossFade("Death", 0);
                 break;
         }
         monsterState = state;
     }
+    /// <summary> 몬스터 이동경로 할당 </summary>
+    public void MovePath(Transform[] path)
+    {
+        movePath = path;
+    }
+
     /// <summary> 도착 - 현재 거리 체크 </summary>
     private void DistanceCheck()
     {
@@ -107,7 +81,6 @@ public class MonsterControl : MonoBehaviour, IDamage
     }
     #endregion
 
-
     /// <summary> interface 데미지 입는 함수 </summary>
     public void OnDamage(float damage)
     {
@@ -117,19 +90,13 @@ public class MonsterControl : MonoBehaviour, IDamage
     /// <summary> 실질적 데미지 입는 함수 </summary>
     private void Hit(float damege)
     {
-        monsterInfo.MonserHpSet(damege - monsterInfo.monsterData.DEF);
+        MonserHpSet(damege - monsterData.DEF);
 
         // Debug.Log($"{damege}를 입음 HP {monsterInfo.HPvalue}");
-        if (monsterInfo.HPvalue <= 0) Die();
+        if (HPvalue <= 0) Die();
     }
     private void Die()
     {
         ChangeMonsterState(MonsterState.Die);
-        monsterInfo.monsterHp.SetActive(false);
-    }
-    public void AniEvent_Die()
-    {
-        dieAction.Invoke(monsterInfo);
-        sprite.flipX = false;
     }
 }

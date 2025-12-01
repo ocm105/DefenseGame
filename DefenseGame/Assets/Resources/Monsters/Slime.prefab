@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 6885112541287424496}
   - component: {fileID: 7716651605389869428}
   - component: {fileID: 6312745381274073398}
-  - component: {fileID: 8228436960624856502}
   - component: {fileID: 4803507554599395393}
   - component: {fileID: 4844385724768621066}
   m_Layer: 0
@@ -161,20 +160,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5bce314ae9cc44eae6babfd5dd4882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
---- !u!114 &8228436960624856502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7716651605389869419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f318143c1ef748c4fbe0ef9586104ac9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  monsterData:
+    Index: 0
+    Level: 0
+    HP: 0
+    DEF: 0
+    GOLD: 0
+    DIAMOND: 0
+  animator: {fileID: 7716651605389869428}
   hpPos: {fileID: 3719187826148562537}
+  sprite: {fileID: 6885112541287424496}
 --- !u!61 &4803507554599395393
 BoxCollider2D:
   m_ObjectHideFlags: 0
