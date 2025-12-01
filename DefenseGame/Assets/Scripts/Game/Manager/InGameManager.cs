@@ -50,13 +50,17 @@ public partial class InGameManager : MonoBehaviour
                 if (waveTime <= 0)
                 {
                     waveIndex++;
-                    wave = true;
-                    waveTime = gameSetting.waveTime;
-                    gameView.WaveCountSet(waveIndex);
 
                     // 최대 웨이브가 되면 종료
                     if (gameSetting.maxmumWave < waveIndex)
+                    {
                         ChangeGameState(GameState.End);
+                        return;
+                    }
+
+                    wave = true;
+                    waveTime = waveIndex % 5 == 0 ? gameSetting.bossTime : gameSetting.waveTime;
+                    gameView.WaveCountSet(waveIndex);
                 }
                 if (wave)
                 {
@@ -66,13 +70,14 @@ public partial class InGameManager : MonoBehaviour
                         nowMonsterSpawnCount++;
                         MonsterSpawn();
                         spawnTime = gameSetting.monsterSpawnTime;
-                        if (nowMonsterSpawnCount >= gameSetting.waveMonsterCount)
+                        if (nowMonsterSpawnCount >= (waveIndex % 5 == 0 ? 1 : gameSetting.waveMonsterCount))
                         {
                             nowMonsterSpawnCount = 0;
                             wave = false;
                         }
                     }
                 }
+
                 break;
             case GameState.Pause:
                 break;
