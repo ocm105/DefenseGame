@@ -51,9 +51,8 @@ public partial class Monster : MonoBehaviour, IDamage // Control
             case MonsterState.Stop:
                 break;
             case MonsterState.Die:
-                Death = true;
-                monsterHp.SetActive(false);
                 animator.CrossFade("Death", 0);
+                monsterHp.SetActive(false);
                 break;
         }
         monsterState = state;

@@ -1,32 +1,11 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public partial class InGameManager : MonoBehaviour
 {
-    [SerializeField] Transform unitPoolPos;
     [SerializeField] GridInfo gridInfo;
-    private int nowUnitSpawnCount = 0;             // 현재 스폰 갯수
-    private List<UnitInfo> unitPool = new List<UnitInfo>();
     public int[] SynergyInfos = new int[(int)SynergyType.Max];
 
-    /// <summary> 유닛 풀링 </summary>
-    private void UnitPooling()
-    {
-        for (int i = 0; i < gameSetting.maximumUnitCount; i++)
-        {
-            unitPool.Add(UnitCreate());
-        }
-    }
-    /// <summary> 유닛 생성 </summary>
-    private UnitInfo UnitCreate()
-    {
-        GameObject obj = Instantiate(Resources.Load<GameObject>(UnitResource.UnitInfo), unitPoolPos);
-        UnitInfo info = obj.GetComponent<UnitInfo>();
-        info.unitUpgrade = gameView.UnitUI.UnitUpgrade;
-        obj.SetActive(false);
-        return info;
-    }
     public void UnitSpawn()
     {
         if (gold >= gameSetting.unitGold && gameSetting.maximumUnitCount > nowUnitSpawnCount)

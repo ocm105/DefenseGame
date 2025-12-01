@@ -11,6 +11,7 @@ public class Unit : MonoBehaviour
     private int atkCount = 0;
     private UnitAniState unitAniState;
     private CancellationTokenSource cancel;
+
     private void Awake()
     {
         animator = this.GetComponent<Animator>();
@@ -46,10 +47,11 @@ public class Unit : MonoBehaviour
         cancel = new CancellationTokenSource();
         while (InGameManager.Instance.GameState != GameState.End)
         {
+            await UniTask.Yield(cancellationToken: cancel.Token);
+
             switch (InGameManager.Instance.GameState)
             {
                 case GameState.Start:
-
                     if (unitInfo.AtkTrigger.targets.Count > 0)
                     {
                         atkCoolTime += Time.deltaTime;
@@ -64,13 +66,13 @@ public class Unit : MonoBehaviour
                         ChangeUnitAnimation(UnitAniState.Idle);
                         atkCoolTime = 0;
                     }
+
                     break;
                 case GameState.Pause:
                 case GameState.End:
 
                     break;
             }
-            await UniTask.Yield(cancellationToken: cancel.Token);
         }
         atkCoolTime = 0;
         ChangeUnitAnimation(UnitAniState.Idle);
@@ -95,15 +97,7 @@ public class Unit : MonoBehaviour
     /// <summary> 애니메이션에서 공격 </summary>
     private void Attack()
     {
-        // 공격하려는 갯수가 더 많을 때
-        if (unitInfo.AtkTrigger.targets.Count >= unitInfo.UnitData.AttackCount)
-        {
-
-            atkCount = unitInfo.UnitData.AttackCount;
-        }
-        // 공격하려는 갯수가 더 적을 때
-        else
-            atkCount = unitInfo.AtkTrigger.targets.Count;
+        atkCount = Mathf.Min(unitInfo.UnitData.AttackCount, unitInfo.AtkTrigger.targets.Count);
 
         for (int i = 0; i < atkCount; i++)
         {

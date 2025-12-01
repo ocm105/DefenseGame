@@ -1,38 +1,9 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public partial class InGameManager : MonoBehaviour
 {
-    [SerializeField] GameObject monsterGroup;
     [SerializeField] PathInfo monsterPathInfo;
-    private int nowMonsterSpawnCount = 0;                           // 현재 스폰 갯수
-    private Queue<GameObject> monsterPool = new Queue<GameObject>();
 
-    private int stageLevel = 1;
-
-    private GameObject MonsterResource()
-    {
-        return Resources.Load<GameObject>(UnitResource.GetMonster(GameDataManager.Instance.stageData[GameIndex.Stage + stageLevel].ResourceMonster));
-    }
-
-    /// <summary> 몬스터 풀링 </summary>
-    private void MonsterPooling()
-    {
-        for (int i = 0; i < gameSetting.maximumMonsterCount; i++)
-        {
-            MonsterCreate();
-        }
-    }
-    /// <summary> 몬스터 생성 </summary>
-    private GameObject MonsterCreate()
-    {
-        GameObject obj = Instantiate(MonsterResource(), monsterGroup.transform);
-        Monster monster = obj.GetComponent<Monster>();
-        monster.MovePath(monsterPathInfo.MonsterMovePath);
-        monster.dieAction = (info) => MonsterDie(info);
-        MonsterInit(obj);
-        return obj;
-    }
     /// <summary> 몬스터 초기화 </summary>
     private void MonsterInit(GameObject obj)
     {
