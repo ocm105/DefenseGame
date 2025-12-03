@@ -1,24 +1,20 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnitGrid : MonoBehaviour
 {
     [SerializeField] Color baseColor;
     [SerializeField] Color dragColor;
-    private SpriteRenderer sprite;
+    [SerializeField] Image gridImg;
     public UnitInfo UnitInfo { get; set; }
     public string Ability { get; set; }
 
     public bool IsUnit { get { return UnitInfo != null; } }
 
-    private void Awake()
-    {
-        sprite = this.GetComponent<SpriteRenderer>();
-    }
-
     public void ChageColor(bool isDrag)
     {
-        sprite.color = isDrag ? dragColor : baseColor;
+        gridImg.color = isDrag ? dragColor : baseColor;
     }
 
     public void UnitMove(UnitInfo unit)

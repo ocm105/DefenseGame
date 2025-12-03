@@ -4,20 +4,12 @@ using UnityEngine.EventSystems;
 
 public partial class InGameManager : MonoBehaviour
 {
-    private UnitInfo unitInfo;                  // 유닛 클릭 Event 용 변수
-    private Camera mainCam;
-    private Vector2 clickPos;
-    private RaycastHit2D[] hits;
-    private bool isUnitClick = false;
+    private PointerEventData pointerEventData;
+    private List<RaycastResult> pointerResults = new List<RaycastResult>();
 
-    private UnitGrid nowGrid;
-    private UnitGrid nextGrid;
+    private UnitGrid nowGrid = null;
+    private UnitGrid nextGrid = null;
     private bool isDragging = false;
-
-    private void Awake()
-    {
-        mainCam = Camera.main;
-    }
 
     /// <summary> Unit 클릭 </summary>
     private void UnitClickEvent()
@@ -25,108 +17,135 @@ public partial class InGameManager : MonoBehaviour
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
         if (Input.GetMouseButtonDown(0))
 #elif UNITY_ANDROID
-        if (Input.touchCount > 0)
+        if (Input.touchCount == 1)
 #endif
         {
+            pointerEventData = new PointerEventData(EventSystem.current);
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-            clickPos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+            pointerEventData.position = Input.mousePosition;
 #elif UNITY_ANDROID
-            clickPos = mainCam.ScreenToWorldPoint(Input.GetTouch(0).position);
+            pointerEventData.position = Input.GetTouch(0).position;
 #endif
-            hits = Physics2D.RaycastAll(clickPos, Vector2.zero);
-            isUnitClick = false;
-            foreach (RaycastHit2D hit in hits)
+            EventSystem.current.RaycastAll(pointerEventData, pointerResults);
+
+            if (pointerResults.Count > 0)
             {
-                if (hit.collider.CompareTag("UnitGrid"))
+                if (!isDragging)
                 {
-                    if (unitInfo != null)
+                    foreach (var result in pointerResults)
                     {
-                        unitInfo.OnClick(false);
-                        unitInfo = null;
+                        if (result.gameObject.layer.Equals(LayerMask.NameToLayer("UI"))) break;
+                        if (result.gameObject.CompareTag("UnitGrid"))
+                        {
+                            UnitGrid grid = result.gameObject.GetComponent<UnitGrid>();
+
+                            // 그리드에 유닛이 있을 때
+                            if (grid.IsUnit)
+                            {
+                                // 이전 유닛이 있고 지금 클릭과 다를 때
+                                if (nowGrid != null && nowGrid != grid)
+                                {
+                                    nowGrid.UnitInfo.OnClick(false);
+                                    nowGrid.ChageColor(false);
+                                }
+
+                                grid.UnitInfo.OnClick(true);
+                                grid.ChageColor(true);
+                                nowGrid = grid;
+                                isDragging = true;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            // 클릭한게 없을 때
+                            if (nowGrid != null)
+                            {
+                                nowGrid.UnitInfo.OnClick(false);
+                                nowGrid = null;
+                            }
+                            UnitStatusClose();
+                            isDragging = false;
+                            break;
+                        }
                     }
-
-                    nowGrid = hit.collider.GetComponent<UnitGrid>();
-
-                    // 클릭한 grid에 유닛이 있을 때
-                    if (nowGrid.IsUnit)
-                    {
-                        unitInfo = nowGrid.UnitInfo;
-                        unitInfo.OnClick(true);
-                        nowGrid.ChageColor(true);
-
-                        isUnitClick = true;
-                        isDragging = true;
-                    }
-                    break;
                 }
-            }
-            // 클릭한게 없을 때
-            if (isUnitClick == false)
-            {
-                if (unitInfo != null)
-                {
-                    unitInfo.OnClick(false);
-                    unitInfo = null;
-                }
-                gameView.UnitStatusActive(false);
             }
         }
 
+        // 드레그 중이면
         if (isDragging)
         {
-            clickPos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-            hits = Physics2D.RaycastAll(clickPos, Vector2.zero);
-            foreach (RaycastHit2D hit in hits)
-            {
-                if (hit.collider.CompareTag("UnitGrid"))
-                {
-                    nextGrid?.ChageColor(false);
-                    UnitGrid unitGrid = hit.collider.GetComponent<UnitGrid>();
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+            pointerEventData.position = Input.mousePosition;
+#elif UNITY_ANDROID
+            pointerEventData.position = Input.GetTouch(0).position;
+#endif
+            EventSystem.current.RaycastAll(pointerEventData, pointerResults);
 
-                    if (nowGrid != unitGrid)
+            foreach (var result in pointerResults)
+            {
+                if (result.gameObject.CompareTag("UnitGrid"))
+                {
+                    UnitGrid grid = result.gameObject.GetComponent<UnitGrid>();
+
+                    // 최초 클릭과 다를 때
+                    if (nowGrid != grid)
                     {
-                        nextGrid = unitGrid;
-                        nextGrid.ChageColor(true);
+                        grid.ChageColor(true);
                         nowGrid.ChageColor(false);
+
+                        // 이전 클릭과 현재 클릭이 다를 때
+                        if (nextGrid != null && nextGrid != grid)
+                        {
+                            nextGrid.ChageColor(false);
+                        }
+                        nextGrid = grid;
                     }
-                    else
+                    else // 최초 클릭과 동일할 때
                     {
                         nowGrid.ChageColor(true);
-                        nextGrid = null;
+                        if (nextGrid != null)
+                        {
+                            nextGrid.ChageColor(false);
+                            nextGrid = null;
+                        }
                     }
                     break;
                 }
             }
+        }
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+        if (Input.GetMouseButtonUp(0))
+#elif UNITY_ANDROID
+        if (Input.touchCount != 1)
+#endif
+        {
+            isDragging = false;
 
-            if (Input.GetMouseButtonUp(0))
+            if (nextGrid != null)
             {
-                isDragging = false;
-
-                if (nextGrid != null)
+                if (nextGrid.IsUnit)
                 {
-                    if (nextGrid.IsUnit)
-                    {
-                        nowGrid.UnitMove(nextGrid.UnitInfo);
-                        nextGrid.UnitMove(unitInfo);
-                    }
-                    else
-                    {
-                        nextGrid.UnitMove(unitInfo);
-                        nowGrid.UnitInfo = null;
-                    }
-                    nextGrid.ChageColor(isDragging);
-                    nextGrid = null;
-                    nowGrid.ChageColor(isDragging);
-                    nowGrid = null;
+                    UnitInfo info = nextGrid.UnitInfo;
+                    nextGrid.UnitMove(nowGrid.UnitInfo);
+                    nowGrid.UnitMove(info);
                 }
                 else
                 {
-                    nowGrid.ChageColor(isDragging);
-                    nowGrid = null;
+                    nextGrid.UnitMove(nowGrid.UnitInfo);
+                    nowGrid.UnitInfo = null;
+
                 }
+                nextGrid.ChageColor(false);
+                nowGrid.ChageColor(false);
+                nowGrid = nextGrid;
+                nextGrid = null;
+            }
 
-
-
+            if (nowGrid != null)
+            {
+                nowGrid.ChageColor(false);
             }
         }
     }
