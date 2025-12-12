@@ -9,7 +9,6 @@ public enum LobbyState
 }
 
 #region Setting
-// 언어 타입
 public enum LanguageType
 {
     Korean = 0,
@@ -29,7 +28,8 @@ public enum GAMEDATA_STATE
 }
 public enum GameState
 {
-    Start = 0,
+    Ready = 0,
+    Start,
     Pause,
     End
 }
@@ -73,7 +73,6 @@ public enum MonsterType
     Monster1 = GameIndex.Monster + 1,
 }
 #endregion
-
 
 #region Player
 public enum PlayerAniState

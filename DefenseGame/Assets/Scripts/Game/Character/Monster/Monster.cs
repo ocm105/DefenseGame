@@ -4,14 +4,14 @@ using System;
 
 public partial class Monster : MonoBehaviour
 {
-    [SerializeField] public MonsterData monsterData;
+    [SerializeField] MonsterData monsterData;
     [SerializeField] Animator animator;
+
     private float speed = 1f;
     private float hp;
-    public float HPvalue { get { return hp; } }
-    public MonsterHp monsterHp { get; set; }
+    private bool Dead => hp <= 0;
+    private MonsterHp monsterHp;
     private MonsterState monsterState;
-    public Action<Monster> dieAction;
 
     public CancellationTokenSource cancel;
 
@@ -25,18 +25,20 @@ public partial class Monster : MonoBehaviour
         cancel?.Dispose();
     }
 
+    public void Initialize(MonsterData data, MonsterHp monsterHp)
+    {
+        this.monsterData = data;
+        this.monsterHp = monsterHp;
+        this.monsterHp.SetHp(1f);
+        this.monsterHp.SetPosition(hpPos.position);
+        hp = monsterData.HP;
+        movePathIndex = 0;
+    }
     public void Spawn()
     {
-        hp = monsterData.HP;
-        monsterHp.SetHp(1f);
         monsterHp.SetActive(true);
-        MonsterStart();
+        this.gameObject.SetActive(true);
         ChangeMonsterState(MonsterState.Arive);
-    }
-    private void MonsterStart()
-    {
-        movePathIndex = 0;
-        monsterHp.SetPosition(hpPos.position);
         MonsterUpdate().Forget();
     }
     private void MonserHpSet(float damage)
@@ -44,10 +46,10 @@ public partial class Monster : MonoBehaviour
         hp -= damage;
         monsterHp.SetHp(Mathf.Clamp01(hp / monsterData.HP));
     }
-
     public void AniEvent_Die()
     {
-        dieAction.Invoke(this);
+        InGameManager.Instance.SpendGold(monsterData.GOLD);
+        InGameManager.Instance.MonsterDespawn(this);
     }
 
 }

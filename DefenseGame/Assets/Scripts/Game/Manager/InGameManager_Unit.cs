@@ -17,7 +17,7 @@ public partial class InGameManager : MonoBehaviour
             {
                 if (unitPool[i].UnitIndex == unitIndex && unitPool[i].isFull == false)
                 {
-                    GoldSet(-gameSetting.unitGold);
+                    SpendGold(-gameSetting.unitGold);
                     unitPool[i].UnitCreate();
                     nowUnitSpawnCount++;
                     isSpawn = true;
@@ -30,7 +30,7 @@ public partial class InGameManager : MonoBehaviour
                 {
                     if (unitPool[i].UnitIndex == -1)
                     {
-                        GoldSet(-gameSetting.unitGold);
+                        SpendGold(-gameSetting.unitGold);
                         UnitGrid grid = UnitRandomGrid();
                         grid.UnitInfo = unitPool[i];
 

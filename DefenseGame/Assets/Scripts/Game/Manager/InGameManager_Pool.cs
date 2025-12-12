@@ -5,15 +5,14 @@ public partial class InGameManager : MonoBehaviour
 {
     [SerializeField] Transform unitPoolPos;
     private List<UnitInfo> unitPool = new List<UnitInfo>();
-    private int nowUnitSpawnCount = 0;             // 현재 스폰 갯수
+    private int nowUnitSpawnCount = 0;
 
-    [SerializeField] GameObject monsterGroup;
-    private Queue<GameObject> monsterPool = new Queue<GameObject>();
+    [SerializeField] Transform monsterPoolPos;
+    private Queue<Monster> monsterPool = new Queue<Monster>();
     private int stageLevel = 1;
-    private int nowMonsterSpawnCount = 0;                           // 현재 스폰 갯수
+    private int nowMonsterSpawnCount = 0; 
 
     #region Unit
-    /// <summary> 유닛 풀링 </summary>
     private void UnitPooling()
     {
         for (int i = 0; i < gameSetting.maximumUnitCount; i++)
@@ -21,7 +20,6 @@ public partial class InGameManager : MonoBehaviour
             unitPool.Add(UnitCreate());
         }
     }
-    /// <summary> 유닛 생성 </summary>
     private UnitInfo UnitCreate()
     {
         GameObject obj = Instantiate(Resources.Load<GameObject>(UnitResource.UnitInfo), unitPoolPos);
@@ -38,7 +36,6 @@ public partial class InGameManager : MonoBehaviour
         return Resources.Load<GameObject>(UnitResource.GetMonster(GameDataManager.Instance.stageData[GameIndex.Stage + stageLevel].ResourceMonster));
     }
 
-    /// <summary> 몬스터 풀링 </summary>
     private void MonsterPooling()
     {
         for (int i = 0; i < gameSetting.maximumMonsterCount; i++)
@@ -46,15 +43,20 @@ public partial class InGameManager : MonoBehaviour
             MonsterCreate();
         }
     }
-    /// <summary> 몬스터 생성 </summary>
     private GameObject MonsterCreate()
     {
-        GameObject obj = Instantiate(MonsterResource(), monsterGroup.transform);
+        GameObject obj = Instantiate(MonsterResource(), monsterPoolPos);
         Monster monster = obj.GetComponent<Monster>();
         monster.MovePath(monsterPathInfo.MonsterMovePath);
-        monster.dieAction = (info) => MonsterDie(info);
-        MonsterInit(obj);
+        MonsterRefresh(monster);
         return obj;
+    }
+    private void MonsterRefresh(Monster monster)
+    {
+        monster.transform.position = monsterPathInfo.MonsterCreatePoint.position;
+        monster.transform.rotation = Quaternion.identity;
+        monster.gameObject.SetActive(false);
+        monsterPool.Enqueue(monster);
     }
     #endregion
 }

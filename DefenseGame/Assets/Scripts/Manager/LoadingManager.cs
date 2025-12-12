@@ -53,9 +53,9 @@ public class LoadingManager : SingletonMonoBehaviour<LoadingManager>
     #region SceneLoad
     public async UniTask SceneLoad(string sceneName)
     {
-        Debug.Log($"{sceneName} ì´ë™ ì‹œìž‘");
+        Debug.Log($"{sceneName} ·Îµù ½ÃÀÛ");
         await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
-        Debug.Log($"{sceneName} ì´ë™ ì™„ë£Œ");
+        Debug.Log($"{sceneName} ·Îµù ¿Ï·á");
         // string currentSceneName = SceneManager.GetActiveScene().name;
         // SetFadeOut();
         // await UniTask.WaitUntil(() => isFade == true);

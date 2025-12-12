@@ -17,7 +17,7 @@ public class TitleView : UIView
     private async UniTaskVoid GameStart()
     {
         await GameDataManager.Instance.LoadData();
-        Debug.Log("DataLoad ì™„ë£Œ");
+        Debug.Log("DataTable ·Îµå ¿Ï·á");
         await LoadingManager.Instance.SceneLoad(Scene.LobbyScene);
     }
 }

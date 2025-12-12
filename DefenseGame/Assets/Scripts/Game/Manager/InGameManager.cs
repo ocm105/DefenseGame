@@ -24,43 +24,53 @@ public partial class InGameManager : MonoBehaviour
 
     private GameState gameState = GameState.End;
     public GameState GameState { get { return gameState; } }
-
-    private async UniTask Init()
-    {
-        await UniTask.WaitUntil(() => gameState == GameState.Start);
-        waveTime = gameSetting.startTime;
-        GoldSet(100);
-        MonsterPooling();
-        UnitPooling();
-        gameView.WaveCountSet(1);
-        gameView.UnitCountSet(nowUnitSpawnCount, gameSetting.maximumUnitCount);
-    }
+    
     private void Start()
     {
-        Init().Forget();
+        Initialize();
+    }
+    private void Initialize()
+    {
+        waveTime = gameSetting.startTime;
+        gameView.WaveTimeSet(waveTime);
+        gameView.WaveCountSet(1);
+        gameView.UnitCountSet(nowUnitSpawnCount, gameSetting.maximumUnitCount);
+
+        UnitPooling();
+        MonsterPooling();
+        SpendGold(100);
+        gameState = GameState.Ready;
     }
 
     private void Update()
     {
         switch (gameState)
         {
+            case GameState.Ready:
+                waveTime -= Time.deltaTime;
+                gameView.WaveTimeSet(waveTime);
+                if (waveTime <= 0)
+                {
+                    gameState = GameState.Start;
+                    NextWave();
+                }
+                break;
+
             case GameState.Start:
                 waveTime -= Time.deltaTime;
                 gameView.WaveTimeSet(waveTime);
                 if (waveTime <= 0)
                 {
-                    waveIndex++;
-
-                    // 최대 웨이브가 되면 종료
-                    if (gameSetting.maxmumWave < waveIndex)
+                    if (gameSetting.maxmumWave <= waveIndex)
                     {
                         ChangeGameState(GameState.End);
                         return;
                     }
-
-                    wave = true;
-                    waveTime = waveIndex % 5 == 0 ? gameSetting.bossTime : gameSetting.waveTime;
-                    gameView.WaveCountSet(waveIndex);
+                    NextWave();
+                }
+                if(waveTime > 0 && IsMonsterArive == false && wave == false)
+                {
+                    NextWave();
                 }
                 if (wave)
                 {
@@ -88,26 +98,33 @@ public partial class InGameManager : MonoBehaviour
     }
 
     #region Fuction
-    /// <summary> 게임 상태 변경 </summary>
     public void ChangeGameState(GameState state)
     {
         switch (state)
         {
+            case GameState.Ready:
+                break;
             case GameState.Start:
-
                 break;
             case GameState.Pause:
                 break;
             case GameState.End:
-                PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("게임 끝!!");
+                PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("���� ��");
                 break;
         }
         gameState = state;
     }
-    private void GoldSet(int _gold)
+    public void SpendGold(int _gold)
     {
         gold += _gold;
         gameView.GoldSet(gold);
+    }
+    private void NextWave()
+    {
+        waveIndex++;
+        gameView.WaveCountSet(waveIndex);
+        waveTime = waveIndex % 5 == 0 ? gameSetting.bossTime : gameSetting.waveTime;
+        wave = true;
     }
     #endregion
 

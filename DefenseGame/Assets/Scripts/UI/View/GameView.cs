@@ -36,15 +36,10 @@ public class GameView : UIView
         homeBtn.onClick.AddListener(OnClick_Home);
     }
     protected override void OnShow()
-    {
-        Init();
-    }
+    { 
 
-    private void Init()
-    {
-        UnitStatusActive(false);
-        InGameManager.Instance.ChangeGameState(GameState.Start);
     }
+   
     #region Event
     public void GoldSet(int gold)
     {
@@ -86,12 +81,11 @@ public class GameView : UIView
 
     private void OnClick_Home()
     {
-        // SoundManager.Instance.PlaySFXSound("Button");
-        PopupState state = Les_UIManager.Instance.Popup<BasePopup_TwoBtn>().Open("ê²Œìž„ì„ ë‚˜ê°€ì‹œê² ìŠµë‹ˆê¹Œ?");
         InGameManager.Instance.ChangeGameState(GameState.Pause);
-        state.OnYes = p => InGameManager.Instance.ChangeGameState(GameState.Start);
+        PopupState state = Les_UIManager.Instance.Popup<BasePopup_TwoBtn>().Open("°ÔÀÓÀ» Á¾·áÇÏ½Ã°Ú½À´Ï±î?");
+        state.OnYes = p => LoadingManager.Instance.SceneLoad(Scene.LobbyScene).Forget();
         state.OnNo = p => InGameManager.Instance.ChangeGameState(GameState.Start);
-        // LoadingManager.Instance.SceneLoad(Constants.Scene.Title);
+         
     }
     #endregion
 }
