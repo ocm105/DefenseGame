@@ -30,7 +30,6 @@ public class UnitInfo : MonoBehaviour
         OnClick(false);
     }
 
-    /// <summary> Unit 정보 설정 </summary>
     public void SetData(int index)
     {
         UnitIndex = index;
@@ -60,11 +59,9 @@ public class UnitInfo : MonoBehaviour
         this.transform.localPosition = Vector2.zero;
     }
 
-    /// <summary> Unit 클릭 </summary>
     public void OnClick(bool isOn = true)
     {
         atkRangeSpr.enabled = isOn;
-        levelSprite.gameObject.SetActive(isOn);
         if (isFull)
         {
             unitUpgrade.SetPosition(upgradePos.position);

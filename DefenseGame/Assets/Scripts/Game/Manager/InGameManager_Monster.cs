@@ -4,7 +4,6 @@ public partial class InGameManager : MonoBehaviour
 {
     [SerializeField] PathInfo monsterPathInfo;
 
-    /// <summary> 몬스터 초기화 </summary>
     private void MonsterInit(GameObject obj)
     {
         obj.SetActive(false);
@@ -12,7 +11,6 @@ public partial class InGameManager : MonoBehaviour
         obj.transform.rotation = Quaternion.identity;
         monsterPool.Enqueue(obj);
     }
-    /// <summary> 몬스터 스폰 </summary>
     private void MonsterSpawn()
     {
         if (monsterPool.Count <= 0)
@@ -27,7 +25,6 @@ public partial class InGameManager : MonoBehaviour
         monster.Spawn();
         obj.SetActive(true);
     }
-    /// <summary> 몬스터 죽었을 때 함수 </summary>
     private void MonsterDie(Monster monster)
     {
         MonsterInit(monster.gameObject);

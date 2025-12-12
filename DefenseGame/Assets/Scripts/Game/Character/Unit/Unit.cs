@@ -78,7 +78,6 @@ public class Unit : MonoBehaviour
         ChangeUnitAnimation(UnitAniState.Idle);
     }
 
-    /// <summary> 유닛 상태 변경 </summary>
     private void ChangeUnitAnimation(UnitAniState state)
     {
         switch (state)
@@ -94,7 +93,6 @@ public class Unit : MonoBehaviour
         unitAniState = state;
     }
 
-    /// <summary> 애니메이션에서 공격 </summary>
     private void Attack()
     {
         atkCount = Mathf.Min(unitInfo.UnitData.AttackCount, unitInfo.AtkTrigger.targets.Count);

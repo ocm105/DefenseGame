@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public partial class InGameManager : MonoBehaviour
@@ -15,7 +15,6 @@ public partial class InGameManager : MonoBehaviour
             SetSynergy(unitIndex);
             for (int i = 0; i < unitPool.Count; i++)
             {
-                // 소환하려는 같은 unit이 있을 때
                 if (unitPool[i].UnitIndex == unitIndex && unitPool[i].isFull == false)
                 {
                     GoldSet(-gameSetting.unitGold);
@@ -29,10 +28,9 @@ public partial class InGameManager : MonoBehaviour
             {
                 for (int i = 0; i < unitPool.Count; i++)
                 {
-                    // 같은 unit이 없지만 남은 pool이 있을 때
                     if (unitPool[i].UnitIndex == -1)
                     {
-                        GoldSet(-20);
+                        GoldSet(-gameSetting.unitGold);
                         UnitGrid grid = UnitRandomGrid();
                         grid.UnitInfo = unitPool[i];
 
@@ -47,7 +45,6 @@ public partial class InGameManager : MonoBehaviour
         }
         gameView.UnitCountSet(nowUnitSpawnCount, gameSetting.maximumUnitCount);
     }
-    /// <summary> 유닛 랜덤 </summary>
     private int UnitRandom()
     {
         int totalWeight = 0;
@@ -71,7 +68,6 @@ public partial class InGameManager : MonoBehaviour
         return 0;
     }
 
-    /// <summary> 유닛 랜덤 위치 </summary>
     private UnitGrid UnitRandomGrid()
     {
         int ran = 0;
@@ -82,7 +78,6 @@ public partial class InGameManager : MonoBehaviour
 
         return gridInfo.UnitGrids[ran];
     }
-    /// <summary> 유닛 Update </summary>
     public void UnitStatusOpen(UnitData data)
     {
         gameView.UnitStatusActive(true, data);
