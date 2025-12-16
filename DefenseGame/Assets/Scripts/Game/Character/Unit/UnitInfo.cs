@@ -62,12 +62,12 @@ public class UnitInfo : MonoBehaviour
     public void OnClick(bool isOn = true)
     {
         atkRangeSpr.enabled = isOn;
-        if (isFull)
-        {
-            unitUpgrade.SetPosition(upgradePos.position);
-            unitUpgrade.SetUpgrade_Action(OnUpgrade);
-        }
-        unitUpgrade.SetActive(isFull && isOn);
+
+        unitUpgrade.SetInteractable(isFull);
+        unitUpgrade.SetUpgrade_Action(OnUpgrade);
+        unitUpgrade.SetPosition(upgradePos.position);
+        unitUpgrade.SetActive(isOn);
+
         if (isOn)
             InGameManager.Instance.UnitStatusOpen(UnitData);
         else

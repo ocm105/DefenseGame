@@ -19,4 +19,8 @@ public class UnitUpgrade : UIUtil
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(action);
     }
+    public void SetInteractable(bool active)
+    {
+        button.interactable = active;
+    }
 }
