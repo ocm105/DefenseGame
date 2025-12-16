@@ -9,16 +9,16 @@ public class UnitData
 {
     public int Index;
     public string Name;
-    public int Level;               // 업글
+    public int Level;               // ?��?
     public string Job;
     public int Mana;
     public int Range;               // 공격범위
-    public float AttackSpeed;       // 공격속도
-    public int Attack;              // 공격력
-    public int AttackCount;         // 1타격에 몇마리 때리는지
-    public int Critical;            // 100% 기준 크리티컬 %
-    public float CriticalPower;     // 크리티컬 공격력 배수
-    public string[] Synergy;        // 시너지
+    public float AttackSpeed;       // 공격?�도
+    public int Attack;              // 공격??
+    public int AttackCount;         // 1?�격에 몇마�??�리?��?
+    public int Critical;            // 100% 기�? ?�리?�컬 %
+    public float CriticalPower;     // ?�리?�컬 공격??배수
+    public string[] Synergy;        // ?�너지
     public string Resource;
     public int Weight;              // 가중치
     public List<string> Effect;     // { "Atk|10|10", "DEF|5|5" }
@@ -58,7 +58,7 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
             {
                 case GAMEDATA_STATE.CONNECTDATAERROR:
                 case GAMEDATA_STATE.PROTOCOLERROR:
-                    PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("Unit_DATA를 받아오지 못했습니다.");
+                    PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("Load Unit_DATA Fail");
                     popup.OnClose = p => Application.Quit();
                     popup.OnOK = p => Application.Quit();
                     break;
@@ -69,7 +69,7 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
                     {
                         unit.SetUnitStat(unit.Effect);
                     }
-                    Debug.Log("UNIT_DATA 완료");
+                    Debug.Log("UNIT_DATA Load");
                     callback?.Invoke(unitData);
                     break;
             }

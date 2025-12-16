@@ -17,10 +17,11 @@ public partial class InGameManager : MonoBehaviour
         monster.Initialize(GameDataManager.Instance.monsterData[monsterDataIndex], gameView.MonsterUI.SetMonsterHP());
         monster.Spawn();
         monsterAriveCount++;
+        gameView.SetMonsterCount(monsterAriveCount);
     }
-    public void MonsterDespawn(Monster monster)
+    public void MonsterDespawn()
     {
         monsterAriveCount--;
-        MonsterRefresh(monster);
+        gameView.SetMonsterCount(monsterAriveCount);
     }
 }

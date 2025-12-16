@@ -23,12 +23,12 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
             {
                 case GAMEDATA_STATE.CONNECTDATAERROR:
                 case GAMEDATA_STATE.PROTOCOLERROR:
-                    PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("WAVE_DATA 를 받아오지 못했습니다.");
+                    PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("Loaf WAVE_DATA Fail");
                     popup.OnClose = p => Application.Quit();
                     popup.OnOK = p => Application.Quit();
                     break;
                 case GAMEDATA_STATE.REQUESTSUCCESS:
-                    Debug.Log("WAVE_DATA 완료");
+                    Debug.Log("WAVE_DATA Load");
                     callback?.Invoke(CSVReader.ReadFromResource<WaveData>(resData));
                     break;
             }

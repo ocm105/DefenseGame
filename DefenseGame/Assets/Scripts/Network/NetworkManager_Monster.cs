@@ -27,12 +27,12 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
             {
                 case GAMEDATA_STATE.CONNECTDATAERROR:
                 case GAMEDATA_STATE.PROTOCOLERROR:
-                    PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("MONSTER_DATA를 받아오지 못했습니다.");
+                    PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("Load MONSTER_DATA Fail");
                     popup.OnClose = p => Application.Quit();
                     popup.OnOK = p => Application.Quit();
                     break;
                 case GAMEDATA_STATE.REQUESTSUCCESS:
-                    Debug.Log("MONSTER_DATA 완료");
+                    Debug.Log("MONSTER_DATA Load");
                     callback?.Invoke(CSVReader.ReadFromResource<MonsterData>(resData));
                     break;
             }

@@ -48,8 +48,7 @@ public partial class Monster : MonoBehaviour
     }
     public void AniEvent_Die()
     {
-        InGameManager.Instance.SpendGold(monsterData.GOLD);
-        InGameManager.Instance.MonsterDespawn(this);
+        InGameManager.Instance.MonsterRefresh(this);
     }
 
 }

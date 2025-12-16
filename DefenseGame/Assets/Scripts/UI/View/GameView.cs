@@ -1,8 +1,6 @@
-using System.Collections;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UISystem;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +13,7 @@ public class GameView : UIView
 
     [SerializeField] TextMeshProUGUI waveCountText;
     [SerializeField] TextMeshProUGUI waveTimeText;
+    [SerializeField] TextMeshProUGUI monsterCountText;
 
     [SerializeField] UnitInfoWindow unitInfoWindow;
     [SerializeField] TextMeshProUGUI goldText;
@@ -48,6 +47,10 @@ public class GameView : UIView
     public void UnitCountSet(int now, int max)
     {
         unitCountText.text = $"{now}/{max}";
+    }
+    public void SetMonsterCount(int count)
+    {
+        monsterCountText.text = $"Monster Count : {count}";
     }
     public void WaveCountSet(int count)
     {

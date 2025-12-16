@@ -85,6 +85,8 @@ public partial class Monster : MonoBehaviour, IDamage // Control
 
         if (Dead)
         {
+            InGameManager.Instance.SpendGold(monsterData.GOLD);
+            InGameManager.Instance.MonsterDespawn();
             ChangeMonsterState(MonsterState.Die);
             monsterHp.SetActive(false);
             monsterHp = null;

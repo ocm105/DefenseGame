@@ -51,7 +51,7 @@ public partial class InGameManager : MonoBehaviour
         MonsterRefresh(monster);
         return obj;
     }
-    private void MonsterRefresh(Monster monster)
+    public void MonsterRefresh(Monster monster)
     {
         monster.transform.position = monsterPathInfo.MonsterCreatePoint.position;
         monster.transform.rotation = Quaternion.identity;

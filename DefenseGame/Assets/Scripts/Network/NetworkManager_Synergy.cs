@@ -47,7 +47,7 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
             {
                 case GAMEDATA_STATE.CONNECTDATAERROR:
                 case GAMEDATA_STATE.PROTOCOLERROR:
-                    PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("SYNERGY_DATA를 받아오지 못했습니다.");
+                    PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("Load SYNERGY_DATA Fail");
                     popup.OnClose = p => Application.Quit();
                     popup.OnOK = p => Application.Quit();
                     break;
@@ -58,7 +58,7 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
                     {
                         synergy.SetPassiveSynergy(synergy.PassiveSynergy);
                     }
-                    Debug.Log("SYNERGY_DATA 완료");
+                    Debug.Log("SYNERGY_DATA Load");
                     callback?.Invoke(synergyData);
                     break;
             }

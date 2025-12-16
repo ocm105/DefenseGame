@@ -35,6 +35,7 @@ public partial class InGameManager : MonoBehaviour
         gameView.WaveTimeSet(waveTime);
         gameView.WaveCountSet(1);
         gameView.UnitCountSet(nowUnitSpawnCount, gameSetting.maximumUnitCount);
+        gameView.SetMonsterCount(monsterAriveCount);
 
         UnitPooling();
         MonsterPooling();
