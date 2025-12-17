@@ -4087,6 +4087,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6505208794262815658, guid: 548ac0cadf3e0a74fb6cd7e89ee3ffd6, type: 3}
+      propertyPath: bossHpPoolCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6505208794262815658, guid: 548ac0cadf3e0a74fb6cd7e89ee3ffd6, type: 3}
+      propertyPath: nomalHpPoolCount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7741527958514795456, guid: 548ac0cadf3e0a74fb6cd7e89ee3ffd6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

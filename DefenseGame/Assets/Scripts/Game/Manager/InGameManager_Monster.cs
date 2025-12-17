@@ -16,6 +16,7 @@ public partial class InGameManager : MonoBehaviour
         Monster monster = monsterPool.Dequeue();
         monster.Initialize(GameDataManager.Instance.monsterData[monsterDataIndex], gameView.MonsterUI.SetMonsterHP());
         monster.Spawn();
+
         nowMonsterSpawnCount++;
         monsterAriveCount++;
         gameView.SetMonsterCount(monsterAriveCount);
@@ -23,6 +24,22 @@ public partial class InGameManager : MonoBehaviour
     public void MonsterDespawn()
     {
         monsterAriveCount--;
+        gameView.SetMonsterCount(monsterAriveCount);
+    }
+
+    private void BossSpwan()
+    {
+        if (monsterPool.Count <= 0)
+        {
+            MonsterCreate();
+        }
+        int monsterDataIndex = GameDataManager.Instance.waveData[GameIndex.Wave + waveIndex].Summon;
+        Monster monster = monsterPool.Dequeue();
+        monster.Initialize(GameDataManager.Instance.monsterData[monsterDataIndex], gameView.MonsterUI.SetBossMonsterHP());
+        monster.Spawn();
+
+        nowMonsterSpawnCount++;
+        monsterAriveCount++;
         gameView.SetMonsterCount(monsterAriveCount);
     }
 }

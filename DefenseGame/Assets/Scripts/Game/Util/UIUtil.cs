@@ -3,8 +3,12 @@ using UnityEngine;
 public class UIUtil : MonoBehaviour
 {
     [SerializeField] RectTransform ui;
-    public Camera mainCam { get; set; }
+    protected Camera mainCam;
 
+    public void SetMainCamera(Camera mainCam)
+    {
+        this.mainCam = mainCam;
+    }
     public virtual void SetActive(bool active)
     {
         ui.gameObject.SetActive(active);

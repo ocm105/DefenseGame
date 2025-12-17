@@ -80,6 +80,7 @@ public partial class InGameManager : MonoBehaviour
                     if (isBossWave)
                     {
                         // 보스 스폰
+                        BossSpwan();
                         waveStart = false;
                     }
                     else

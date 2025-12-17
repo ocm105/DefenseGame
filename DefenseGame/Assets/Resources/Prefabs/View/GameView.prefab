@@ -3117,9 +3117,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb3ff7db4b77dbf4ca8e091f6549c187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterUI
-  hpPoolCount: 20
+  nomalHpPoolCount: 20
   monsterHPPrefab: {fileID: 3392505532160119522, guid: 1b1a4c7e26311d04c9f15b405b7eaffe, type: 3}
-  monsterHps: []
+  bossHpPoolCount: 5
+  bossHPPrefab: {fileID: 3392505532160119522, guid: b217cefc7eb3008428d0cb9cb94d4db8, type: 3}
 --- !u!1 &6653570363483483352
 GameObject:
   m_ObjectHideFlags: 0
