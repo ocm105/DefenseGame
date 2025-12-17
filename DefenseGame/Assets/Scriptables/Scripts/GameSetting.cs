@@ -3,15 +3,41 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameSetting", menuName = "ScriptableObjects/GameSetting")]
 public class GameSetting : ScriptableObject
 {
-    [Header("ê²Œì„ ì‹œì‘ ì¹´ìš´íŠ¸")] public float startTime = 3;
-    [Header("Wave ì¹´ìš´íŠ¸")] public float waveTime = 15;
-    [Header("Wave ë§¥ì‹œë©ˆ")] public int maxmumWave = 30;
-    [Header("ë³´ìŠ¤ ì¹´ìš´íŠ¸")] public float bossTime = 20;
-    [Header("ìœ ë‹› 2ì„± ë°°ìˆ˜")] public float star2 = 3.5f;
-    [Header("ìœ ë‹› 3ì„± ë°°ìˆ˜")] public float star3 = 12f;
-    [Header("ìœ ë‹› ë½‘ê¸° ê³¨ë“œ")] public int unitGold;
-    [Header("ìœ ë‹› ë§¥ì‹œë©ˆ")] public int maximumUnitCount = 17;
-    [Header("ëª¬ìŠ¤í„° ë§¥ì‹œë©ˆ")] public int maximumMonsterCount = 80;
-    [Header("Wave ëª¬ìŠ¤í„° ê°¯ìˆ˜")] public int waveMonsterCount = 10;
-    [Header("ëª¬ìŠ¤í„° ì†Œí™˜ ì‹œê°„")] public float monsterSpawnTime = 0.5f;
+    [Header("°ÔÀÓ ½ÃÀÛ ½Ã°£")] public float startTime = 3;
+    [Header("±âº» ¼ÒÁö±İ")] public int startGold = 100;
+    [Header("½ÃÀÛ Wave")] public int startWave = 1;
+
+    [Header("Wave ½Ã°£")] public float waveTime = 15;
+    [Header("Wave ÃÖ´ëÄ¡")] public int maxmumWave = 30;
+    [Header("Wave´ç ¸ó½ºÅÍ ¼ıÀÚ")] public int waveMonsterCount = 10;
+
+    [Header("º¸½º ½Ã°£")] public float bossTime = 20;
+    [Header("º¸½º Wave")] public int bossWave = 5;
+
+    [Header("À¯´Ö »Ì±â ºñ¿ë")] public int unitGold = 20;
+    [Header("À¯´Ö ÃÖ´ëÄ¡")] public int maximumUnitCount = 17;
+
+    [Header("¸ó½ºÅÍ ÃÖ´ëÄ¡")] public int maximumMonsterCount = 80;
+    [Header("¸ó½ºÅÍ ¼ÒÈ¯ »çÀÌ½Ã°£")] public float monsterSpawnTime = 0.5f;
+
+    [Header("2¼º ½ºÅİ ¹è¼ö")] public float star2 = 3.5f;
+    [Header("3»ó ½ºÅÈ ¹è¼ö")] public float star3 = 12f;
+
+    private bool isBossWave = false;
+
+    /// <summary> º¸½º ¿şÀÌºê °Ë»ç </summary>
+    public bool IsBossWave(int wave)
+    {
+        isBossWave = wave % 5 == 0;
+        return isBossWave;
+    }
+    /// <summary> ÇöÀç ÃÖ´ë ¿şÀÌºêÀÎÁö </summary>
+    public bool IsMaxmumWave(int wave)
+    {
+        return maxmumWave <= wave;
+    }
+    public float WaveTime(int wave)
+    {
+        return isBossWave ? bossTime : waveTime;
+    }
 }

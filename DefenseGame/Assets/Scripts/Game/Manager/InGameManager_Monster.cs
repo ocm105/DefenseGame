@@ -16,6 +16,7 @@ public partial class InGameManager : MonoBehaviour
         Monster monster = monsterPool.Dequeue();
         monster.Initialize(GameDataManager.Instance.monsterData[monsterDataIndex], gameView.MonsterUI.SetMonsterHP());
         monster.Spawn();
+        nowMonsterSpawnCount++;
         monsterAriveCount++;
         gameView.SetMonsterCount(monsterAriveCount);
     }

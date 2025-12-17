@@ -19,27 +19,29 @@ public partial class InGameManager : MonoBehaviour
     [SerializeField] GameSetting gameSetting;
     private float waveTime, spawnTime = 0;
     private int waveIndex = 0;
-    private bool wave = false;
+    private bool waveStart = false;
+    private bool isBossWave = false;
     private int gold = 0;
 
     private GameState gameState = GameState.End;
     public GameState GameState { get { return gameState; } }
-    
+
     private void Start()
     {
         Initialize();
     }
     private void Initialize()
     {
+        UnitPooling();
+        MonsterPooling();
+
         waveTime = gameSetting.startTime;
         gameView.WaveTimeSet(waveTime);
-        gameView.WaveCountSet(1);
+        gameView.WaveCountSet(gameSetting.startWave);
         gameView.UnitCountSet(nowUnitSpawnCount, gameSetting.maximumUnitCount);
         gameView.SetMonsterCount(monsterAriveCount);
 
-        UnitPooling();
-        MonsterPooling();
-        SpendGold(100);
+        SpendGold(gameSetting.startGold);
         gameState = GameState.Ready;
     }
 
@@ -62,29 +64,36 @@ public partial class InGameManager : MonoBehaviour
                 gameView.WaveTimeSet(waveTime);
                 if (waveTime <= 0)
                 {
-                    if (gameSetting.maxmumWave <= waveIndex)
+                    if (gameSetting.IsMaxmumWave(waveIndex))
                     {
                         ChangeGameState(GameState.End);
                         return;
                     }
                     NextWave();
                 }
-                if(waveTime > 0 && IsMonsterArive == false && wave == false)
+                if (waveTime > 0 && IsMonsterArive == false && waveStart == false)
                 {
                     NextWave();
                 }
-                if (wave)
+                if (waveStart)
                 {
-                    spawnTime -= Time.deltaTime;
-                    if (spawnTime <= 0)
+                    if (isBossWave)
                     {
-                        nowMonsterSpawnCount++;
-                        MonsterSpawn();
-                        spawnTime = gameSetting.monsterSpawnTime;
-                        if (nowMonsterSpawnCount >= (waveIndex % 5 == 0 ? 1 : gameSetting.waveMonsterCount))
+                        // 보스 스폰
+                        waveStart = false;
+                    }
+                    else
+                    {
+                        spawnTime -= Time.deltaTime;
+                        if (spawnTime <= 0)
                         {
-                            nowMonsterSpawnCount = 0;
-                            wave = false;
+                            MonsterSpawn();
+                            spawnTime = gameSetting.monsterSpawnTime;
+                            if (nowMonsterSpawnCount >= gameSetting.waveMonsterCount)
+                            {
+                                nowMonsterSpawnCount = 0;
+                                waveStart = false;
+                            }
                         }
                     }
                 }
@@ -120,12 +129,16 @@ public partial class InGameManager : MonoBehaviour
         gold += _gold;
         gameView.GoldSet(gold);
     }
+
     private void NextWave()
     {
         waveIndex++;
         gameView.WaveCountSet(waveIndex);
-        waveTime = waveIndex % 5 == 0 ? gameSetting.bossTime : gameSetting.waveTime;
-        wave = true;
+
+        isBossWave = gameSetting.IsBossWave(waveIndex);
+        waveTime = gameSetting.WaveTime(waveIndex);
+
+        waveStart = true;
     }
     #endregion
 
