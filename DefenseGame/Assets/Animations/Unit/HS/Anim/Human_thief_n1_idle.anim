@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Human_Wizard_n2_idle_Anim
+  m_Name: Human_thief_n1_idle
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,11 +21,11 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 8485632952582983936, guid: c1ef5f183096fcd479dfb664c6746ff3, type: 3}
+      value: {fileID: 7766491547365632188, guid: 1a03731e085e9724588f6926414da052, type: 3}
     - time: 0.25
-      value: {fileID: -180590332431068288, guid: c1ef5f183096fcd479dfb664c6746ff3, type: 3}
+      value: {fileID: 8743877356496600468, guid: 1a03731e085e9724588f6926414da052, type: 3}
     - time: 0.41666666
-      value: {fileID: 8485632952582983936, guid: c1ef5f183096fcd479dfb664c6746ff3, type: 3}
+      value: {fileID: 8743877356496600468, guid: 1a03731e085e9724588f6926414da052, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,9 +48,9 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 8485632952582983936, guid: c1ef5f183096fcd479dfb664c6746ff3, type: 3}
-    - {fileID: -180590332431068288, guid: c1ef5f183096fcd479dfb664c6746ff3, type: 3}
-    - {fileID: 8485632952582983936, guid: c1ef5f183096fcd479dfb664c6746ff3, type: 3}
+    - {fileID: 7766491547365632188, guid: 1a03731e085e9724588f6926414da052, type: 3}
+    - {fileID: 8743877356496600468, guid: 1a03731e085e9724588f6926414da052, type: 3}
+    - {fileID: 8743877356496600468, guid: 1a03731e085e9724588f6926414da052, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

@@ -1,16 +1,13 @@
 fileFormatVersion: 2
-guid: 6cd6339bef4622b4288d29584f3d6b24
+guid: 58bc5c20e4b340741955345e9c4358eb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8477692529786642653
-    second: Human_thief_n1_attack-Sheet_0
+      213: -6788291959987618055
+    second: Human_warrior_n1_idle-Sheet_0
   - first:
-      213: -6513268912686303341
-    second: Human_thief_n1_attack-Sheet_1
-  - first:
-      213: -590095789916139938
-    second: Human_thief_n1_attack-Sheet_2
+      213: -3882381152171594384
+    second: Human_warrior_n1_idle-Sheet_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -119,7 +116,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Human_thief_n1_attack-Sheet_0
+      name: Human_warrior_n1_idle-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -134,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dd06ae86070d6a570800000000000000
-      internalID: 8477692529786642653
+      spriteID: 9fe3c45ad642bc1a0800000000000000
+      internalID: -6788291959987618055
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Human_thief_n1_attack-Sheet_1
+      name: Human_warrior_n1_idle-Sheet_1
       rect:
         serializedVersion: 2
         x: 64
@@ -156,30 +153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 397fcb4ce683c95a0800000000000000
-      internalID: -6513268912686303341
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Human_thief_n1_attack-Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e5e489a610f8fc7f0800000000000000
-      internalID: -590095789916139938
+      spriteID: 07de32e69e20f1ac0800000000000000
+      internalID: -3882381152171594384
       vertices: []
       indices: 
       edges: []
@@ -188,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c4dc0a4adb07b9849be78d42ebe2745f
+    spriteID: 6f846879481c14f4e93b1ef8c7091f8d
     internalID: 0
     vertices: []
     indices: 
@@ -200,9 +175,8 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Human_thief_n1_attack-Sheet_0: 8477692529786642653
-      Human_thief_n1_attack-Sheet_1: -6513268912686303341
-      Human_thief_n1_attack-Sheet_2: -590095789916139938
+      Human_warrior_n1_idle-Sheet_0: -6788291959987618055
+      Human_warrior_n1_idle-Sheet_1: -3882381152171594384
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,16 +1,19 @@
 fileFormatVersion: 2
-guid: 6cd6339bef4622b4288d29584f3d6b24
+guid: 6782c89a5dedd084699893639ecb0096
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8477692529786642653
-    second: Human_thief_n1_attack-Sheet_0
+      213: -284395325845170334
+    second: Human_archer_n1_attack-Sheet_0
   - first:
-      213: -6513268912686303341
-    second: Human_thief_n1_attack-Sheet_1
+      213: 4632556993392605002
+    second: Human_archer_n1_attack-Sheet_1
   - first:
-      213: -590095789916139938
-    second: Human_thief_n1_attack-Sheet_2
+      213: 1490700698318815072
+    second: Human_archer_n1_attack-Sheet_2
+  - first:
+      213: 2774295958687697574
+    second: Human_archer_n1_attack-Sheet_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -119,7 +122,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Human_thief_n1_attack-Sheet_0
+      name: Human_archer_n1_attack-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -134,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dd06ae86070d6a570800000000000000
-      internalID: 8477692529786642653
+      spriteID: 267973b35ff9d0cf0800000000000000
+      internalID: -284395325845170334
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Human_thief_n1_attack-Sheet_1
+      name: Human_archer_n1_attack-Sheet_1
       rect:
         serializedVersion: 2
         x: 64
@@ -156,14 +159,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 397fcb4ce683c95a0800000000000000
-      internalID: -6513268912686303341
+      spriteID: a47fae88a062a4040800000000000000
+      internalID: 4632556993392605002
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Human_thief_n1_attack-Sheet_2
+      name: Human_archer_n1_attack-Sheet_2
       rect:
         serializedVersion: 2
         x: 128
@@ -178,8 +181,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e5e489a610f8fc7f0800000000000000
-      internalID: -590095789916139938
+      spriteID: 06f38b5136800b410800000000000000
+      internalID: 1490700698318815072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Human_archer_n1_attack-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6aac16fb977408620800000000000000
+      internalID: 2774295958687697574
       vertices: []
       indices: 
       edges: []
@@ -188,7 +213,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c4dc0a4adb07b9849be78d42ebe2745f
+    spriteID: 75d00a80d780db244b8202a97ceb0ed7
     internalID: 0
     vertices: []
     indices: 
@@ -200,9 +225,10 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Human_thief_n1_attack-Sheet_0: 8477692529786642653
-      Human_thief_n1_attack-Sheet_1: -6513268912686303341
-      Human_thief_n1_attack-Sheet_2: -590095789916139938
+      Human_archer_n1_attack-Sheet_0: -284395325845170334
+      Human_archer_n1_attack-Sheet_1: 4632556993392605002
+      Human_archer_n1_attack-Sheet_2: 1490700698318815072
+      Human_archer_n1_attack-Sheet_3: 2774295958687697574
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
