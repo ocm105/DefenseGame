@@ -5,12 +5,16 @@ public class UIUtil : MonoBehaviour
     [SerializeField] RectTransform ui;
     protected Camera mainCam;
 
-    public void SetMainCamera(Camera mainCam)
+    public bool isUsed { get; protected set; }
+
+    private void Awake()
     {
-        this.mainCam = mainCam;
+        this.mainCam = Camera.main;
     }
+    
     public virtual void SetActive(bool active)
     {
+        isUsed = active;
         ui.gameObject.SetActive(active);
     }
     public virtual void SetPosition(Vector3 target)

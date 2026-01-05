@@ -17,6 +17,7 @@ public partial class InGameManager : MonoBehaviour
 
     [SerializeField] GameView gameView;
     [SerializeField] GameSetting gameSetting;
+    
     private float waveTime, spawnTime = 0;
     private int waveIndex = 0;
     private bool waveStart = false;
@@ -26,6 +27,12 @@ public partial class InGameManager : MonoBehaviour
     private GameState gameState = GameState.End;
     public GameState GameState { get { return gameState; } }
 
+    public Camera MainCamera { get; private set; }
+
+    private void Awake()
+    {
+        MainCamera = Camera.main;
+    }
     private void Start()
     {
         Initialize();

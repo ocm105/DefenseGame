@@ -12,6 +12,7 @@ public partial class InGameManager : MonoBehaviour
     private int stageLevel = 1;
     private int nowMonsterSpawnCount = 0; 
 
+
     #region Unit
     private void UnitPooling()
     {

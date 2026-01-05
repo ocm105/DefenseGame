@@ -30,7 +30,6 @@ public class MonsterUI : MonoBehaviour
         {
             obj = Instantiate(monsterHPPrefab, this.transform);
             monsterHp = obj.GetComponent<MonsterHp>();
-            monsterHp.SetMainCamera(mainCam);
             monsterHp.SetActive(false);
             monsterHps.AddLast(monsterHp);
         }
@@ -40,7 +39,7 @@ public class MonsterUI : MonoBehaviour
         MonsterHp monsterHp = null;
         foreach (MonsterHp hp in monsterHps)
         {
-            if (!hp.IsUse)
+            if (!hp.isUsed)
             {
                 monsterHp = hp;
                 break;
@@ -61,7 +60,6 @@ public class MonsterUI : MonoBehaviour
         {
             obj = Instantiate(bossHPPrefab, this.transform);
             monsterHp = obj.GetComponent<MonsterHp>();
-            monsterHp.SetMainCamera(mainCam);
             monsterHp.SetActive(false);
             bossHps.AddLast(monsterHp);
         }
@@ -71,7 +69,7 @@ public class MonsterUI : MonoBehaviour
         MonsterHp monsterHp = null;
         foreach (MonsterHp hp in bossHps)
         {
-            if (!hp.IsUse)
+            if (!hp.isUsed)
             {
                 monsterHp = hp;
                 break;
