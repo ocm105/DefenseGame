@@ -1,5 +1,7 @@
-using UnityEngine;
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Pool;
 
 public partial class InGameManager : MonoBehaviour
 {
@@ -10,8 +12,12 @@ public partial class InGameManager : MonoBehaviour
     [SerializeField] Transform monsterPoolPos;
     private Queue<Monster> monsterPool = new Queue<Monster>();
     private int stageLevel = 1;
-    private int nowMonsterSpawnCount = 0; 
+    private int nowMonsterSpawnCount = 0;
 
+    [SerializeField] Transform fontPos;
+    [SerializeField] DamageFont damageFontPrefab;
+    [SerializeField] int damagefontPoolCount = 30;
+    private Queue<DamageFont> damageFontPool = new Queue<DamageFont>();
 
     #region Unit
     private void UnitPooling()
@@ -60,4 +66,29 @@ public partial class InGameManager : MonoBehaviour
         monsterPool.Enqueue(monster);
     }
     #endregion
+
+    private DamageFont CreateFont()
+    {
+        DamageFont font = Instantiate(damageFontPrefab, fontPos);
+        font.SetActive(false);
+        return font;
+    }
+    private void FontPooling()
+    {
+        for (int i = 0; i < damagefontPoolCount; i++)
+        {
+            damageFontPool.Enqueue(CreateFont());
+        }
+    }
+    public async UniTask GetDamageFont(float damage, Transform pos)
+    {
+        if (damageFontPool.Count <= 0)
+        {
+            damageFontPool.Enqueue(CreateFont());
+        }
+
+        var font = damageFontPool.Dequeue();
+        await font.Intialize(damage, pos);
+        damageFontPool.Enqueue(font);
+    }
 }

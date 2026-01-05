@@ -3687,6 +3687,9 @@ MonoBehaviour:
   monsterPathInfo: {fileID: 1182304286}
   unitPoolPos: {fileID: 1444103119}
   monsterPoolPos: {fileID: 1215390120}
+  fontPos: {fileID: 486025184}
+  damageFontPrefab: {fileID: 3108417431875714762, guid: 9b27caf1eb69af24a9cdaa2f38d3e1bc, type: 3}
+  damagefontPoolCount: 30
   gridInfo: {fileID: 382190946}
   SynergyInfos: 00000000000000000000000000000000
 --- !u!4 &1810931119

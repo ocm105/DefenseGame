@@ -19,6 +19,9 @@ public class UIUtil : MonoBehaviour
     }
     public virtual void SetPosition(Vector3 target)
     {
+        if(mainCam == null)
+            this.mainCam = Camera.main;
+
         ui.position = mainCam.WorldToScreenPoint(target);
     }
 }

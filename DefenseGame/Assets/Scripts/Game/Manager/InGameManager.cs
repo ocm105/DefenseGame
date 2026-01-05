@@ -41,6 +41,7 @@ public partial class InGameManager : MonoBehaviour
     {
         UnitPooling();
         MonsterPooling();
+        FontPooling();
 
         waveTime = gameSetting.startTime;
         gameView.WaveTimeSet(waveTime);

@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 public partial class Monster : MonoBehaviour, IDamage // Control
 {
     [SerializeField] Transform hpPos;
+    [SerializeField] Transform damagePos;
     [SerializeField] SpriteRenderer sprite;
     private Transform[] movePath;
     private int movePathIndex = 0;
@@ -81,6 +82,7 @@ public partial class Monster : MonoBehaviour, IDamage // Control
     }
     private void Hit(float damege)
     {
+        InGameManager.Instance.GetDamageFont(damege, damagePos).Forget();
         MonserHpSet(damege - monsterData.DEF);
 
         if (Dead)
