@@ -31,7 +31,7 @@ public partial class InGameManager : MonoBehaviour
     {
         GameObject obj = Instantiate(Resources.Load<GameObject>(UnitResource.UnitInfo), unitPoolPos);
         UnitInfo info = obj.GetComponent<UnitInfo>();
-        info.unitUpgrade = gameView.UnitUI.UnitUpgrade;
+        info.unitUpgrade = gameView.unitUI.UnitUpgrade;
         obj.SetActive(false);
         return info;
     }

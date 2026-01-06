@@ -19,10 +19,9 @@ public class GameView : UIView
     [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] TextMeshProUGUI unitCountText;
 
-    [SerializeField] UnitUI unitUI;
-    public UnitUI UnitUI { get { return unitUI; } }
-    [SerializeField] MonsterUI monsterUI;
-    public MonsterUI MonsterUI { get { return monsterUI; } }
+    [SerializeField] public UnitUI unitUI;
+    [SerializeField] public MonsterUI monsterUI;
+    [SerializeField] public WaringPanel waringPanel;
 
     public void Show()
     {
