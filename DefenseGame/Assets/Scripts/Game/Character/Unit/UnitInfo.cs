@@ -6,6 +6,7 @@ public class UnitInfo : MonoBehaviour
 {
     [HideInInspector] public int UnitIndex = -1;
     public UnitData UnitData { get; private set; }
+    public UnitGrid grid;
 
     [SerializeField] GameObject[] unitPositions;
     private List<Unit> unitList = new List<Unit>();
@@ -29,7 +30,21 @@ public class UnitInfo : MonoBehaviour
     {
         OnClick(false);
     }
-
+    public void Init()
+    {
+        UnitIndex = -1;
+        UnitData = null;
+        level = 1;
+        UnitCount = 0;
+        for (int i = 0; i < unitList.Count; i++)
+        {
+            unitList[i].Delete();
+            Destroy(unitList[i].gameObject);
+        }
+        unitList.Clear();
+        grid.UnitInfo = null;
+        this.gameObject.SetActive(false);
+    }
     public void SetData(int index)
     {
         UnitIndex = index;
@@ -75,15 +90,30 @@ public class UnitInfo : MonoBehaviour
     }
     private void OnUpgrade()
     {
-        level++;
-        SetData(UnitIndex + level - 1);
-        InGameManager.Instance.UnitStatusOpen(UnitData);
-        unitUpgrade.SetActive(false);
+        UnitIndex++;
 
-        UnitCount = 1;
-        for (int i = UnitCount; i < unitPositions.Length; i++)
+        if (InGameManager.Instance.IsSameUnit(UnitIndex))
         {
-            unitList[i].Delete();
+            InGameManager.Instance.UnitCreate(UnitIndex);
+            InGameManager.Instance.ResetUnitClick();
+            InGameManager.Instance.UnitCountUpdate(-3);
+            Init();
+            OnClick(false);
+        }
+        else
+        {
+            level++;
+            SetData(UnitIndex);
+
+            UnitCount = 1;
+            for (int i = UnitCount; i < unitPositions.Length; i++)
+            {
+                unitList[i].Delete();
+            }
+
+            InGameManager.Instance.UnitCountUpdate(-2);
+            OnClick(true);
         }
     }
+
 }

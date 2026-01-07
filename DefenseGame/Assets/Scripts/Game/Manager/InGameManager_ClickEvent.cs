@@ -11,7 +11,12 @@ public partial class InGameManager : MonoBehaviour
     private UnitGrid nextGrid = null;
     private bool isDragging = false;
 
-    /// <summary> Unit 클릭 </summary>
+    public void ResetUnitClick()
+    {
+        nowGrid = null;
+        nextGrid = null;
+    }
+
     private void UnitClickEvent()
     {
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
@@ -39,10 +44,8 @@ public partial class InGameManager : MonoBehaviour
                         {
                             UnitGrid grid = result.gameObject.GetComponent<UnitGrid>();
 
-                            // 그리드에 유닛이 있을 때
                             if (grid.IsUnit)
                             {
-                                // 이전 유닛이 있고 지금 클릭과 다를 때
                                 if (nowGrid != null && nowGrid != grid)
                                 {
                                     nowGrid.UnitInfo.OnClick(false);
@@ -58,7 +61,6 @@ public partial class InGameManager : MonoBehaviour
                         }
                         else
                         {
-                            // 클릭한게 없을 때
                             if (nowGrid != null)
                             {
                                 nowGrid.UnitInfo.OnClick(false);
@@ -73,7 +75,6 @@ public partial class InGameManager : MonoBehaviour
             }
         }
 
-        // 드레그 중이면
         if (isDragging)
         {
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
@@ -89,20 +90,18 @@ public partial class InGameManager : MonoBehaviour
                 {
                     UnitGrid grid = result.gameObject.GetComponent<UnitGrid>();
 
-                    // 최초 클릭과 다를 때
                     if (nowGrid != grid)
                     {
                         grid.ChageColor(true);
                         nowGrid.ChageColor(false);
 
-                        // 이전 클릭과 현재 클릭이 다를 때
                         if (nextGrid != null && nextGrid != grid)
                         {
                             nextGrid.ChageColor(false);
                         }
                         nextGrid = grid;
                     }
-                    else // 최초 클릭과 동일할 때
+                    else
                     {
                         nowGrid.ChageColor(true);
                         if (nextGrid != null)
@@ -135,8 +134,8 @@ public partial class InGameManager : MonoBehaviour
                 {
                     nextGrid.UnitMove(nowGrid.UnitInfo);
                     nowGrid.UnitInfo = null;
-
                 }
+
                 nextGrid.ChageColor(false);
                 nowGrid.ChageColor(false);
                 nowGrid = nextGrid;

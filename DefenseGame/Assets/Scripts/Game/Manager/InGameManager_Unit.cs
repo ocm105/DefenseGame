@@ -6,45 +6,7 @@ public partial class InGameManager : MonoBehaviour
     [SerializeField] GridInfo gridInfo;
     public int[] SynergyInfos = new int[(int)SynergyType.Max];
 
-    public void UnitSpawn()
-    {
-        if (gold >= gameSetting.unitGold && gameSetting.maximumUnitCount > nowUnitSpawnCount)
-        {
-            bool isSpawn = false;
-            int unitIndex = UnitRandom();
-            SetSynergy(unitIndex);
-            for (int i = 0; i < unitPool.Count; i++)
-            {
-                if (unitPool[i].UnitIndex == unitIndex && unitPool[i].isFull == false)
-                {
-                    SpendGold(-gameSetting.unitGold);
-                    unitPool[i].UnitCreate();
-                    nowUnitSpawnCount++;
-                    isSpawn = true;
-                    break;
-                }
-            }
-            if (isSpawn == false)
-            {
-                for (int i = 0; i < unitPool.Count; i++)
-                {
-                    if (unitPool[i].UnitIndex == -1)
-                    {
-                        SpendGold(-gameSetting.unitGold);
-                        UnitGrid grid = UnitRandomGrid();
-                        grid.UnitInfo = unitPool[i];
 
-                        unitPool[i].SetData(unitIndex);
-                        unitPool[i].SetPosition(grid.transform);
-                        unitPool[i].UnitCreate();
-                        nowUnitSpawnCount++;
-                        break;
-                    }
-                }
-            }
-        }
-        gameView.UnitCountSet(nowUnitSpawnCount, gameSetting.maximumUnitCount);
-    }
     private int UnitRandom()
     {
         int totalWeight = 0;
@@ -67,26 +29,17 @@ public partial class InGameManager : MonoBehaviour
         }
         return 0;
     }
-
     private UnitGrid UnitRandomGrid()
     {
         int ran = 0;
-        do
+        while (true)
         {
             ran = UnityEngine.Random.Range(0, gridInfo.UnitGrids.Length);
-        } while (gridInfo.UnitGrids[ran].IsUnit);
+            if (gridInfo.UnitGrids[ran].IsUnit == false) break;
+        }
 
         return gridInfo.UnitGrids[ran];
     }
-    public void UnitStatusOpen(UnitData data)
-    {
-        gameView.UnitStatusActive(true, data);
-    }
-    public void UnitStatusClose()
-    {
-        gameView.UnitStatusActive(false);
-    }
-
     private void SetSynergy(int index)
     {
         int num = GameDataManager.Instance.unitData[index].Synergy.Length;
@@ -96,5 +49,74 @@ public partial class InGameManager : MonoBehaviour
             SynergyInfos[(int)type]++;
         }
     }
+    public void UnitSpawn()
+    {
+        if (gold >= gameSetting.unitGold && gameSetting.maximumUnitCount > nowUnitSpawnCount)
+        {
+            SpendGold(-gameSetting.unitGold);
+            UnitCreate(UnitRandom());
+        }
+    }
+    public void UnitCreate(int unitIndex)
+    {
+        bool isSpawn = IsSameUnit(unitIndex);
+        SetSynergy(unitIndex);
 
+        for (int i = 0; i < unitPool.Count; i++)
+        {
+            if (isSpawn)
+            {
+                if (unitPool[i].UnitIndex == unitIndex && unitPool[i].isFull == false)
+                {
+                    unitPool[i].UnitCreate();
+                    break;
+                }
+            }
+            else
+            {
+                if (unitPool[i].UnitIndex == -1)
+                {
+                    UnitGrid grid = UnitRandomGrid();
+                    grid.UnitInfo = unitPool[i];
+
+                    unitPool[i].grid = grid;
+                    unitPool[i].SetData(unitIndex);
+                    unitPool[i].SetPosition(grid.transform);
+                    unitPool[i].UnitCreate();
+                    break;
+                }
+            }
+        }
+
+        UnitCountUpdate(+1);
+    }
+
+    public void UnitCountUpdate(int num)
+    {
+        nowUnitSpawnCount += num;
+        gameView.UnitCountSet(nowUnitSpawnCount, gameSetting.maximumUnitCount);
+    }
+    public bool IsSameUnit(int unitIndex)
+    {
+        bool isSame = false;
+        for (int i = 0; i < unitPool.Count; i++)
+        {
+            if (unitPool[i].UnitIndex == unitIndex && unitPool[i].isFull == false)
+            {
+                isSame = true;
+                break;
+            }
+        }
+
+        return isSame;
+    }
+    
+    public void UnitStatusOpen(UnitData data)
+    {
+        gameView.UnitStatusActive(true, data);
+    }
+    public void UnitStatusClose()
+    {
+        gameView.UnitStatusActive(false);
+    }
 }
