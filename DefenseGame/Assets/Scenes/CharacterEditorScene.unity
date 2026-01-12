@@ -857,9 +857,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 585356ad24322174ca74e0de7077d578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CreateAnimationClip
-  spriteResource: {fileID: 4423279728123183005, guid: f5082e003c3b7dc44aee1d9636e6ec9d, type: 3}
-  imgResource: {fileID: 0}
-  animationMode: 1
+  spriteIdleResource: {fileID: -1360380642293844256, guid: 4bc248f3b96c24f4caff06c7e19e4e44, type: 3}
+  spriteAttackResource: {fileID: -5368527603184729822, guid: 05bf980edc416aa42b193345f8793832, type: 3}
+  imgIdleResource: {fileID: 0}
+  imgAttackResource: {fileID: 0}
+  animatorName: arc
   isSprite: 1
 --- !u!4 &1816728718
 Transform:

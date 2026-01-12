@@ -155,6 +155,12 @@ public class CreateAnimationClip : MonoBehaviour
                         value = sprites[3]
                     };
                 }
+                AnimationEvent animEvent = new AnimationEvent
+                {
+                    time = 4 / clip.frameRate,
+                    functionName = "Attack"
+                };
+                AnimationUtility.SetAnimationEvents(clip, new AnimationEvent[] { animEvent });
                 break;
         }
 

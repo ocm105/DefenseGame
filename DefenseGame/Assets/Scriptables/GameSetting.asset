@@ -13,11 +13,16 @@ MonoBehaviour:
   m_Name: GameSetting
   m_EditorClassIdentifier: Assembly-CSharp::GameSetting
   startTime: 3
+  startGold: 100
+  startWave: 1
   waveTime: 15
+  maxmumWave: 30
+  waveMonsterCount: 10
   bossTime: 20
+  bossWave: 5
+  unitGold: 20
+  maximumUnitCount: 23
+  maximumMonsterCount: 80
+  monsterSpawnTime: 0.5
   star2: 3.5
   star3: 12
-  unitGold: 20
-  maximumMonsterCount: 80
-  maximumUnitCount: 17
-  maxmumWave: 30
