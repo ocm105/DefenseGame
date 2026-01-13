@@ -861,7 +861,7 @@ MonoBehaviour:
   spriteAttackResource: {fileID: -5368527603184729822, guid: 05bf980edc416aa42b193345f8793832, type: 3}
   imgIdleResource: {fileID: 0}
   imgAttackResource: {fileID: 0}
-  animatorName: arc
+  animatorName: Elf_archer_n1
   isSprite: 1
 --- !u!4 &1816728718
 Transform:
