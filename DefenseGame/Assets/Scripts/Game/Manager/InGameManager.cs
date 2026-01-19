@@ -15,9 +15,9 @@ public partial class InGameManager : MonoBehaviour
         }
     }
 
-    [SerializeField] GameView gameView;
-    [SerializeField] GameSetting gameSetting;
-    
+    [SerializeField] public GameView gameView;
+    [SerializeField] public GameSetting gameSetting;
+
     private float waveTime, spawnTime = 0;
     private int waveIndex = 0;
     private bool waveStart = false;

@@ -110,13 +110,4 @@ public partial class InGameManager : MonoBehaviour
 
         return isSame;
     }
-    
-    public void UnitStatusOpen(UnitData data)
-    {
-        gameView.UnitStatusActive(true, data);
-    }
-    public void UnitStatusClose()
-    {
-        gameView.UnitStatusActive(false);
-    }
 }

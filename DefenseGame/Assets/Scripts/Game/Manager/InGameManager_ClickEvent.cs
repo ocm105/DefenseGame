@@ -66,7 +66,7 @@ public partial class InGameManager : MonoBehaviour
                                 nowGrid.UnitInfo.OnClick(false);
                                 nowGrid = null;
                             }
-                            UnitStatusClose();
+                            gameView.UnitStatusActive(false);
                             isDragging = false;
                             break;
                         }

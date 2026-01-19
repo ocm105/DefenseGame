@@ -19,7 +19,6 @@ public class UnitInfo : MonoBehaviour
     [SerializeField] UnitAttackTrigger atkTrigger;
     public UnitAttackTrigger AtkTrigger { get { return atkTrigger; } }
     private SpriteRenderer atkRangeSpr;
-    public UnitUpgrade unitUpgrade { get; set; }
     private int level = 1;
 
     private void Awake()
@@ -78,25 +77,34 @@ public class UnitInfo : MonoBehaviour
     {
         atkRangeSpr.enabled = isOn;
 
-        unitUpgrade.SetInteractable(isFull);
-        unitUpgrade.SetUpgrade_Action(OnUpgrade);
-        unitUpgrade.SetPosition(upgradePos.position);
-        unitUpgrade.SetActive(isOn);
+        var entry = InGameManager.Instance;
+        var view = entry.gameView;
 
         if (isOn)
-            InGameManager.Instance.UnitStatusOpen(UnitData);
+        {
+            view.UnitStatusActive(true, UnitData);
+            view.unitUI.SetPosition(upgradePos.position);
+
+            view.unitUI.SetUpgrade_Interactable(isFull);
+            view.unitUI.SetUpgrade_Action(OnUpgrade);
+
+            view.unitUI.SetSell_Action(OnSell);
+        }
         else
-            InGameManager.Instance.UnitStatusClose();
+            view.UnitStatusActive(false);
+
+        view.unitUI.SetActive(isOn);
     }
     private void OnUpgrade()
     {
         UnitIndex++;
+        var entry = InGameManager.Instance;
 
-        if (InGameManager.Instance.IsSameUnit(UnitIndex))
+        if (entry.IsSameUnit(UnitIndex))
         {
-            InGameManager.Instance.UnitCreate(UnitIndex);
-            InGameManager.Instance.ResetUnitClick();
-            InGameManager.Instance.UnitCountUpdate(-3);
+            entry.UnitCreate(UnitIndex);
+            entry.ResetUnitClick();
+            entry.UnitCountUpdate(-3);
             Init();
             OnClick(false);
         }
@@ -111,9 +119,28 @@ public class UnitInfo : MonoBehaviour
                 unitList[i].Delete();
             }
 
-            InGameManager.Instance.UnitCountUpdate(-2);
+            entry.UnitCountUpdate(-2);
             OnClick(true);
         }
     }
 
+    private void OnSell()
+    {
+        if (UnitCount < 1) return;
+        var entry = InGameManager.Instance;
+
+        if (UnitCount <= 1)
+        {
+            entry.ResetUnitClick();
+            Init();
+            OnClick(false);
+        }
+        else
+        {
+            UnitCount--;
+            unitList[UnitCount].Delete();
+        }
+        entry.UnitCountUpdate(-1);
+        entry.SpendGold(entry.gameSetting.unitGold);
+    }
 }
