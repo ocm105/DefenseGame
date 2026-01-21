@@ -3,22 +3,29 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameSetting", menuName = "ScriptableObjects/GameSetting")]
 public class GameSetting : ScriptableObject
 {
-    [Header("게임 시작 시간")] public float startTime = 3;
-    [Header("기본 소지금")] public int startGold = 100;
-    [Header("시작 Wave")] public int startWave = 1;
+    [Header("기본 값")]
+    [Tooltip("게임 시작 시간")] public float startTime = 3;
+    [Tooltip("기본 소지금")] public int startGold = 100;
+    [Tooltip("시작 Wave")] public int startWave = 1;
 
-    [Header("Wave 시간")] public float waveTime = 15;
-    [Header("Wave 최대치")] public int maxmumWave = 30;
-    [Header("Wave당 몬스터 숫자")] public int waveMonsterCount = 10;
+    [Header("Wave 정보")]
+    [Tooltip("시간")] public float waveTime = 15;
+    [Tooltip("최대치")] public int maxmumWave = 30;
+    [Tooltip("몬스터 숫자")] public int waveMonsterCount = 10;
 
-    [Header("보스 시간")] public float bossTime = 20;
-    [Header("보스 Wave")] public int bossWave = 5;
+    [Header("Boss 정보")]
+    [Tooltip("시간")] public float bossTime = 20;
+    [Tooltip("Wave")] public int bossWave = 5;
 
-    [Header("유닛 뽑기 비용")] public int unitGold = 20;
-    [Header("유닛 최대치")] public int maximumUnitCount = 17;
+    [Header("Unit 정보")]
+    [Tooltip("최대치")] public int maximumUnitCount = 17;
+    [Tooltip("레벨 최대치")] public int maximumUnitLevel = 3;
+    [Tooltip("뽑기 비용")] public int unitGold = 20;
+    [Tooltip("팔기 비용")] public int[] unitSell;
 
-    [Header("몬스터 최대치")] public int maximumMonsterCount = 80;
-    [Header("몬스터 소환 사이시간")] public float monsterSpawnTime = 0.5f;
+    [Header("Monster 정보")]
+    [Tooltip("최대치")] public int maximumMonsterCount = 80;
+    [Tooltip("소환 텀")] public float monsterSpawnTime = 0.5f;
 
     [Header("2성 스텟 배수")] public float star2 = 3.5f;
     [Header("3상 스탯 배수")] public float star3 = 12f;

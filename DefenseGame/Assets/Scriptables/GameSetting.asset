@@ -20,8 +20,10 @@ MonoBehaviour:
   waveMonsterCount: 10
   bossTime: 20
   bossWave: 5
-  unitGold: 20
   maximumUnitCount: 23
+  maximumUnitLevel: 3
+  unitGold: 20
+  unitSell: 0f0000003c000000be000000
   maximumMonsterCount: 80
   monsterSpawnTime: 0.5
   star2: 3.5

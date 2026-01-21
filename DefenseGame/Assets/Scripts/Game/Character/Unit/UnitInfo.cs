@@ -85,7 +85,7 @@ public class UnitInfo : MonoBehaviour
             view.UnitStatusActive(true, UnitData);
             view.unitUI.SetPosition(upgradePos.position);
 
-            view.unitUI.SetUpgrade_Interactable(isFull);
+            view.unitUI.SetUpgrade_Interactable(isFull && level < entry.gameSetting.maximumUnitLevel);
             view.unitUI.SetUpgrade_Action(OnUpgrade);
 
             view.unitUI.SetSell_Action(OnSell);
@@ -128,6 +128,7 @@ public class UnitInfo : MonoBehaviour
     {
         if (UnitCount < 1) return;
         var entry = InGameManager.Instance;
+        var lv = level - 1;
 
         if (UnitCount <= 1)
         {
@@ -141,6 +142,6 @@ public class UnitInfo : MonoBehaviour
             unitList[UnitCount].Delete();
         }
         entry.UnitCountUpdate(-1);
-        entry.SpendGold(entry.gameSetting.unitGold);
+        entry.SpendGold(entry.gameSetting.unitSell[lv]);
     }
 }
