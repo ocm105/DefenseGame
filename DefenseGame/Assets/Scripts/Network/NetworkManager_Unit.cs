@@ -8,19 +8,20 @@ using Cysharp.Threading.Tasks;
 public class UnitData
 {
     public int Index;
+    public int Grade;
     public string Name;
-    public int Level;               // ?…ê?
+    public int Level;               // ·¹º§
     public string Job;
     public int Mana;
-    public int Range;               // ê³µê²©ë²”ìœ„
-    public float AttackSpeed;       // ê³µê²©?ë„
-    public int Attack;              // ê³µê²©??
-    public int AttackCount;         // 1?€ê²©ì— ëª‡ë§ˆë¦??Œë¦¬?”ì?
-    public int Critical;            // 100% ê¸°ì? ?¬ë¦¬?°ì»¬ %
-    public float CriticalPower;     // ?¬ë¦¬?°ì»¬ ê³µê²©??ë°°ìˆ˜
-    public string[] Synergy;        // ?œë„ˆì§€
+    public int Range;               // °ø°İ¹üÀ§
+    public float AttackSpeed;       // °ø°İ¼Óµµ
+    public float Attack;              // °ø°İ·Â
+    public int AttackCount;         // Å¸°İ °¹¼ö
+    public int Critical;            // Ä¡¸íÅ¸
+    public float CriticalPower;     // Ä¡¸íÅ¸ ¹è¼ö
+    public string[] Synergy;        // ½Ã³ÊÁö
     public string Resource;
-    public int Weight;              // ê°€ì¤‘ì¹˜
+    public int Weight;
     public List<string> Effect;     // { "Atk|10|10", "DEF|5|5" }
     public UnitStat[] unitStats;
 

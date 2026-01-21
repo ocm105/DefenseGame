@@ -10,7 +10,7 @@ public partial class InGameManager : MonoBehaviour
     private int UnitRandom()
     {
         int totalWeight = 0;
-        var list = GameDataManager.Instance.unitData.Values;
+        var list = GameDataManager.Instance.GetUnitDataGrades(1);
         foreach (var item in list)
         {
             totalWeight += item.Weight;
