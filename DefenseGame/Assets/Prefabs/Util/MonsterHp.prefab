@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterHp
   ui: {fileID: 4508690175054680128}
-  hp: {fileID: 7159459391018812877}
+  hpBar: {fileID: 7159459391018812877}
 --- !u!1 &7152881719553086783
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,15 +4,15 @@ using UnityEngine.UI;
 
 public class MonsterHp : UIUtil
 {
-    [SerializeField] Image hp;
-    
+    [SerializeField] protected Image hpBar;
+
     public override void SetPosition(Vector3 target)
     {
         base.SetPosition(target);
     }
-    public void SetHp(float _hp)
+    public virtual void SetHp(float curHp, float maxHp)
     {
         this.transform.SetAsLastSibling();
-        hp.fillAmount = _hp;
+        hpBar.fillAmount = Mathf.Clamp01(curHp / maxHp);
     }
 }

@@ -13,11 +13,11 @@ public class MonsterUI : MonoBehaviour
     [SerializeField] GameObject bossHPPrefab;
     private LinkedList<MonsterHp> monsterHps = new LinkedList<MonsterHp>();
     private LinkedList<MonsterHp> bossHps = new LinkedList<MonsterHp>();
-    private Camera mainCam;
+
+    [SerializeField] public MonsterHp testBossHp;
 
     private void Start()
     {
-        mainCam = Camera.main;
         MonsterHpPool(nomalHpPoolCount);
         BossMonsterHpPool(bossHpPoolCount);
     }

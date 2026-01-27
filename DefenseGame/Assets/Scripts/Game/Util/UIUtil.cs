@@ -11,7 +11,9 @@ public class UIUtil : MonoBehaviour
     {
         this.mainCam = Camera.main;
     }
-    
+
+    public virtual void Initialize() { }
+
     public virtual void SetActive(bool active)
     {
         isUsed = active;
@@ -19,7 +21,7 @@ public class UIUtil : MonoBehaviour
     }
     public virtual void SetPosition(Vector3 target)
     {
-        if(mainCam == null)
+        if (mainCam == null)
             this.mainCam = Camera.main;
 
         ui.position = mainCam.WorldToScreenPoint(target);

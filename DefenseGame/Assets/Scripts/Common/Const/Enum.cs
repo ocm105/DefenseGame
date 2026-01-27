@@ -70,8 +70,11 @@ public enum MonsterState
 }
 public enum MonsterType
 {
-    Monster1 = GameIndex.Monster + 1,
+    Nomal = 0,
+    Epic,
+    Boss
 }
+
 #endregion
 
 #region Player

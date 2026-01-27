@@ -14,7 +14,7 @@ public partial class InGameManager : MonoBehaviour
         }
         int monsterDataIndex = GameDataManager.Instance.waveData[GameIndex.Wave + waveIndex].Summon;
         Monster monster = monsterPool.Dequeue();
-        monster.Initialize(GameDataManager.Instance.monsterData[monsterDataIndex], gameView.monsterUI.SetMonsterHP());
+        monster.Initialize(GameDataManager.Instance.monsterData[monsterDataIndex], MonsterType.Nomal, gameView.monsterUI.SetMonsterHP());
         monster.Spawn();
 
         nowMonsterSpawnCount++;
@@ -35,7 +35,7 @@ public partial class InGameManager : MonoBehaviour
         }
         int monsterDataIndex = GameDataManager.Instance.waveData[GameIndex.Wave + waveIndex].Summon;
         Monster monster = monsterPool.Dequeue();
-        monster.Initialize(GameDataManager.Instance.monsterData[monsterDataIndex], gameView.monsterUI.SetBossMonsterHP());
+        monster.Initialize(GameDataManager.Instance.monsterData[monsterDataIndex], MonsterType.Boss, gameView.monsterUI.testBossHp);//gameView.monsterUI.SetBossMonsterHP());
         monster.Spawn();
 
         nowMonsterSpawnCount++;

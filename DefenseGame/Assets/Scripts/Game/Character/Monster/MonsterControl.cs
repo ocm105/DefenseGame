@@ -22,7 +22,8 @@ public partial class Monster : MonoBehaviour, IDamage // Control
                     {
                         case MonsterState.Arive:
                             this.transform.position = Vector2.MoveTowards(this.transform.position, movePath[movePathIndex].position, speed * Time.deltaTime);
-                            monsterHp.SetPosition(hpPos.position);
+                            if (type != MonsterType.Boss)
+                                monsterHp.SetPosition(hpPos.position);
                             DistanceCheck();
                             break;
                         case MonsterState.Stop:

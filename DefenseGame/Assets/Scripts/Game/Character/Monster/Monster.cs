@@ -13,6 +13,8 @@ public partial class Monster : MonoBehaviour
     private MonsterHp monsterHp;
     private MonsterState monsterState;
 
+    private MonsterType type;
+
     public CancellationTokenSource cancel;
 
     private void OnDisable()
@@ -25,13 +27,16 @@ public partial class Monster : MonoBehaviour
         cancel?.Dispose();
     }
 
-    public void Initialize(MonsterData data, MonsterHp monsterHp)
+    public void Initialize(MonsterData data, MonsterType type, MonsterHp monsterHp)
     {
         this.monsterData = data;
+        this.type = type;
+        this.hp = monsterData.HP;
+
         this.monsterHp = monsterHp;
-        this.monsterHp.SetHp(1f);
-        this.monsterHp.SetPosition(hpPos.position);
-        hp = monsterData.HP;
+        this.monsterHp.SetHp(hp, monsterData.HP);
+        if (type != MonsterType.Boss)
+            this.monsterHp.SetPosition(hpPos.position);
         movePathIndex = 0;
     }
     public void Spawn()
@@ -44,7 +49,7 @@ public partial class Monster : MonoBehaviour
     private void MonserHpSet(float damage)
     {
         hp -= damage;
-        monsterHp.SetHp(Mathf.Clamp01(hp / monsterData.HP));
+        monsterHp.SetHp(hp, monsterData.HP);
     }
     public void AniEvent_Die()
     {
