@@ -1,8 +1,8 @@
 using UnityEngine;
-using DG.Tweening;
 using TMPro;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
+using LitMotion;
 
 public class WaringPanel : MonoBehaviour
 {
@@ -26,7 +26,7 @@ public class WaringPanel : MonoBehaviour
         var m = time / 60f;
         var s = time % 60f;
 
-        string t; 
+        string t;
         if (m < 1) m = 0;
         t = $"{m:00}:{s:00}";
         return t;
@@ -35,9 +35,9 @@ public class WaringPanel : MonoBehaviour
     private async UniTask StartWaringTween()
     {
         this.gameObject.SetActive(true);
-        await canvasGroup.DOFade(1, 0.5f);
+        await LMotion.Create(0f, 1f, 0.5f).Bind(a => canvasGroup.alpha = a).AddTo(this);
         await UniTask.WaitForSeconds(3f);
-        await canvasGroup.DOFade(0, 0.5f);
+        await LMotion.Create(1f, 0f, 0.5f).Bind(a => canvasGroup.alpha = a).AddTo(this);
         this.gameObject.SetActive(false);
     }
 

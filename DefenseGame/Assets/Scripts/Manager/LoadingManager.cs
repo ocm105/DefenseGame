@@ -2,10 +2,11 @@ using System.Collections;
 using UISystem;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 using UnityEngine.SceneManagement;
 using System;
 using Cysharp.Threading.Tasks;
+using LitMotion;
+using LitMotion.Extensions;
 
 public class LoadingManager : SingletonMonoBehaviour<LoadingManager>
 {
@@ -28,25 +29,30 @@ public class LoadingManager : SingletonMonoBehaviour<LoadingManager>
     #region Fade
     public void SetFadeIn(Action call = null)
     {
-        fadeImage.DOColor(fadeInColor, fadeTime).onComplete =
-        () =>
-        {
-            isFade = false;
-            fadeCanvas.SetActive(false);
-            fadeImage.gameObject.SetActive(false);
-            call.Invoke();
-        };
+        LMotion.Create(fadeOutColor, fadeInColor, fadeTime)
+               .WithOnComplete(() =>
+               {
+                   isFade = false;
+                   fadeCanvas.SetActive(false);
+                   fadeImage.gameObject.SetActive(false);
+                   call?.Invoke();
+               })
+               .BindToColor(fadeImage)
+               .AddTo(this);
     }
     public void SetFadeOut(Action call = null)
     {
         fadeCanvas.SetActive(true);
         fadeImage.gameObject.SetActive(true);
-        fadeImage.DOColor(fadeOutColor, fadeTime).onComplete =
-        () =>
-        {
-            isFade = true;
-            call.Invoke();
-        };
+
+        LMotion.Create(fadeOutColor, fadeInColor, fadeTime)
+               .WithOnComplete(() =>
+               {
+                   isFade = true;
+                   call?.Invoke();
+               })
+               .BindToColor(fadeImage)
+               .AddTo(this);
     }
     #endregion
 

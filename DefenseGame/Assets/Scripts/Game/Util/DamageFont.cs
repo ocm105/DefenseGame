@@ -1,19 +1,20 @@
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
+using LitMotion;
+using LitMotion.Extensions;
 using TMPro;
 using UnityEngine;
 
 public class DamageFont : UIUtil
 {
     [SerializeField] TMP_Text text;
-    
+
     public async UniTask Intialize(float damage, Transform pos)
     {
         text.text = damage.ToString();
         SetPosition(pos.position);
         SetActive(true);
 
-        await text.transform.DOLocalMoveY(10f, 0.5f);
+        await LMotion.Create(0f, 10f, 0.5f).BindToLocalPositionY(text.transform).AddTo(this);
         End();
     }
 

@@ -1,7 +1,8 @@
 using UnityEngine;
 using UISystem;
 using TMPro;
-using DG.Tweening;
+using LitMotion;
+using LitMotion.Extensions;
 
 public class BasePopup_Toast : UIPopup
 {
@@ -30,14 +31,16 @@ public class BasePopup_Toast : UIPopup
 
     private void Toast_Tween()
     {
-        frame.transform.localScale = Vector3.zero;
-
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(frame.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutCubic));
-        sequence.AppendInterval(2f);
-        sequence.Append(frame.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InCubic));
-        sequence.SetAutoKill(true);
-
-        sequence.OnComplete(() => OnResult(PopupResults.Close));
+        LSequence.Create()
+                 .Append(LMotion.Create(Vector3.zero, Vector3.one, 0.5f)
+                                .WithEase(Ease.OutCubic)
+                                .BindToLocalScale(frame.transform))
+                 .AppendInterval(2f)
+                 .Append(LMotion.Create(Vector3.one, Vector3.zero, 0.5f)
+                                .WithEase(Ease.OutCubic)
+                                .WithOnComplete(() => OnResult(PopupResults.Close))
+                                .BindToLocalScale(frame.transform))
+                 .Run()
+                 .AddTo(this);
     }
 }
