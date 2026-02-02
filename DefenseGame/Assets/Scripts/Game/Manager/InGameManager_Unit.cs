@@ -77,7 +77,7 @@ public partial class InGameManager : MonoBehaviour
                 if (unitPool[i].UnitIndex == -1)
                 {
                     UnitGrid grid = UnitRandomGrid();
-                    grid.UnitInfo = unitPool[i];
+                    grid.UnitBase = unitPool[i];
 
                     unitPool[i].grid = grid;
                     unitPool[i].SetData(unitIndex);

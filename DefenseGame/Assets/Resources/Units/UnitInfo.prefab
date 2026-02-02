@@ -167,7 +167,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3903550582263832544}
-  - component: {fileID: 608990429325002358}
   - component: {fileID: 7754269458707241882}
   - component: {fileID: 2873427441234988757}
   m_Layer: 5
@@ -192,18 +191,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8048424593223458864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &608990429325002358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1837509021745547760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cbd7b6bd3407344ea2afb39ae7f71ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &7754269458707241882
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -437,14 +424,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33981eff53a4c054a9fdae765a9275ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  atkRange: {fileID: 3903550582263832544}
   UnitIndex: -1
+  grid: {fileID: 0}
   unitPositions:
   - {fileID: 5207788742709132692}
   - {fileID: 456771814009061424}
   - {fileID: 3513944853195233704}
   levelSprite: {fileID: 3021935190320529260}
   upgradePos: {fileID: 854668299587123736}
-  atkTrigger: {fileID: 608990429325002358}
 --- !u!61 &985341096890412345
 BoxCollider2D:
   m_ObjectHideFlags: 0

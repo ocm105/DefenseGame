@@ -48,11 +48,11 @@ public partial class InGameManager : MonoBehaviour
                             {
                                 if (nowGrid != null && nowGrid != grid)
                                 {
-                                    nowGrid.UnitInfo.OnClick(false);
+                                    nowGrid.UnitBase.OnClick(false);
                                     nowGrid.ChageColor(false);
                                 }
 
-                                grid.UnitInfo.OnClick(true);
+                                grid.UnitBase.OnClick(true);
                                 grid.ChageColor(true);
                                 nowGrid = grid;
                                 isDragging = true;
@@ -63,7 +63,7 @@ public partial class InGameManager : MonoBehaviour
                         {
                             if (nowGrid != null)
                             {
-                                nowGrid.UnitInfo.OnClick(false);
+                                nowGrid.UnitBase.OnClick(false);
                                 nowGrid = null;
                             }
                             gameView.UnitStatusActive(false);
@@ -126,14 +126,14 @@ public partial class InGameManager : MonoBehaviour
             {
                 if (nextGrid.IsUnit)
                 {
-                    UnitInfo info = nextGrid.UnitInfo;
-                    nextGrid.UnitMove(nowGrid.UnitInfo);
+                    UnitBase info = nextGrid.UnitBase;
+                    nextGrid.UnitMove(nowGrid.UnitBase);
                     nowGrid.UnitMove(info);
                 }
                 else
                 {
-                    nextGrid.UnitMove(nowGrid.UnitInfo);
-                    nowGrid.UnitInfo = null;
+                    nextGrid.UnitMove(nowGrid.UnitBase);
+                    nowGrid.UnitBase = null;
                 }
 
                 nextGrid.ChageColor(false);

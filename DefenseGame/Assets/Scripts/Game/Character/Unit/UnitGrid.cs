@@ -7,24 +7,24 @@ public class UnitGrid : MonoBehaviour
     [SerializeField] Color baseColor;
     [SerializeField] Color dragColor;
     [SerializeField] Image gridImg;
-    public UnitInfo UnitInfo { get; set; }
+    public UnitBase UnitBase { get; set; }
     public string Ability { get; set; }
 
-    public bool IsUnit { get { return UnitInfo != null; } }
+    public bool IsUnit { get { return UnitBase != null; } }
 
     public void ChageColor(bool isDrag)
     {
         gridImg.color = isDrag ? dragColor : baseColor;
     }
 
-    public void UnitMove(UnitInfo unit)
+    public void UnitMove(UnitBase unit)
     {
-        UnitInfo = unit;
+        UnitBase = unit;
         unit.transform.parent = this.transform;
         unit.OnClick(false);
         Move(unit).Forget();
     }
-    private async UniTask Move(UnitInfo unit)
+    private async UniTask Move(UnitBase unit)
     {
         while (Vector2.Distance(unit.transform.localPosition, Vector3.zero) > 0.05f)
         {

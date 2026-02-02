@@ -6,7 +6,7 @@ using UnityEngine.Pool;
 public partial class InGameManager : MonoBehaviour
 {
     [SerializeField] Transform unitPoolPos;
-    private List<UnitInfo> unitPool = new List<UnitInfo>();
+    private List<UnitBase> unitPool = new List<UnitBase>();
     private int nowUnitSpawnCount = 0;
 
     [SerializeField] Transform monsterPoolPos;
@@ -27,10 +27,10 @@ public partial class InGameManager : MonoBehaviour
             unitPool.Add(UnitCreate());
         }
     }
-    private UnitInfo UnitCreate()
+    private UnitBase UnitCreate()
     {
         GameObject obj = Instantiate(Resources.Load<GameObject>(UnitResource.UnitInfo), unitPoolPos);
-        UnitInfo info = obj.GetComponent<UnitInfo>();
+        UnitBase info = obj.GetComponent<UnitBase>();
         obj.SetActive(false);
         return info;
     }

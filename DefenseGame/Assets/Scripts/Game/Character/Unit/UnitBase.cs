@@ -1,68 +1,65 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitInfo : MonoBehaviour
+public partial class UnitBase : MonoBehaviour
 {
+    private const int MaxUnit = 3;
     [HideInInspector] public int UnitIndex = -1;
     public UnitData UnitData { get; private set; }
+    private UnitModel[] unitModel = new UnitModel[MaxUnit];
+
+    public int UnitCount { get; private set; } = 0;
+    public bool isFull { get { return UnitCount >= MaxUnit; } }
+    public bool isMove { get; set; } = false;
+
     public UnitGrid grid;
 
     [SerializeField] GameObject[] unitPositions;
-    private List<Unit> unitList = new List<Unit>();
-    public int UnitCount { get; private set; } = 0;
-    public bool isFull { get { return UnitCount >= 3; } }
-    public bool isMove { get; set; } = false;
-
     [SerializeField] SpriteRenderer levelSprite;
     [SerializeField] Transform upgradePos;
-    [SerializeField] UnitAttackTrigger atkTrigger;
-    public UnitAttackTrigger AtkTrigger { get { return atkTrigger; } }
-    private SpriteRenderer atkRangeSpr;
+
     private int level = 1;
 
-    private void Awake()
-    {
-        atkRangeSpr = atkTrigger.GetComponent<SpriteRenderer>();
-    }
     private void OnDisable()
     {
+        AttackCancel();
         OnClick(false);
     }
     public void Init()
     {
         UnitIndex = -1;
         UnitData = null;
-        level = 1;
         UnitCount = 0;
-        for (int i = 0; i < unitList.Count; i++)
-        {
-            unitList[i].Delete();
-            Destroy(unitList[i].gameObject);
-        }
-        unitList.Clear();
-        grid.UnitInfo = null;
+        level = 1;
+        grid.UnitBase = null;
         this.gameObject.SetActive(false);
+
+        for (int i = 0; i < unitModel.Length; i++)
+        {
+            if (unitModel[i] == null) return;
+            unitModel[i].Delete();
+            Destroy(unitModel[i].gameObject);
+            unitModel[i] = null;
+        }
     }
     public void SetData(int index)
     {
         UnitIndex = index;
         UnitData = GameDataManager.Instance.unitData[index];
-        atkTrigger.transform.localScale = new Vector3(UnitData.Range, UnitData.Range);
-        levelSprite.sprite = Resources.Load<Sprite>(StringExtension.StringMerge("Image/Level/", level.ToString()));
+        InitAttackInfo(UnitData);
+        levelSprite.sprite = Resources.Load<Sprite>($"Image/Level/{level}");
+        UnitUpdate().Forget();
     }
     public void UnitCreate()
     {
-        if (unitList.Count < 3)
+        if (UnitCount < MaxUnit)
         {
             string address = UnitResource.GetPrefab(UnitData.Resource);
             GameObject loadObject = Resources.Load<GameObject>(address);
             GameObject unit = Instantiate(loadObject, unitPositions[UnitCount].transform);
-            unitList.Add(unit.GetComponent<Unit>());
-            unitList[UnitCount].unitInfo = this;
+            unitModel[UnitCount] = unit.GetComponent<UnitModel>();
         }
         else
-            unitList[UnitCount].Create();
+            unitModel[UnitCount].Init();
 
         UnitCount++;
         this.gameObject.SetActive(true);
@@ -75,7 +72,7 @@ public class UnitInfo : MonoBehaviour
 
     public void OnClick(bool isOn = true)
     {
-        atkRangeSpr.enabled = isOn;
+        atkRange.gameObject.SetActive(isOn);
 
         var entry = InGameManager.Instance;
         var view = entry.gameView;
@@ -114,9 +111,9 @@ public class UnitInfo : MonoBehaviour
             SetData(UnitIndex);
 
             UnitCount = 1;
-            for (int i = UnitCount; i < unitPositions.Length; i++)
+            for (int i = UnitCount; i < unitModel.Length; i++)
             {
-                unitList[i].Delete();
+                unitModel[i].Delete();
             }
 
             entry.UnitCountUpdate(-2);
@@ -132,6 +129,7 @@ public class UnitInfo : MonoBehaviour
 
         if (UnitCount <= 1)
         {
+            AttackCancel();
             entry.ResetUnitClick();
             Init();
             OnClick(false);
@@ -139,7 +137,7 @@ public class UnitInfo : MonoBehaviour
         else
         {
             UnitCount--;
-            unitList[UnitCount].Delete();
+            unitModel[UnitCount].Delete();
         }
         entry.UnitCountUpdate(-1);
         entry.SpendGold(entry.gameSetting.unitSell[lv]);
