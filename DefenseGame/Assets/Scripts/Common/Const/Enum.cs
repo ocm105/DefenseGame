@@ -59,6 +59,13 @@ public enum SynergyType
     Wind,
     Max
 }
+public enum UnitJobType
+{
+    Warrior = 0,
+    Ranger,
+    Thief,
+    Wizard
+}
 #endregion
 
 #region Monster

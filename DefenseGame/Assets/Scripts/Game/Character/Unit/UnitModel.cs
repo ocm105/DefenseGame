@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class UnitModel : MonoBehaviour
 {
+    [SerializeField] public GameObject attackPrefab;
+    [SerializeField] public Transform attackPos;
     public Animator animator { get; private set; }
     public bool isAttack { get; private set; }
 
     private void Awake()
     {
         animator = this.GetComponent<Animator>();
-    }
-    private void Start()
-    {
-        Init();
     }
     public void Init()
     {

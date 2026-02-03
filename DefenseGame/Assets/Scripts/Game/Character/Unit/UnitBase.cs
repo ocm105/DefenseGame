@@ -7,6 +7,7 @@ public partial class UnitBase : MonoBehaviour
     public UnitData UnitData { get; private set; }
     private UnitModel[] unitModel = new UnitModel[MaxUnit];
 
+
     public int UnitCount { get; private set; } = 0;
     public bool isFull { get { return UnitCount >= MaxUnit; } }
     public bool isMove { get; set; } = false;

@@ -10,6 +10,8 @@ public partial class Monster : MonoBehaviour, IDamage // Control
     private Transform[] movePath;
     private int movePathIndex = 0;
 
+    public Transform damagerTrans => this.transform;
+
     private async UniTaskVoid MonsterUpdate()
     {
         cancel = new CancellationTokenSource();

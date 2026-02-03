@@ -16,21 +16,21 @@ public class UnitInfoWindow : MonoBehaviour
 
     private void SetData(UnitData data)
     {
-        unitName.text = StringExtension.StringMerge("ì´ë¦„ : ", data.Name);
-        unitLevel.text = StringExtension.StringMerge("ë ˆë²¨ : ", data.Level.ToString());
-        unitJob.text = StringExtension.StringMerge("ì§ì—… : ", data.Job);
+        unitName.text = StringExtension.StringMerge("ÀÌ¸§ : ", data.Name);
+        unitLevel.text = StringExtension.StringMerge("·¹º§ : ", data.Level.ToString());
+        unitJob.text = StringExtension.StringMerge("Á÷¾÷ : ", data.Job.ToString());
         string synergy = string.Empty;
         foreach (var str in data.Synergy)
         {
             synergy += StringExtension.StringMerge(str, " ");
         }
-        unitSynergy.text = StringExtension.StringMerge("ì‹œë„ˆì§€ : ", synergy);
-        unitMana.text = StringExtension.StringMerge("ë§ˆë‚˜ : ", data.Mana.ToString());
-        unitAttack.text = StringExtension.StringMerge("ë°ë¯¸ì§€ : ", data.Attack.ToString());
-        unitAttackCount.text = StringExtension.StringMerge("ë•Œë¦¬ëŠ” ìˆ˜ : ", data.AttackCount.ToString());
-        unitAttackRange.text = StringExtension.StringMerge("ë²”ìœ„ : ", data.Range.ToString());
-        unitCriticalPrecent.text = StringExtension.StringMerge("ì¹˜ëª…íƒ€ìœ¨ : ", data.Critical.ToString(), "%");
-        unitCriticalPower.text = StringExtension.StringMerge("ì¹˜ëª…íƒ€ ë°°ìœ¨ :", (data.CriticalPower * 100).ToString(), "%");
+        unitSynergy.text = StringExtension.StringMerge("½Ã³ÊÁö€ : ", synergy);
+        unitMana.text = StringExtension.StringMerge("¸¶³ª : ", data.Mana.ToString());
+        unitAttack.text = StringExtension.StringMerge("°ø°İ·Â€ : ", data.Attack.ToString());
+        unitAttackCount.text = StringExtension.StringMerge("°ø°İ°¡´É ¼ö: ", data.AttackCount.ToString());
+        unitAttackRange.text = StringExtension.StringMerge("°ø°İ ¹üÀ§ : ", data.Range.ToString());
+        unitCriticalPrecent.text = StringExtension.StringMerge("Ä¡¸íÅ¸À²: ", data.Critical.ToString(), "%");
+        unitCriticalPower.text = StringExtension.StringMerge("Ä¡¸íÅ¸ :", (data.CriticalPower * 100).ToString(), "%");
     }
 
     public void SetActive(bool isActive, UnitData data = null)
