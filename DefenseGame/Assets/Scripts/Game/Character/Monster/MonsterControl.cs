@@ -10,6 +10,7 @@ public partial class Monster : MonoBehaviour, IDamage // Control
     private Transform[] movePath;
     private int movePathIndex = 0;
 
+    public bool isDead => hp <= 0;
     public Transform damagerTrans => this.transform;
 
     private async UniTaskVoid MonsterUpdate()
@@ -88,7 +89,7 @@ public partial class Monster : MonoBehaviour, IDamage // Control
         InGameManager.Instance.GetDamageFont(damege, damagePos).Forget();
         MonserHpSet(damege - monsterData.DEF);
 
-        if (Dead)
+        if (isDead)
         {
             InGameManager.Instance.SpendGold(monsterData.GOLD);
             InGameManager.Instance.MonsterDespawn();

@@ -9,7 +9,7 @@ public partial class Monster : MonoBehaviour
 
     private float speed = 1f;
     private float hp;
-    private bool Dead => hp <= 0;
+
     private MonsterHp monsterHp;
     private MonsterState monsterState;
 

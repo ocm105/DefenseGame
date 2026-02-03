@@ -8,7 +8,6 @@ public partial class UnitBase : MonoBehaviour // Attack
 {
     [SerializeField] Transform atkRange;
     private float atkCoolTime = 0;
-    private int attackCount = 0;
     private float AttackRange = 0;
 
     private Collider2D[] hits;
@@ -62,12 +61,12 @@ public partial class UnitBase : MonoBehaviour // Attack
                     return distA.CompareTo(distB);
                 });
 
-                attackCount = Mathf.Min(UnitData.AttackCount, hits.Length);
-
-                for (int i = 0; i < attackCount; i++)
+                int attackCount = 0;
+                foreach (var hit in hits)
                 {
-                    if (hits[i].TryGetComponent<IDamage>(out var damage))
+                    if (hit.TryGetComponent<IDamage>(out var damage))
                     {
+                        if (damage.isDead) continue;
                         switch (UnitData.Job)
                         {
                             case UnitJobType.Warrior:
@@ -78,6 +77,7 @@ public partial class UnitBase : MonoBehaviour // Attack
                             case UnitJobType.Wizard:
                                 if (unit.attackPrefab != null && unit.attackPos != null)
                                 {
+                                    var pos = unit.attackPos.position;
                                     GameObject go = Instantiate(unit.attackPrefab);
                                     LMotion.Create(0f, 1f, 0.5f)
                                            .WithOnComplete(() =>
@@ -87,14 +87,16 @@ public partial class UnitBase : MonoBehaviour // Attack
                                            })
                                            .Bind(t =>
                                            {
-                                               go.transform.position = Vector2.Lerp(unit.attackPos.position, damage.damagerTrans.position, t);
+                                               go.transform.position = Vector2.Lerp(pos, damage.damagerTrans.position, t);
                                            }).AddTo(go);
                                 }
                                 break;
                         }
-
+                        attackCount++;
                         isAttack = true;
                     }
+                    if (attackCount >= UnitData.AttackCount)
+                        break;
                 }
                 if (isAttack)
                 {
