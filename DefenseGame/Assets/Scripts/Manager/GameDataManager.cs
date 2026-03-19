@@ -1,16 +1,16 @@
-using UnityEngine;
-using UISystem;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
+using UISystem;
+using UnityEditor.Overlays;
+using UnityEngine;
 
 public class GameDataManager : SingletonMonoBehaviour<GameDataManager>
 {
-    public Dictionary<int, WaveData> waveData = new Dictionary<int, WaveData>();
-    public Dictionary<int, StageData> stageData = new Dictionary<int, StageData>();
-    public Dictionary<int, SynergyData> synergyData = new Dictionary<int, SynergyData>();
-    public Dictionary<int, MonsterData> monsterData = new Dictionary<int, MonsterData>();
-    public Dictionary<int, UnitData> unitData = new Dictionary<int, UnitData>();
+    public List<WaveData> waveData = new();
+    public List<UnitData> unitData = new();
+    public List<MonsterData> monsterData = new();
 
     protected override void OnAwakeSingleton()
     {
@@ -20,21 +20,19 @@ public class GameDataManager : SingletonMonoBehaviour<GameDataManager>
 
     public async UniTask LoadData()
     {
-        await NetworkManager.Instance.GetWaveDataRequest((resData) => waveData = resData);
-        await NetworkManager.Instance.GetStageDataRequest((resData) => stageData = resData);
-        await NetworkManager.Instance.GetSynergyDataRequest((resData) => synergyData = resData);
-        await NetworkManager.Instance.GetMonsterDataRequest((resData) => monsterData = resData);
-        await NetworkManager.Instance.GetUnitDataRequest((resData) => unitData = resData);
+        waveData = await NetworkManager.Instance.GetWaveData();
+        monsterData = await NetworkManager.Instance.GetMonsterData();
+        unitData = await NetworkManager.Instance.GetUnitData();
     }
 
-    public List<UnitData> GetUnitDataGrades(int grade, int level = 1)
-    {
-        var result = new List<UnitData>();
-        foreach (var kvp in unitData)
-        {
-            if (kvp.Value.Grade == grade && kvp.Value.Level == level)
-                result.Add(kvp.Value);
-        }
-        return result;
-    }
+    //public List<UnitData> GetUnitDataGrades(int grade, int level = 1)
+    //{
+    //    var result = new List<UnitData>();
+    //    foreach (var kvp in unitData)
+    //    {
+    //        if (kvp.Value.Grade == grade && kvp.Value.Level == level)
+    //            result.Add(kvp.Value);
+    //    }
+    //    return result;
+    //}
 }

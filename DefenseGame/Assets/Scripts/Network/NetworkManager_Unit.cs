@@ -19,7 +19,6 @@ public class UnitData
     public int AttackCount;         // 타격 갯수
     public int Critical;            // 치명타
     public float CriticalPower;     // 치명타 배수
-    public string[] Synergy;        // 시너지
     public string Resource;
     public int Weight;
     public List<string> Effect;     // { "Atk|10|10", "DEF|5|5" }
@@ -51,30 +50,36 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
 {
     public const string UNIT_DATA_PATH = "https://docs.google.com/spreadsheets/d/13F6AfUVGakrPEFcEH-h2PHvT_kzbpjJtDOg-B0yNWWo/export?format=csv";
 
-    public async UniTask GetUnitDataRequest(Action<Dictionary<int, UnitData>> callback = null)
+    public async UniTask<List<UnitData>> GetUnitData()
     {
-        await Request_Get(UNIT_DATA_PATH, (dataState, resData) =>
-        {
-            switch (dataState)
-            {
-                case GAMEDATA_STATE.CONNECTDATAERROR:
-                case GAMEDATA_STATE.PROTOCOLERROR:
-                    PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("Load Unit_DATA Fail");
-                    popup.OnClose = p => Application.Quit();
-                    popup.OnOK = p => Application.Quit();
-                    break;
-                case GAMEDATA_STATE.REQUESTSUCCESS:
-                    var unitData = CSVReader.ReadFromResource<UnitData>(resData);
+        var request = await Request_Get(UNIT_DATA_PATH);
 
-                    foreach (var unit in unitData.Values)
-                    {
-                        unit.SetUnitStat(unit.Effect);
-                    }
-                    Debug.Log("UNIT_DATA Load");
-                    callback?.Invoke(unitData);
-                    break;
-            }
-        });
+        switch (request.state)
+        {
+            case GAMEDATA_STATE.CONNECTDATAERROR:
+            case GAMEDATA_STATE.PROTOCOLERROR:
+                PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("Load Unit_DATA Fail");
+                popup.OnClose = p => Application.Quit();
+                popup.OnOK = p => Application.Quit();
+                return null;
+
+            case GAMEDATA_STATE.REQUESTSUCCESS:
+
+                List<UnitData> data = new();
+                var items = CSVReader.ReadFromResource<UnitData>(request.data);
+
+                foreach (var unit in items.Values)
+                {
+                    unit.SetUnitStat(unit.Effect);
+                    data.Add(unit);
+                }
+
+                Debug.Log("UNIT_DATA Load");
+                return data;
+
+            default:
+                return null;
+        }
     }
 }
 

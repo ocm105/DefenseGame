@@ -4,6 +4,19 @@ using UISystem;
 using UnityEngine;
 using UnityEngine.Networking;
 
+[Serializable]
+public class NetworkRequestData
+{
+    public GAMEDATA_STATE state;
+    public string data;
+
+    public NetworkRequestData(GAMEDATA_STATE state, string data)
+    {
+        this.state = state;
+        this.data = data;
+    }
+}
+
 public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
 {
     protected override void OnAwakeSingleton()
@@ -14,105 +27,88 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
 
     private bool NetworkCheck()
     {
-        // 인터넷 연결이 안되었을 때 행동
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            // PopupState popup = Les_UIManager.Instance.Popup<BasePopup_OneBtn>().Open("네트워크 연결 오류");
-            // popup.OnClose = p => Application.Quit();
-            // popup.OnOK = p => Application.Quit();
             return false;
         }
-        // 데이터로 연결이 되었을 때 행동
         else if (Application.internetReachability == NetworkReachability.ReachableViaCarrierDataNetwork)
         {
             return true;
         }
-        // 와이파이로 연결이 되었을 때 행동
         else
         {
             return true;
         }
     }
 
-    public async UniTask Request_Post(string url, WWWForm form, Action<GAMEDATA_STATE, string> resultAction = null)
+    public async UniTask<NetworkRequestData> Request_Get(string url)
     {
         if (NetworkCheck())
         {
-            Les_UIManager.Instance.CurrentView.Loading = true;
+            NetworkRequestData data;
 
-            // string jsonReq = JsonUtility.ToJson(reqParam);
+            UnityWebRequest request = UnityWebRequest.Get(url);
 
-            // Debug.Log($"<color=green>[Req_Post]</color>=> url: {url}, param: {jsonReq}");
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
 
-            using (UnityWebRequest request = UnityWebRequest.Post(url, form))
+            await request.SendWebRequest();
+
+            switch (request.result)
             {
-                // byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonReq);
-                // request.uploadHandler = new UploadHandlerRaw(jsonToSend);
-                // request.downloadHandler = new DownloadHandlerBuffer();
-
-                // request.SetRequestHeader("Content-Type", "application/json");
-
-                await request.SendWebRequest();
-
-                // Debug.Log($"<color=yellow>[Res_Post]</color>=> url: {url}, resData: {request.downloadHandler.text}");
-
-                switch (request.result)
-                {
-                    case UnityWebRequest.Result.ConnectionError:
-                    case UnityWebRequest.Result.DataProcessingError:
-                        resultAction?.Invoke(GAMEDATA_STATE.CONNECTDATAERROR, request.downloadHandler.text);
-                        break;
-                    case UnityWebRequest.Result.ProtocolError:
-                        resultAction?.Invoke(GAMEDATA_STATE.PROTOCOLERROR, request.downloadHandler.text);
-                        break;
-                    case UnityWebRequest.Result.Success:
-                        resultAction?.Invoke(GAMEDATA_STATE.REQUESTSUCCESS, request.downloadHandler.text);
-                        break;
-                }
-
-                request.Dispose();
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    data = new NetworkRequestData(GAMEDATA_STATE.CONNECTDATAERROR, request.downloadHandler.text);
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    data = new NetworkRequestData(GAMEDATA_STATE.PROTOCOLERROR, request.downloadHandler.text);
+                    break;
+                case UnityWebRequest.Result.Success:
+                    data = new NetworkRequestData(GAMEDATA_STATE.REQUESTSUCCESS, request.downloadHandler.text);
+                    break;
+                default:
+                    data = null;
+                    break;
             }
 
-            Les_UIManager.Instance.CurrentView.Loading = false;
+            request.Dispose();
+
+            return data;
         }
+        return null;
     }
 
-    public async UniTask Request_Get(string url, Action<GAMEDATA_STATE, string> resultAction = null)
+    public async UniTask<NetworkRequestData> Request_Post(string url, WWWForm form)
     {
         if (NetworkCheck())
         {
-            // Les_UIManager.Instance.CurrentView.Loading = true;
+            NetworkRequestData data;
 
-            // Debug.Log($"<color=green>[Req_Get]</color>=> url: {url}");
+            UnityWebRequest request = UnityWebRequest.Post(url, form);
+            await request.SendWebRequest();
 
-            using (UnityWebRequest request = UnityWebRequest.Get(url))
+            switch (request.result)
             {
-                request.downloadHandler = new DownloadHandlerBuffer();
-                request.SetRequestHeader("Content-Type", "application/json");
-
-                await request.SendWebRequest();
-
-                // Debug.Log($"<color=yellow>[Res_Get]</color>=> url: {url}, resData: {request.downloadHandler.text}");
-
-                switch (request.result)
-                {
-                    case UnityWebRequest.Result.ConnectionError:
-                    case UnityWebRequest.Result.DataProcessingError:
-                        resultAction?.Invoke(GAMEDATA_STATE.CONNECTDATAERROR, request.downloadHandler.text);
-                        break;
-                    case UnityWebRequest.Result.ProtocolError:
-                        resultAction?.Invoke(GAMEDATA_STATE.PROTOCOLERROR, request.downloadHandler.text);
-                        break;
-                    case UnityWebRequest.Result.Success:
-                        resultAction?.Invoke(GAMEDATA_STATE.REQUESTSUCCESS, request.downloadHandler.text);
-                        break;
-                }
-
-                request.Dispose();
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    data = new NetworkRequestData(GAMEDATA_STATE.CONNECTDATAERROR, request.downloadHandler.text);
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    data = new NetworkRequestData(GAMEDATA_STATE.PROTOCOLERROR, request.downloadHandler.text);
+                    break;
+                case UnityWebRequest.Result.Success:
+                    data = new NetworkRequestData(GAMEDATA_STATE.REQUESTSUCCESS, request.downloadHandler.text);
+                    break;
+                default:
+                    data = null;
+                    break;
             }
 
-            // Les_UIManager.Instance.CurrentView.Loading = false;
+            request.Dispose();
+
+            return data;
         }
+        return null;
     }
 
 }
