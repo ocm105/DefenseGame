@@ -2617,60 +2617,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1709800792}
   m_CullTransparentMesh: 1
---- !u!1 &1810931117
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1810931119}
-  - component: {fileID: 1810931118}
-  m_Layer: 0
-  m_Name: InGameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1810931118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810931117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce58127ea040b5a40bbc76b8dd2227cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameView: {fileID: 941518776767790396}
-  gameSetting: {fileID: 11400000, guid: b238c97ea529ef343a437381871e2062, type: 2}
-  monsterPathInfo: {fileID: 0}
-  unitPoolPos: {fileID: 1444103119}
-  monsterPoolPos: {fileID: 0}
-  fontPos: {fileID: 486025184}
-  damageFontPrefab: {fileID: 3108417431875714762, guid: 9b27caf1eb69af24a9cdaa2f38d3e1bc, type: 3}
-  damagefontPoolCount: 30
-  gridInfo: {fileID: 0}
-  SynergyInfos: 00000000000000000000000000000000
---- !u!4 &1810931119
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810931117}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1852404686
 GameObject:
   m_ObjectHideFlags: 0
@@ -3837,17 +3783,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 548ac0cadf3e0a74fb6cd7e89ee3ffd6, type: 3}
---- !u!114 &941518776767790396 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1356487895937108265, guid: 548ac0cadf3e0a74fb6cd7e89ee3ffd6, type: 3}
-  m_PrefabInstance: {fileID: 106751834461294380}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b090cb5c91e201459f581fd08034845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1474953384349877831
 GameObject:
   m_ObjectHideFlags: 0
@@ -3895,4 +3830,3 @@ SceneRoots:
   - {fileID: 639062095}
   - {fileID: 1982963703}
   - {fileID: 399152810}
-  - {fileID: 1810931119}
