@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55de4b6992794be4cacdb64e96b7425d, type: 3}
+  m_Name: ModelTable
+  m_EditorClassIdentifier: Assembly-CSharp::ModelTable
+  unitModelTable:
+  - id: 2000010
+    prefab: {fileID: 7327130586381147138, guid: 40b970d77a3510e44897e2307e5976d2, type: 3}
+  monsterModelTable: []

@@ -6,7 +6,6 @@ public class UnitModel : ChracterModel
     [SerializeField] SpriteRenderer model;
     [SerializeField] SpriteRenderer level;
     [SerializeField] Transform atkRange;
-    [SerializeField] public Transform upgradeBtnPos;
 
     public virtual void Init(UnitBase owner)
     {

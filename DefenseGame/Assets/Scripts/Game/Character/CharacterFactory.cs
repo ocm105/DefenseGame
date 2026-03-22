@@ -6,7 +6,7 @@ public class CharacterFactory
     private Queue<UnitBase> unitPool = new Queue<UnitBase>();
     private Queue<MonsterBase> monsterPool = new Queue<MonsterBase>();
 
-    public UnitBase GetUnit(UnitData rawData, Vector3 spawnPoint, Quaternion spawnRotation)
+    public UnitBase GetUnit(UnitData rawData, Transform parent)
     {
         UnitBase unit = null;
 
@@ -15,11 +15,13 @@ public class CharacterFactory
         else
             unit = CreateUnitMono();
 
+        unit.transform.parent = parent;
+        unit.transform.localPosition = Vector3.zero;
         unit.Init(rawData);
 
         return unit;
     }
-    public MonsterBase GetMonster(MonsterData rawData, Vector3 spawnPoint, Quaternion spawnRotation)
+    public MonsterBase GetMonster(MonsterData rawData, Transform parent)
     {
         MonsterBase monster = null;
 
@@ -28,6 +30,8 @@ public class CharacterFactory
         else
             monster = CreateMonsterMono();
 
+        monster.transform.parent = parent;
+        monster.transform.localPosition = Vector3.zero;
         monster.Init(rawData);
 
         return monster;

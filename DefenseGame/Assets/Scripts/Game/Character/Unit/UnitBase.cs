@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class UnitBase : ChracterBase
@@ -8,6 +9,13 @@ public class UnitBase : ChracterBase
     public void Init(UnitData rawData)
     {
         this.rawData = rawData;
+
+        if (model == null)
+        {
+            var item = ModelTable.Instance.unitModelTable.Where(x => x.id == rawData.Index.ToString()).FirstOrDefault();
+            var go = GameObject.Instantiate(item.prefab, this.transform);
+            model = go.GetComponent<UnitModel>();
+        }
 
         model.Init(this);
     }

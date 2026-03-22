@@ -3,6 +3,19 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameSetting", menuName = "ScriptableObjects/GameSetting")]
 public class GameSetting : ScriptableObject
 {
+    private static GameSetting instance = null;
+    public static GameSetting Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = Resources.Load("Scriptables/GameSetting") as GameSetting;
+            }
+            return instance;
+        }
+    }
+
     [Header("기본 값")]
     [Tooltip("게임 시작 시간")] public float startTime = 3;
     [Tooltip("기본 소지금")] public int startGold = 100;

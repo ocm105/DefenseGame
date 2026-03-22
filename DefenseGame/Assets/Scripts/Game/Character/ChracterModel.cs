@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public abstract class ChracterModel : MonoBehaviour
 {
-    protected Animator animator;
+    [SerializeField] protected Animator animator;
     public UnityEvent onDead;
 
     protected bool isAttack = false;

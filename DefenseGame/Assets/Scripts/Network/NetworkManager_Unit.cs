@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 [Serializable]
 public class UnitData
 {
+    public int Index;
     public int Grade;
     public string Name;
     public int Level;               // ·¹º§

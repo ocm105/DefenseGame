@@ -26,13 +26,6 @@ public enum GAMEDATA_STATE
     NODATA,
     REQUESTSUCCESS
 }
-public enum GameState
-{
-    Ready = 0,
-    Start,
-    Pause,
-    End
-}
 public enum StageType
 {
     PLAINS,
@@ -50,14 +43,6 @@ public enum UnitAniState
     Idle,
     Attack,
     Skill,
-}
-public enum SynergyType
-{
-    Fire,
-    Water,
-    Thunder,
-    Wind,
-    Max
 }
 public enum UnitJobType
 {
@@ -80,25 +65,5 @@ public enum MonsterType
     Nomal = 0,
     Epic,
     Boss
-}
-
-#endregion
-
-#region Player
-public enum PlayerAniState
-{
-    Default,
-    Attack,
-    Skill,
-    Hit,
-    Die
-}
-public enum PlayerAttackLevel
-{
-    None = 0,
-    Attack1,
-    Attack2,
-    Attack3,
-    Max
 }
 #endregion
