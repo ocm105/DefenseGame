@@ -7,7 +7,6 @@ using Cysharp.Threading.Tasks;
 [Serializable]
 public class UnitData
 {
-    public int Index;
     public int Grade;
     public string Name;
     public int Level;               // 레벨
@@ -19,31 +18,6 @@ public class UnitData
     public int AttackCount;         // 타격 갯수
     public int Critical;            // 치명타
     public float CriticalPower;     // 치명타 배수
-    public string Resource;
-    public int Weight;
-    public List<string> Effect;     // { "Atk|10|10", "DEF|5|5" }
-    public UnitStat[] unitStats;
-
-    public void SetUnitStat(List<string> strs)
-    {
-        string[] arr = new string[strs.Count];
-        unitStats = new UnitStat[strs.Count];
-        for (int i = 0; i < strs.Count; i++)
-        {
-            unitStats[i] = new UnitStat();
-            arr = strs[i].Split('|');
-            unitStats[i].value1 = arr[0];
-            unitStats[i].value2 = arr[1];
-            unitStats[i].value3 = arr[2];
-        }
-    }
-}
-
-public class UnitStat
-{
-    public string value1;
-    public string value2;
-    public string value3;
 }
 
 public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
@@ -70,7 +44,6 @@ public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>
 
                 foreach (var unit in items.Values)
                 {
-                    unit.SetUnitStat(unit.Effect);
                     data.Add(unit);
                 }
 
