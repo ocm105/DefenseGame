@@ -9,6 +9,6 @@ public static class Scene
 }
 public static class Character
 {
-    public static string UnitMono = $"Units/UnitMono";
-    public static string MonsterMono = $"Monsters/MonsterMono";
+    public static string UnitMono = $"Unit/UnitMono";
+    public static string MonsterMono = $"Monster/MonsterMono";
 }

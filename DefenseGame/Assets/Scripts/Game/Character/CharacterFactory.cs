@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class CharacterFactory
@@ -19,9 +20,11 @@ public class CharacterFactory
         unit.transform.localPosition = Vector3.zero;
         unit.Init(rawData);
 
+        unit.gameObject.SetActive(true);
+
         return unit;
     }
-    public MonsterBase GetMonster(MonsterData rawData, Transform parent)
+    public MonsterBase GetMonster(MonsterData rawData, Vector3 pos, Transform parent)
     {
         MonsterBase monster = null;
 
@@ -31,8 +34,10 @@ public class CharacterFactory
             monster = CreateMonsterMono();
 
         monster.transform.parent = parent;
-        monster.transform.localPosition = Vector3.zero;
+        monster.transform.position = pos;
         monster.Init(rawData);
+
+        monster.gameObject.SetActive(true);
 
         return monster;
     }

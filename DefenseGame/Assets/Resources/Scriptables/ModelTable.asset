@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: ModelTable
   m_EditorClassIdentifier: Assembly-CSharp::ModelTable
   unitModelTable:
-  - id: 2000010
+  - id: ElfWarrior
     prefab: {fileID: 7327130586381147138, guid: 40b970d77a3510e44897e2307e5976d2, type: 3}
-  monsterModelTable: []
+  monsterModelTable:
+  - id: Slime
+    prefab: {fileID: 7716651605389869419, guid: 40c35e41627bcdd4f8ec26e294be9ef9, type: 3}

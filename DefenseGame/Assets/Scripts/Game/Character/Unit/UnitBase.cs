@@ -4,7 +4,7 @@ using UnityEngine;
 public class UnitBase : ChracterBase
 {
     public UnitData rawData;
-    private UnitModel model;
+    public UnitModel model { get; private set; }
 
     public void Init(UnitData rawData)
     {
@@ -12,7 +12,7 @@ public class UnitBase : ChracterBase
 
         if (model == null)
         {
-            var item = ModelTable.Instance.unitModelTable.Where(x => x.id == rawData.Index.ToString()).FirstOrDefault();
+            var item = ModelTable.Instance.unitModelTable.Where(x => x.id == rawData.strID.ToString()).FirstOrDefault();
             var go = GameObject.Instantiate(item.prefab, this.transform);
             model = go.GetComponent<UnitModel>();
         }

@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class UnitSpawner : MonoBehaviour
 {
-    [SerializeField] GameView view;
     private Button button;
 
     private UnitBase unitMono;
@@ -20,26 +19,25 @@ public class UnitSpawner : MonoBehaviour
     {
         if (isUnit == false)
         {
-            view.Set_UnitSpawnUI(true, this.transform);
-            view.Set_UnitSpawnEvent(Spawn);
+            GameView.Instance.Set_UnitSpawnUI(true, this.transform);
+            GameView.Instance.Set_UnitSpawnEvent(Spawn);
         }
         else
         {
-
         }
     }
     private void Spawn()
     {
         if (isUnit == true || unitMono != null) return;
 
-        UnitData data = GameDataManager.Instance.unitData.Where(x => x.Index == 2000010).FirstOrDefault();
-        unitMono = view.characterFactory.GetUnit(data, this.transform);
+        UnitData data = GameDataManager.Instance.unitData.Where(x => x.strID == "ElfWarrior").FirstOrDefault();
+        unitMono = GameView.Instance.characterFactory.GetUnit(data, this.transform);
         isUnit = true;
     }
     private void DeSpawn()
     {
         if (isUnit == false || unitMono == null) return;
-        view.characterFactory.ReturnUnit(unitMono);
+        GameView.Instance.characterFactory.ReturnUnit(unitMono);
         unitMono = null;
         isUnit = false;
     }

@@ -7,7 +7,7 @@ public abstract class ChracterBase : MonoBehaviour, IDamage
     public float originHP;          // 기존 체력
     public Transform damagerTrans => this.transform;
 
-    public bool isDead => false;
+    public bool isDead => currentHp <= 0f;
     public UnityEvent onDead;
 
     public abstract void OnDamage(float damage);

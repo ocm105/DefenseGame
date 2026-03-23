@@ -10,7 +10,7 @@ namespace UISystem
             get
             {
                 if (UIManager.Instance == null)
-                    UIManager.Instance = FindObjectOfType<UIManager>();
+                    UIManager.Instance = FindFirstObjectByType<UIManager>();
 
                 return UIManager.Instance as Les_UIManager;
             }

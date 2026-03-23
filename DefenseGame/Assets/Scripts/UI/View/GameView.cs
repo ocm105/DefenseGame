@@ -9,6 +9,9 @@ using UnityEngine.UI;
 
 public class GameView : UIView
 {
+    private static GameView instance;
+    public static GameView Instance { get { return instance; } }
+
     [SerializeField] Button homeBtn;
 
     [SerializeField] TextMeshProUGUI waveCountText;
@@ -26,23 +29,26 @@ public class GameView : UIView
     [SerializeField] Transform unitMergeUI;
     [SerializeField] TweenButton unitMergeBtn;
 
+    [SerializeField] MonsterSpawner monsterSpawner;
+
     private Camera mainCam;
     public CharacterFactory characterFactory { get; private set; }
 
-    private void Awake()
-    {
-        mainCam = Camera.main;
-        characterFactory = new CharacterFactory();
-    }
     public void Show()
     {
+        instance = this;
+        mainCam = Camera.main;
+        characterFactory = new CharacterFactory();
         ShowLayer();
     }
     protected override void OnFirstShow()
     {
         homeBtn.onClick.AddListener(OnClick_Home);
     }
-    protected override void OnShow() { }
+    protected override void OnShow()
+    {
+        MonsterSpawn().Forget();
+    }
 
     #region Event
     public void GoldSet(int gold)
@@ -102,5 +108,22 @@ public class GameView : UIView
     {
         unitMergeBtn.onClick.RemoveAllListeners();
         unitMergeBtn.onClick.AddListener(action);
+    }
+    private async UniTask MonsterSpawn()
+    {
+        float maxTime = 60f;
+        float currentTime = maxTime;
+        while (UnityEditor.EditorApplication.isPlaying)
+        {
+            WaveTimeSet(currentTime);
+
+            if (currentTime == maxTime)
+                monsterSpawner.OnSpawn();
+
+            await UniTask.WaitForSeconds(1f).SuppressCancellationThrow();
+            currentTime -= 1f;
+            if (currentTime <= 0f)
+                currentTime = maxTime;
+        }
     }
 }

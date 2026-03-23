@@ -7,12 +7,9 @@ using Cysharp.Threading.Tasks;
 [Serializable]
 public class MonsterData
 {
-    public int Index;
-    public int Level;
-    public int HP;
-    public int DEF;
-    public int GOLD;
-    public int DIAMOND;
+    public string strID;
+    public float hP;
+    public float speed;
 }
 
 public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>

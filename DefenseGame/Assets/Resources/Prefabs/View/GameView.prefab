@@ -4757,9 +4757,9 @@ MonoBehaviour:
   Footer: 
   BgmKey: BGM_MAIN
   homeBtn: {fileID: 8061684717075984903}
-  waveCountText: {fileID: 0}
-  waveTimeText: {fileID: 0}
-  monsterCountText: {fileID: 0}
+  waveCountText: {fileID: 6823149530128340620}
+  waveTimeText: {fileID: 8256153615451858838}
+  monsterCountText: {fileID: 1172901608852332810}
   unitInfoWindow: {fileID: 6950507370226826623}
   goldText: {fileID: 9216231378591234453}
   unitCountText: {fileID: 1664202621722171577}
@@ -4768,6 +4768,7 @@ MonoBehaviour:
   unitSpawnBtn: {fileID: 8785063541424053248}
   unitMergeUI: {fileID: 3160711509796306278}
   unitMergeBtn: {fileID: 1402278411316943859}
+  monsterSpawner: {fileID: 0}
 --- !u!1 &8165794799530394095
 GameObject:
   m_ObjectHideFlags: 0

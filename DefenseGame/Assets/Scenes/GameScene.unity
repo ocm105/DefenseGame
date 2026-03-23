@@ -1313,6 +1313,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 709256025}
+  - component: {fileID: 709256026}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -1332,7 +1333,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6573524804416358077}
   - {fileID: 1280148395}
   - {fileID: 1182304285}
   m_Father: {fileID: 399152810}
@@ -1342,6 +1342,31 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 250}
   m_SizeDelta: {x: 1000, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &709256026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709256024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bf58e7b00b64074097d5942fd07ac93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterSpawner
+  paths:
+  - {fileID: 1320751119}
+  - {fileID: 1201297922}
+  - {fileID: 819734776}
+  - {fileID: 723643078}
+  - {fileID: 1071042270}
+  - {fileID: 393048071}
+  - {fileID: 1999477112}
+  - {fileID: 577159347}
+  - {fileID: 1395615642}
+  - {fileID: 853172052}
+  - {fileID: 1971585883}
+  - {fileID: 549601230}
 --- !u!1 &723643077
 GameObject:
   m_ObjectHideFlags: 0
@@ -1609,7 +1634,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1444103119}
   - {fileID: 462537898}
   - {fileID: 1420107675}
   m_Father: {fileID: 399152810}
@@ -2483,41 +2507,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425395184}
   m_CullTransparentMesh: 1
---- !u!1 &1444103118
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1444103119}
-  m_Layer: 0
-  m_Name: UnitPool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1444103119
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1444103118}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 961825049}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1601710562
 GameObject:
   m_ObjectHideFlags: 0
@@ -3916,6 +3905,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1356487895937108265, guid: 548ac0cadf3e0a74fb6cd7e89ee3ffd6, type: 3}
+      propertyPath: monsterSpawner
+      value: 
+      objectReference: {fileID: 709256026}
     - target: {fileID: 5232821135508905599, guid: 548ac0cadf3e0a74fb6cd7e89ee3ffd6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3976,46 +3969,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b090cb5c91e201459f581fd08034845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1474953384349877831
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6573524804416358077}
-  m_Layer: 0
-  m_Name: MosterPool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!224 &5833327794064507299 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1227103583740852118, guid: 548ac0cadf3e0a74fb6cd7e89ee3ffd6, type: 3}
   m_PrefabInstance: {fileID: 106751834461294380}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &6573524804416358077
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1474953384349877831}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 709256025}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

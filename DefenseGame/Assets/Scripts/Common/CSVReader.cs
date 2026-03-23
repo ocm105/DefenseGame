@@ -180,7 +180,7 @@ public class CSVReader
 
             values = GetColumn(lines[i]);
 
-            int keyIndex = 0;
+            //int keyIndex = 0;
             int valueCount = values.Count;
 
             if (values.Count >= headerCount)
@@ -200,19 +200,19 @@ public class CSVReader
 
                     fieldTypeList[j].mAction(fieldTypeList[j].mType, key, value, js);
 
-                    if (j == 0)
-                    {
-                        keyIndex = js[key].AsInt;
-                        if (keyIndex == 0)
-                        {
-                            Debug.Log("Invalid TableIndex(0)!!! : " + data);
-                            return dictionary;
-                        }
-                    }
+                    //if (j == 0)
+                    //{
+                    //keyIndex = js[key].AsInt;
+                    //if (keyIndex == 0)
+                    //{
+                    //    Debug.Log("Invalid TableIndex(0)!!! : " + data);
+                    //    return dictionary;
+                    //}
+                    //}
                 }
 
                 value = js.ToString();
-                dictionary[keyIndex] = JsonUtility.FromJson<T>(value);
+                dictionary[i] = JsonUtility.FromJson<T>(value);
             }
             else
             {

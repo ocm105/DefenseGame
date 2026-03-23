@@ -7,18 +7,16 @@ using Cysharp.Threading.Tasks;
 [Serializable]
 public class UnitData
 {
-    public int Index;
-    public int Grade;
-    public string Name;
-    public int Level;               // 레벨
-    public UnitJobType Job;
-    public int Mana;
-    public int Range;               // 공격범위
-    public float AttackSpeed;       // 공격속도
-    public float Attack;              // 공격력
-    public int AttackCount;         // 타격 갯수
-    public int Critical;            // 치명타
-    public float CriticalPower;     // 치명타 배수
+    public string strID;
+    public int grade;               // 랭크
+    public string name;
+    public UnitJobType job;
+    public float atk;
+    public float atkRange;
+    public float atkSpeed;
+    public int atkCount;
+    public float critical;
+    public float criticalPower;
 }
 
 public partial class NetworkManager : SingletonMonoBehaviour<NetworkManager>

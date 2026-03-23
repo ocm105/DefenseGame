@@ -15,15 +15,15 @@ public class UnitInfoWindow : MonoBehaviour
 
     private void SetData(UnitData data)
     {
-        unitName.text = StringExtension.StringMerge("ÀÌ¸§ : ", data.Name);
-        unitLevel.text = StringExtension.StringMerge("·¹º§ : ", data.Level.ToString());
-        unitJob.text = StringExtension.StringMerge("Á÷¾÷ : ", data.Job.ToString());
-        unitMana.text = StringExtension.StringMerge("¸¶³ª : ", data.Mana.ToString());
-        unitAttack.text = StringExtension.StringMerge("°ø°Ý·Â€ : ", data.Attack.ToString());
-        unitAttackCount.text = StringExtension.StringMerge("°ø°Ý°¡´É ¼ö: ", data.AttackCount.ToString());
-        unitAttackRange.text = StringExtension.StringMerge("°ø°Ý ¹üÀ§ : ", data.Range.ToString());
-        unitCriticalPrecent.text = StringExtension.StringMerge("Ä¡¸íÅ¸À²: ", data.Critical.ToString(), "%");
-        unitCriticalPower.text = StringExtension.StringMerge("Ä¡¸íÅ¸ :", (data.CriticalPower * 100).ToString(), "%");
+        //unitName.text = StringExtension.StringMerge("ÀÌ¸§ : ", data.Name);
+        //unitLevel.text = StringExtension.StringMerge("·¹º§ : ", data.Level.ToString());
+        //unitJob.text = StringExtension.StringMerge("Á÷¾÷ : ", data.Job.ToString());
+        //unitMana.text = StringExtension.StringMerge("¸¶³ª : ", data.Mana.ToString());
+        //unitAttack.text = StringExtension.StringMerge("°ø°Ý·Â€ : ", data.Attack.ToString());
+        //unitAttackCount.text = StringExtension.StringMerge("°ø°Ý°¡´É ¼ö: ", data.AttackCount.ToString());
+        //unitAttackRange.text = StringExtension.StringMerge("°ø°Ý ¹üÀ§ : ", data.Range.ToString());
+        //unitCriticalPrecent.text = StringExtension.StringMerge("Ä¡¸íÅ¸À²: ", data.Critical.ToString(), "%");
+        //unitCriticalPower.text = StringExtension.StringMerge("Ä¡¸íÅ¸ :", (data.CriticalPower * 100).ToString(), "%");
     }
 
     public void SetActive(bool isActive, UnitData data = null)

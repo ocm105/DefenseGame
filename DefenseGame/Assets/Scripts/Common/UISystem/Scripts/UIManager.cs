@@ -501,7 +501,7 @@ namespace UISystem
 
         public bool IsExistAcivePopup()
         {
-            //LoadingPopup 은 제외
+            //LoadingPopup ?� ?�외
             List<UILayer> acivePopups = CurrentPopups.FindAll(p => p != null && p.gameObject.activeInHierarchy);
             if (acivePopups.Count > 0)
             {

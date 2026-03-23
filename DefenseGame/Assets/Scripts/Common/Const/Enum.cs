@@ -54,12 +54,6 @@ public enum UnitJobType
 #endregion
 
 #region Monster
-public enum MonsterState
-{
-    Arive = 0,
-    Stop,
-    Die
-}
 public enum MonsterType
 {
     Nomal = 0,
