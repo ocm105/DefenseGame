@@ -23,7 +23,7 @@ public class MonsterSpawner : MonoBehaviour
     private void DeSpawn(MonsterBase monster)
     {
         monsterMonos.Remove(monster);
-        GameView.Instance.characterFactory.ReturnMonster(monster);
+        GameView.Instance.ReturnMonsterFactroy(monster);
     }
     private async UniTask SpawnAsync()
     {
@@ -31,7 +31,7 @@ public class MonsterSpawner : MonoBehaviour
         MonsterBase monster = null;
         for (int i = 0; i < 20; i++)
         {
-            monster = GameView.Instance.characterFactory.GetMonster(data, paths[0].position, this.transform);
+            monster = GameView.Instance.GetMonster(data, paths[0].position, this.transform);
             monster.OnSpawn(paths, DeSpawn);
             monsterMonos.Add(monster);
             await UniTask.WaitForSeconds(spawnInterval, cancellationToken: spawnToken.Token);

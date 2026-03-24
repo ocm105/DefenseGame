@@ -30,14 +30,14 @@ public class UnitSpawner : MonoBehaviour
     {
         if (isUnit == true || unitMono != null) return;
 
-        UnitData data = GameDataManager.Instance.unitData.Where(x => x.strID == "ElfWarrior").FirstOrDefault();
-        unitMono = GameView.Instance.characterFactory.GetUnit(data, this.transform);
+        var data = GameDataManager.Instance.unitData.Where(x => x.strID == "ElfWarrior").FirstOrDefault();
+        unitMono = GameView.Instance.GetUnit(data, this.transform);
         isUnit = true;
     }
     private void DeSpawn()
     {
         if (isUnit == false || unitMono == null) return;
-        GameView.Instance.characterFactory.ReturnUnit(unitMono);
+        GameView.Instance.ReturnUnitFactroy(unitMono);
         unitMono = null;
         isUnit = false;
     }

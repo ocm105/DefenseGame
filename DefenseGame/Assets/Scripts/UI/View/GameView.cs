@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using Spellbind;
-using System.Linq;
 using TMPro;
 using UISystem;
 using UnityEngine;
@@ -12,15 +11,18 @@ public class GameView : UIView
     private static GameView instance;
     public static GameView Instance { get { return instance; } }
 
-    [SerializeField] Button homeBtn;
+    private Camera mainCam;
+    public CharacterFactory characterFactory { get; private set; }
 
-    [SerializeField] TextMeshProUGUI waveCountText;
+    [SerializeField] TextMeshProUGUI waveText;
     [SerializeField] TextMeshProUGUI waveTimeText;
     [SerializeField] TextMeshProUGUI monsterCountText;
+    private int wave = 1;
+    private int monsterCount = 0;
 
-    [SerializeField] UnitInfoWindow unitInfoWindow;
-    [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] TextMeshProUGUI unitCountText;
+    [SerializeField] TextMeshProUGUI goldText;
+    private int unitCount = 0;
 
     [SerializeField] public WaringPanel waringPanel;
 
@@ -31,8 +33,7 @@ public class GameView : UIView
 
     [SerializeField] MonsterSpawner monsterSpawner;
 
-    private Camera mainCam;
-    public CharacterFactory characterFactory { get; private set; }
+    [SerializeField] Button homeBtn;
 
     public void Show()
     {
@@ -47,35 +48,36 @@ public class GameView : UIView
     }
     protected override void OnShow()
     {
-        MonsterSpawn().Forget();
+        StartWave().Forget();
+        Set_UnitCount(0, 0);
     }
 
     #region Event
-    public void GoldSet(int gold)
+    public void Set_Gold(int gold)
     {
         goldText.text = gold.ToString();
     }
-    public void UnitCountSet(int now, int max)
+    public void Set_UnitCount(int add, int max)
     {
-        unitCountText.text = $"{now}/{max}";
+        unitCount += add;
+        unitCountText.text = $"{unitCount}/{max}";
     }
-    public void SetMonsterCount(int count)
+    private void Set_Wave(int wave)
     {
-        monsterCountText.text = $"Monster Count : {count}";
+        waveText.text = $"Wave : {wave}";
     }
-    public void WaveCountSet(int count)
+    private void Set_WaveTime(float time)
     {
-        waveCountText.text = count.ToString();
-    }
-    public void WaveTimeSet(float time)
-    {
-        waveTimeText.text = Mathf.CeilToInt(time).ToString();
-    }
-    public void UnitStatusActive(bool isActive, UnitData data = null)
-    {
-        unitInfoWindow.SetActive(isActive, data);
-    }
+        int m = Mathf.FloorToInt((time % 3600) / 60f);
+        int s = Mathf.FloorToInt(time % 60f);
 
+        waveTimeText.text = $"Time : {m.ToString("00")}:{s.ToString("00")}";
+    }
+    private void Set_MonsterCount(int add)
+    {
+        monsterCount += add;
+        monsterCountText.text = $"Monster : {monsterCount}";
+    }
     private void OnClick_Home()
     {
         PopupState state = Les_UIManager.Instance.Popup<BasePopup_TwoBtn>().Open("게임을 종료하시겠습니까?");
@@ -109,21 +111,48 @@ public class GameView : UIView
         unitMergeBtn.onClick.RemoveAllListeners();
         unitMergeBtn.onClick.AddListener(action);
     }
-    private async UniTask MonsterSpawn()
+    private async UniTask StartWave()
     {
+        wave = 1;
         float maxTime = 60f;
         float currentTime = maxTime;
         while (UnityEditor.EditorApplication.isPlaying)
         {
-            WaveTimeSet(currentTime);
+            Set_WaveTime(currentTime);
 
             if (currentTime == maxTime)
+            {
+                Set_Wave(wave);
                 monsterSpawner.OnSpawn();
+            }
 
             await UniTask.WaitForSeconds(1f).SuppressCancellationThrow();
             currentTime -= 1f;
             if (currentTime <= 0f)
+            {
+                wave++;
                 currentTime = maxTime;
+            }
         }
+    }
+    public MonsterBase GetMonster(MonsterData data, Vector3 pos, Transform parent)
+    {
+        Set_MonsterCount(+1);
+        return characterFactory.GetMonster(data, pos, parent);
+    }
+    public void ReturnMonsterFactroy(MonsterBase monster)
+    {
+        Set_MonsterCount(-1);
+        characterFactory.ReturnMonster(monster);
+    }
+    public UnitBase GetUnit(UnitData data, Transform parent)
+    {
+        Set_UnitCount(+1, 0);
+        return characterFactory.GetUnit(data, parent);
+    }
+    public void ReturnUnitFactroy(UnitBase unit)
+    {
+        Set_UnitCount(-1, 0);
+        characterFactory.ReturnUnit(unit);
     }
 }
