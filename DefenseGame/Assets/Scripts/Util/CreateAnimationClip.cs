@@ -1,3 +1,4 @@
+#if UNITY_EDITOR 
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -182,6 +183,7 @@ public class CreateAnimationClip : MonoBehaviour
         return clip;
     }
 }
+#endif
 public enum AnimationMode
 {
     Idle = 0,
