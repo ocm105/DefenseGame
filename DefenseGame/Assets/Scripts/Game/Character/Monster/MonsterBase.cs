@@ -15,7 +15,7 @@ public class MonsterBase : ChracterBase
     public void Init(MonsterData rawData)
     {
         this.rawData = rawData;
-        originHP = rawData.hP;
+        originHP = rawData.hp;
         currentHp = originHP;
         pathIndex = 0;
 

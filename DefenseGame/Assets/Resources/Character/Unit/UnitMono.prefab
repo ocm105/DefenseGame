@@ -50,14 +50,16 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   rawData:
-    Grade: 0
-    Name: 
-    Level: 0
-    Job: 0
-    Mana: 0
-    Range: 0
-    AttackSpeed: 0
-    Attack: 0
-    AttackCount: 0
-    Critical: 0
-    CriticalPower: 0
+    strID: 
+    grade: 0
+    name: 
+    job: 0
+    atk: 0
+    atkRange: 0
+    atkSpeed: 0
+    atkCount: 0
+    critical: 0
+    criticalPower: 0
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 64

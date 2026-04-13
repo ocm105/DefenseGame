@@ -8,7 +8,7 @@ using Cysharp.Threading.Tasks;
 public class MonsterData
 {
     public string strID;
-    public float hP;
+    public float hp;
     public float speed;
 }
 

@@ -10,5 +10,8 @@ public abstract class ChracterBase : MonoBehaviour, IDamage
     public bool isDead => currentHp <= 0f;
     public UnityEvent onDead;
 
-    public abstract void OnDamage(float damage);
+    public virtual void OnDamage(float damage) { }
+
+    protected virtual void Attack() { }
+
 }

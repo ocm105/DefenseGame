@@ -6,6 +6,10 @@ public class UnitBase : ChracterBase
     public UnitData rawData;
     public UnitModel model { get; private set; }
 
+    private UnitAniState state = UnitAniState.Idle;
+    public LayerMask targetLayer;
+
+
     public void Init(UnitData rawData)
     {
         this.rawData = rawData;
@@ -19,26 +23,27 @@ public class UnitBase : ChracterBase
 
         model.Init(this);
     }
-    private void TryAttack()
+    private void Update()
     {
-
+        Attack();
     }
-
-    //private void Attack()
-    //{
-    //    var hits = Physics2D.OverlapCircleAll(this.transform.position, rawData.Range);
-    //    if (hits.Length <= 0) return;
-
-    //    int hitCount = Mathf.Min(hits.Length, rawData.AttackCount);
-
-    //    for (int i = 0; i < hitCount; i++)
-    //    {
-    //        //if (hits[i].TryGetComponent<>)
-    //    }
-    //}
-
-    public override void OnDamage(float damage)
+    protected override void Attack()
     {
-        if (isDead) return;
+        base.Attack();
+
+        if (model.IsAttack) return;
+
+        var hits = Physics2D.OverlapCircleAll(this.transform.position, rawData.atkRange * 0.5f, targetLayer);
+        if (hits.Length <= 0) return;
+
+        int hitCount = Mathf.Min(hits.Length, rawData.atkCount);
+
+        for (int i = 0; i < hitCount; i++)
+        {
+            if (hits[i].TryGetComponent<IDamage>(out var damage))
+            {
+                model.Attack(damage);
+            }
+        }
     }
 }
